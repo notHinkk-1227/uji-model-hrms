@@ -55,3 +55,8 @@
 - YuNet face_detection_yunet_2023mar.onnx: 232589 byte, SHA-256 8f2383e4dd3cfbb4553ea8718107fc0423210dc964f9f4280604804ed2552fa4 (cocok dengan nilai mirror). Dipakai sebagai detektor eksperimen untuk semua model.
 - audit/model-audit-v2.md menggantikan model-audit.md (koreksi: commit MiniFASNet 2020-08-05; tabel detektor; keputusan baru).
 - Fase 2 selesai. Berikutnya Fase 3 (dataset dan protokol).
+
+## 2026-11-02 - Protokol evaluasi v1.0 dibekukan
+- Peneliti menyetujui protokol v0.2; ditambah definisi pencahayaan dan pengaturan kamera menjadi v1.0 (reports/protokol-evaluasi-v1.0.md).
+- Desain: ponsel masing-masing relawan (kamera depan) sebagai inti; jangkar (ponsel rekan) dan uji stres (kamera depan rusak) opsional.
+- Pencahayaan diatur secara fisik, bukan diedit. Pengambilan data baru dimulai setelah formulir persetujuan ditandatangani semua relawan.
