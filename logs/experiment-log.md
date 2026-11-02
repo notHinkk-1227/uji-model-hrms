@@ -60,3 +60,15 @@
 - Peneliti menyetujui protokol v0.2; ditambah definisi pencahayaan dan pengaturan kamera menjadi v1.0 (reports/protokol-evaluasi-v1.0.md).
 - Desain: ponsel masing-masing relawan (kamera depan) sebagai inti; jangkar (ponsel rekan) dan uji stres (kamera depan rusak) opsional.
 - Pencahayaan diatur secara fisik, bukan diedit. Pengambilan data baru dimulai setelah formulir persetujuan ditandatangani semua relawan.
+
+## 2026-11-02 - SFace diunduh dan smoke test
+- Sumber: huggingface.co/opencv/face_recognition_sface (resmi OpenCV). Berkas face_recognition_sface_2021dec.onnx: 38696353 byte, SHA-256 0ba9fbfa01b5270c96627c4ef784da859931e02f04419c829e83484087c34e79 (cocok dengan nilai mirror, sumber sekunder). LICENSE Apache 2.0 terunduh. Varian int8 tidak dipakai.
+- Smoke test (data acak, BUKAN pengukuran): input [1,3,112,112] float, output fc1 [1,128] float, norma L2 5,09. Dimensi embedding 128.
+- ONNX Runtime memberi peringatan bahwa initializer muncul di graph inputs (model hasil ekspor lama); tidak memengaruhi kebenaran, mungkin memengaruhi latensi (perlu dicatat saat benchmark).
+
+## 2026-11-02 - buffalo_l diunduh; CDCN tidak dilanjutkan
+- buffalo_l.zip dari GitHub release v0.7 (URL dari dokumentasi sekunder): 288621354 byte, SHA-256 80ffe37d8a5940d59a7384c201a2a38d4741f2f3c51eef46ebb28218a7b0ca2f (tanpa checksum resmi). Isi zip cocok dengan dokumentasi (5 berkas onnx). Hanya w600k_r50.onnx diekstrak: 174383860 byte, SHA-256 4c06341c33c2ca1f86781dab0e829f88ad5b64be9fba56e56bc9ebdefc619e43. Bobot nonkomersial, hanya acuan riset.
+- Smoke test w600k_r50 (data acak, bukan pengukuran): input ['None',3,112,112], output [1,512]. Norma 1837 pada input 0-255 menunjukkan model mengharapkan input ternormalisasi (dugaan, belum diverifikasi dari kode resmi).
+- Konfirmasi sekunder: halaman konversi ONNX pihak ketiga mencantumkan SHA-256 2.7_80x80_MiniFASNetV2.pth = a5eb02e1...bec0, sama dengan berkas lokal. Halaman itu juga mengklaim urutan keluaran [live, print, replay] yang bertentangan dengan kode asli (indeks 1 = asli); makna indeks belum terverifikasi.
+- CDCN: TIDAK DILANJUTKAN. Tidak ada bobot siap pakai, kode memakai data OULU-NPU olahan (.dat), lisensi hanya riset. Akses OULU-NPU juga dilaporkan bermasalah (isu GitHub 2022; status kini belum diverifikasi).
+- Usulan pengganti: facenox/face-antispoof-onnx (Apache-2.0 kode; MiniFAS; 128x128 RGB; diuji pada CelebA-Spoof; data latih belum dipastikan). Menunggu persetujuan peneliti dan audit data latih.
