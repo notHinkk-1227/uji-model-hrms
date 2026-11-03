@@ -77,3 +77,8 @@
 - Peneliti menyetujui penggantian CDCN dengan face-antispoof-onnx (facenox) sebagai kandidat liveness ketiga.
 - Diperbarui: audit/model-audit-v3.md, audit/license-evidence-v2.md, reports/handover-penelitian-v2.md, laporan baseline di Claude Docs (catatan revisi + 10 penyesuaian). Versi lama dipindahkan ke audit/arsip/.
 - Status face-antispoof-onnx: TERTAHAN-LISENSI (sementara); data latih diduga CelebA-Spoof, menunggu pembacaan docs/DATA_PREPARATION.md.
+
+## 2026-11-03 - Pengarsipan dokumen dan cadangan
+- reports/handover-penelitian.md dan protokol-evaluasi-v0.2.md diarsipkan ke reports/arsip/. Pencarian "CDCN" di dokumen aktif hanya menemukan penyebutan yang menjelaskan alasan CDCN dikeluarkan.
+- Cadangan riwayat Git: /d/backup-penelitian/model-research-face.bundle (30205 byte; tanpa bobot dan data). Ulangi setiap selesai satu fase.
+- Dua salah ketik (spasi hilang) diperbaiki.
