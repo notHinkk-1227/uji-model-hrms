@@ -103,3 +103,10 @@
 - detection/face.py: cv2.FaceDetectorYN (conf 0,8; NMS 0,3), membuang wajah dengan jarak ke tepi < 5 px atau ukuran < 60 px.
 - metrics.json (klaim repo): matriks konfusi [[31760,789],[493,38296]] pada 71338 sampel; hasil hitung asisten: BPCER ~2,42%, APCER ~1,27%, ACER ~1,85% (belum diukur sendiri; tidak sebanding langsung dengan ACER 3,81% anti-spoof-mn3). Kecepatan 0,13 ms diukur di CUDA. Parameter 695971.
 - Perbedaan dengan MiniFASNet: skala 0-1 vs 0-255; crop persegi 1,5x vs skala 2,7/4,0 tanpa dipersegikan; keluaran 2 kelas vs 3 kelas. Skrip evaluasi harus memakai preprocessing terpisah per model.
+
+## 2026-11-03 - face-antispoof-onnx: urutan warna, threshold, OpenCV 5
+- demo.py (baris 169 dan 256): frame dikonversi BGR->RGB sebelum diproses, jadi model menerima RGB (berbeda dari MiniFASNet yang BGR).
+- demo.py (baris 316-327): --threshold default 0,5 (probabilitas) dikonversi ke selisih logit = ln(p/(1-p)); untuk 0,5 hasilnya 0, jadi real bila logit_real - logit_spoof >= 0. Aturan keputusan utama kita; ROC dilaporkan terpisah.
+- system.py hanya berisi info perangkat keras (CPU/GPU/provider); tidak memuat konversi warna atau bbox.
+- OpenCV 5.0.0: cv2.FaceDetectorYN ada; YuNet termuat (baru terbukti termuat, belum terbukti mendeteksi wajah). Peringatan: targets (mis. GPU) tidak didukung graph engine baru; tidak berpengaruh untuk CPU.
+- Belum pasti: format bbox yang diharapkan crop() (x1,y1,x2,y2 vs x,y,w,h); lihat demo.py dan tests/test_preprocess.py.
