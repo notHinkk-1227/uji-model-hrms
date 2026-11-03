@@ -72,3 +72,8 @@
 - Konfirmasi sekunder: halaman konversi ONNX pihak ketiga mencantumkan SHA-256 2.7_80x80_MiniFASNetV2.pth = a5eb02e1...bec0, sama dengan berkas lokal. Halaman itu juga mengklaim urutan keluaran [live, print, replay] yang bertentangan dengan kode asli (indeks 1 = asli); makna indeks belum terverifikasi.
 - CDCN: TIDAK DILANJUTKAN. Tidak ada bobot siap pakai, kode memakai data OULU-NPU olahan (.dat), lisensi hanya riset. Akses OULU-NPU juga dilaporkan bermasalah (isu GitHub 2022; status kini belum diverifikasi).
 - Usulan pengganti: facenox/face-antispoof-onnx (Apache-2.0 kode; MiniFAS; 128x128 RGB; diuji pada CelebA-Spoof; data latih belum dipastikan). Menunggu persetujuan peneliti dan audit data latih.
+
+## 2026-11-02 - Penggantian CDCN diterapkan ke semua dokumen
+- Peneliti menyetujui penggantian CDCN dengan face-antispoof-onnx (facenox) sebagai kandidat liveness ketiga.
+- Diperbarui: audit/model-audit-v3.md, audit/license-evidence-v2.md, reports/handover-penelitian-v2.md, laporan baseline di Claude Docs (catatan revisi + 10 penyesuaian). Versi lama dipindahkan ke audit/arsip/.
+- Status face-antispoof-onnx: TERTAHAN-LISENSI (sementara); data latih diduga CelebA-Spoof, menunggu pembacaan docs/DATA_PREPARATION.md.
