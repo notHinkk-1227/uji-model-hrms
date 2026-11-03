@@ -95,3 +95,11 @@
 - Smoke test (data acak): input [batch,3,128,128], output [batch,2]. Skala/urutan warna belum dipastikan (baca src/inference/preprocess.py).
 - Crop (docs/DATA_PREPARATION.md): kotak wajah 1,5x, dipersegikan (sisi terpanjang), padding BORDER_REFLECT_101, resize 128x128. Batasan (docs/LIMITATIONS.md): cahaya redup/latar kuat bermasalah, wajah sumber >= ~64x64, frontal +/-30 derajat, tidak dilatih untuk topeng 3D; ambang bawaan 0,5.
 - Data latih bobot tetap tidak dinyatakan; format data (image_BB.txt, metas/labels/*.json) tampak mengikuti CelebA-Spoof (pengetahuan peneliti/asisten, bukan kutipan dokumen). Status: TERTAHAN-LISENSI (sementara). Rencana: tanya maintainer lewat isu GitHub.
+
+## 2026-11-03 - face-antispoof-onnx: preprocessing dari kode
+- preprocess.py: crop persegi sisi-terpanjang x1,5 (padding BORDER_REFLECT_101), resize 128x128 (INTER_AREA bila mengecil, LANCZOS4 bila membesar), nilai /255 (rentang 0-1), CHW float32, TANPA mean/std. Tidak ada konversi warna di preprocess(); urutan warna (README: RGB) harus dipastikan dari system.py/demo.py.
+- crop() mengharapkan bbox (x1,y1,x2,y2) (w = w - x, h = h - y); detektor mengembalikan x,y,width,height; konversi di system.py belum dilihat.
+- inference.py: keluaran logit [real, spoof] (indeks 0 = real); real jika (real - spoof) >= threshold (selisih logit, bukan probabilitas).
+- detection/face.py: cv2.FaceDetectorYN (conf 0,8; NMS 0,3), membuang wajah dengan jarak ke tepi < 5 px atau ukuran < 60 px.
+- metrics.json (klaim repo): matriks konfusi [[31760,789],[493,38296]] pada 71338 sampel; hasil hitung asisten: BPCER ~2,42%, APCER ~1,27%, ACER ~1,85% (belum diukur sendiri; tidak sebanding langsung dengan ACER 3,81% anti-spoof-mn3). Kecepatan 0,13 ms diukur di CUDA. Parameter 695971.
+- Perbedaan dengan MiniFASNet: skala 0-1 vs 0-255; crop persegi 1,5x vs skala 2,7/4,0 tanpa dipersegikan; keluaran 2 kelas vs 3 kelas. Skrip evaluasi harus memakai preprocessing terpisah per model.
