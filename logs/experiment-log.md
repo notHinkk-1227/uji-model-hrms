@@ -82,3 +82,9 @@
 - reports/handover-penelitian.md dan protokol-evaluasi-v0.2.md diarsipkan ke reports/arsip/. Pencarian "CDCN" di dokumen aktif hanya menemukan penyebutan yang menjelaskan alasan CDCN dikeluarkan.
 - Cadangan riwayat Git: /d/backup-penelitian/model-research-face.bundle (30205 byte; tanpa bobot dan data). Ulangi setiap selesai satu fase.
 - Dua salah ketik (spasi hilang) diperbaiki.
+
+## 2026-11-03 - face-antispoof-onnx di-clone
+- Clone dangkal https://github.com/facenox/face-antispoof-onnx ke repositories/face-antispoof-onnx. HEAD 2f8dd93dd0fd9d120f08e83d9020719f67ffdb68, commit terakhir 2026-10-15. Ukuran 789 MB (didominasi folder models/checkpoints; tidak dipakai).
+- LICENSE Apache-2.0 (11548 byte). README mengkredit Minivision Silent-Face-Anti-Spoofing (Apache-2.0) sebagai dasar.
+- Bobot: models/best/98.20/best_model.onnx 1912594 byte; best_model.pth 2965272 byte; best_model_quantized.onnx 626197 byte. models/detector.onnx 232589 byte (ukuran sama dengan YuNet 2023mar; hash diverifikasi di langkah berikutnya).
+- Data latih: TIDAK dinyatakan di README, METRICS, PREVIOUS_RESULTS, DATA_PREPARATION (grep "celeba|dataset|license"). Yang dinyatakan hanya: diuji pada CelebA Spoof (70k+ sampel). Dugaan sebelumnya ("sangat mungkin CelebA-Spoof") belum terbukti maupun terbantah.
