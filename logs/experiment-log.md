@@ -110,3 +110,9 @@
 - system.py hanya berisi info perangkat keras (CPU/GPU/provider); tidak memuat konversi warna atau bbox.
 - OpenCV 5.0.0: cv2.FaceDetectorYN ada; YuNet termuat (baru terbukti termuat, belum terbukti mendeteksi wajah). Peringatan: targets (mis. GPU) tidak didukung graph engine baru; tidak berpengaruh untuk CPU.
 - Belum pasti: format bbox yang diharapkan crop() (x1,y1,x2,y2 vs x,y,w,h); lihat demo.py dan tests/test_preprocess.py.
+
+## 2026-11-03 - Format bbox pasti; spesifikasi anti-spoof-mn3
+- face-antispoof-onnx: demo.py memanggil crop(rgb, (x, y, x+w, y+h), faktor) dan test_preprocess.py memakai (x, y, x2, y2): format bbox crop() = (x1,y1,x2,y2) [terverifikasi]. Detektor di demo menerima gambar RGB; pipeline kita memakai satu deteksi YuNet pada BGR untuk semua model (penyimpangan dicatat).
+- anti-spoof-mn3 (dokumen OMZ): model asli RGB 128x128, mean [151.2405,119.5950,107.8395], scale [63.0105,56.4570,55.0035], keluaran probabilitas 2 kelas (0 real, 1 spoof); model terkonversi BGR; crop tidak dijelaskan. OMZ dalam mode pemeliharaan; bobot lewat omz_downloader.
+- Lisensi anti-spoof-mn3: artikel dukungan Intel (000102082) menyatakan berbasis repo MIT dan boleh komersial, tidak menyinggung klausul dataset CelebA-Spoof. Pernyataan "bobot dibersihkan" hanya dari forum. Status tetap TERTAHAN-LISENSI.
+- Dibuat reports/spesifikasi-preprocessing-v1.md (tabel preprocessing semua model).
