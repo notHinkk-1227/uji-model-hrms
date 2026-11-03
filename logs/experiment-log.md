@@ -88,3 +88,10 @@
 - LICENSE Apache-2.0 (11548 byte). README mengkredit Minivision Silent-Face-Anti-Spoofing (Apache-2.0) sebagai dasar.
 - Bobot: models/best/98.20/best_model.onnx 1912594 byte; best_model.pth 2965272 byte; best_model_quantized.onnx 626197 byte. models/detector.onnx 232589 byte (ukuran sama dengan YuNet 2023mar; hash diverifikasi di langkah berikutnya).
 - Data latih: TIDAK dinyatakan di README, METRICS, PREVIOUS_RESULTS, DATA_PREPARATION (grep "celeba|dataset|license"). Yang dinyatakan hanya: diuji pada CelebA Spoof (70k+ sampel). Dugaan sebelumnya ("sangat mungkin CelebA-Spoof") belum terbukti maupun terbantah.
+
+## 2026-11-03 - face-antispoof-onnx: checksum dan spesifikasi crop
+- SHA-256 (tanpa pembanding resmi): models/best/98.20/best_model.onnx af2381b88f38769222ed93379e12444e2a50814575de1c46170de570c55a42b6; best_model.pth 290ad61b0ece12a4afef5186076415b05ef07f19d9e103db89875af05e795c02; best_model_quantized.onnx fde20585635cae62ed1d41796f76b6f8bc4b92cd91ec1cf0f1bc6485d2d587a9.
+- models/detector.onnx identik (SHA-256 8f2383e4...2fa4) dengan YuNet 2023mar yang dipakai eksperimen.
+- Smoke test (data acak): input [batch,3,128,128], output [batch,2]. Skala/urutan warna belum dipastikan (baca src/inference/preprocess.py).
+- Crop (docs/DATA_PREPARATION.md): kotak wajah 1,5x, dipersegikan (sisi terpanjang), padding BORDER_REFLECT_101, resize 128x128. Batasan (docs/LIMITATIONS.md): cahaya redup/latar kuat bermasalah, wajah sumber >= ~64x64, frontal +/-30 derajat, tidak dilatih untuk topeng 3D; ambang bawaan 0,5.
+- Data latih bobot tetap tidak dinyatakan; format data (image_BB.txt, metas/labels/*.json) tampak mengikuti CelebA-Spoof (pengetahuan peneliti/asisten, bukan kutipan dokumen). Status: TERTAHAN-LISENSI (sementara). Rencana: tanya maintainer lewat isu GitHub.
