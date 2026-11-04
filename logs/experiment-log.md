@@ -122,3 +122,9 @@
 - omz_downloader --name anti-spoof-mn3 -> models/anti-spoof-mn3/public/anti-spoof-mn3/anti-spoof-mn3.onnx: 12270179 byte, SHA-256 c4c99af04603b62d7e44f6f4daeb33e0daeccc696008c0b1d62f6f5cebbb3262. Tidak ada pesan gagal; checksum OMZ tidak ditampilkan eksplisit. Ukuran konsisten dengan 3,02 juta parameter float32.
 - Model asli (bukan IR terkonversi): RGB, normalisasi eksternal (mean/scale dari dokumen OMZ), keluaran 2 kelas (0 real, 1 spoof).
 - Keluarga ArcFace (buffalo_l, AuraFace; sumber sekunder: salinan kode arcface_onnx.py insightface): input (x-127,5)/127,5, blobFromImages dengan swapRB=True (BGR->RGB), alignment 5 landmark norm_crop 112x112. Pengecualian: graf dengan node Sub/Mul awal memakai mean 0, std 1 (model MXNet). SFace belum dikonfirmasi.
+
+## 2026-11-04 - anti-spoof-mn3 smoke test; SFace preprocessing terverifikasi
+- anti-spoof-mn3 smoke test (data acak, BUKAN pengukuran): input actual_input_1 [1,3,128,128]; output output1 [1,2]; keluaran sudah probabilitas (jumlah 1,0); pada derau acak model menghasilkan [0.983, 0.017] (yakin "real"), jadi smoke test hanya bukti model berjalan.
+- SFace (kode OpenCV face_recognize.cpp): alignCrop memakai 5 landmark dari kolom 4-13 keluaran YuNet, similarity transform, warpAffine 112x112 INTER_LINEAR; feature memakai blobFromImage(skala 1, mean 0, swapRB=true) -> RGB nilai 0-255 mentah, tanpa normalisasi.
+- Keenam model terunduh dan lolos smoke test. reports/spesifikasi-preprocessing-v2.md adalah tabel preprocessing acuan (v1 tidak pernah disimpan ke repo).
+- Tersisa: nilai titik templat ArcFace dan norm_crop dari kode resmi insightface; verifikasi empiris pasangan sama/beda identitas.
