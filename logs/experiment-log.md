@@ -128,3 +128,12 @@
 - SFace (kode OpenCV face_recognize.cpp): alignCrop memakai 5 landmark dari kolom 4-13 keluaran YuNet, similarity transform, warpAffine 112x112 INTER_LINEAR; feature memakai blobFromImage(skala 1, mean 0, swapRB=true) -> RGB nilai 0-255 mentah, tanpa normalisasi.
 - Keenam model terunduh dan lolos smoke test. reports/spesifikasi-preprocessing-v2.md adalah tabel preprocessing acuan (v1 tidak pernah disimpan ke repo).
 - Tersisa: nilai titik templat ArcFace dan norm_crop dari kode resmi insightface; verifikasi empiris pasangan sama/beda identitas.
+
+## 2026-11-04 - Koreksi catatan v1
+- Entri sebelumnya menyebut "v1 tidak pernah disimpan ke repo"; ternyata berkas v1 ikut ter-commit (eb78686). v1 kini diarsipkan ke reports/arsip/; v2 adalah acuan.
+
+## 2026-11-04 - Modul 1 dan 2 skrip evaluasi lolos uji bentuk
+- scripts/common.py (detektor YuNet bersama), scripts/preprocess_liveness.py (tiga preprocessing liveness), scripts/test_modul1.py.
+- Uji pada repositories/face-antispoof-onnx/assets/docs/face.jpg (500x750, gambar dokumentasi repo, bukan data relawan): 1 wajah, bbox (293.9, 73.6, 157.2, 200.9), skor 0.94. Landmark 5 titik masuk akal (mata sejajar y~152-154, hidung y 196.7, sudut mulut y 223-225) dan terletak di dalam bbox.
+- Keluaran: MiniFASNet (1,3,80,80) float32 rentang 0-255; face-antispoof-onnx (1,3,128,128) rentang 0-1; anti-spoof-mn3 (1,3,128,128) rentang -2.400 s/d 2.675 (sama dengan batas matematis normalisasi mean/scale). Ini uji bentuk dan rentang, BUKAN uji kualitas dan belum menguji urutan warna.
+- Crop anti-spoof-mn3 masih ASUMSI (persegi x1,5 seperti face-antispoof-onnx); belum diverifikasi.
