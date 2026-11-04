@@ -5,3 +5,4 @@
 a7933ea5330113b01c9b60351d8f4c33003f145d8470ac5f0e52ee2effe25c60 *models/auraface/glintr100.onnx
 af2381b88f38769222ed93379e12444e2a50814575de1c46170de570c55a42b6 *repositories/face-antispoof-onnx/models/best/98.20/best_model.onnx
 fde20585635cae62ed1d41796f76b6f8bc4b92cd91ec1cf0f1bc6485d2d587a9 *repositories/face-antispoof-onnx/models/best/98.20/best_model_quantized.onnx
+c4c99af04603b62d7e44f6f4daeb33e0daeccc696008c0b1d62f6f5cebbb3262 *models/anti-spoof-mn3/public/anti-spoof-mn3/anti-spoof-mn3.onnx

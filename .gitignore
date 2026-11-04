@@ -9,3 +9,4 @@ repositories/
 *.pt
 *.caffemodel
 *.zip
+.venv-omz/

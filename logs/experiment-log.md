@@ -116,3 +116,9 @@
 - anti-spoof-mn3 (dokumen OMZ): model asli RGB 128x128, mean [151.2405,119.5950,107.8395], scale [63.0105,56.4570,55.0035], keluaran probabilitas 2 kelas (0 real, 1 spoof); model terkonversi BGR; crop tidak dijelaskan. OMZ dalam mode pemeliharaan; bobot lewat omz_downloader.
 - Lisensi anti-spoof-mn3: artikel dukungan Intel (000102082) menyatakan berbasis repo MIT dan boleh komersial, tidak menyinggung klausul dataset CelebA-Spoof. Pernyataan "bobot dibersihkan" hanya dari forum. Status tetap TERTAHAN-LISENSI.
 - Dibuat reports/spesifikasi-preprocessing-v1.md (tabel preprocessing semua model).
+
+## 2026-11-04 - anti-spoof-mn3 diunduh (omz_downloader); ArcFace preprocessing
+- Lingkungan terpisah .venv-omz (Python 3.12, openvino-dev 2024.6.0, numpy 1.26.4); .venv utama tidak berubah (numpy 2.5.4, onnxruntime 1.31.1). .venv-omz ditambahkan ke .gitignore.
+- omz_downloader --name anti-spoof-mn3 -> models/anti-spoof-mn3/public/anti-spoof-mn3/anti-spoof-mn3.onnx: 12270179 byte, SHA-256 c4c99af04603b62d7e44f6f4daeb33e0daeccc696008c0b1d62f6f5cebbb3262. Tidak ada pesan gagal; checksum OMZ tidak ditampilkan eksplisit. Ukuran konsisten dengan 3,02 juta parameter float32.
+- Model asli (bukan IR terkonversi): RGB, normalisasi eksternal (mean/scale dari dokumen OMZ), keluaran 2 kelas (0 real, 1 spoof).
+- Keluarga ArcFace (buffalo_l, AuraFace; sumber sekunder: salinan kode arcface_onnx.py insightface): input (x-127,5)/127,5, blobFromImages dengan swapRB=True (BGR->RGB), alignment 5 landmark norm_crop 112x112. Pengecualian: graf dengan node Sub/Mul awal memakai mean 0, std 1 (model MXNet). SFace belum dikonfirmasi.
