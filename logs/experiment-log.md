@@ -152,3 +152,9 @@
 - Derau: pada 1 thread ansambel_total (15.2) < ansambel_inferensi (17.5) dan p95 V1SE 14.0 vs median 7.8 -> variasi antar pengukuran ~10-15%; selisih lebih kecil dari ~15-20% belum bermakna.
 - Multithread: ONNX Runtime dan YuNet lebih cepat dengan 4 thread; MiniFASNet (PyTorch) lebih lambat.
 - Kondisi laptop (daya, mode performa) tidak dicatat; angka bukan angka server produksi. Resolusi gambar yang dikirim aplikasi HRMS belum diketahui.
+
+## 2026-11-05 - Koreksi benchmark latensi; temuan detektor pada gambar besar
+- Tiga ulangan (1 thread, 100 ulangan, face.jpg 500x750), median ms: YuNet 23.75/22.84/22.11; MiniFASNet V2 inferensi 5.58/5.12/4.90; V1SE 5.55/5.57/5.32; ansambel inferensi 11.01/10.90/10.46, ansambel total 10.94/10.60/10.58; face-antispoof-onnx total 4.72/4.72/4.75; anti-spoof-mn3 total 3.34/3.35/3.22.
+- KOREKSI: perkiraan derau "10-15%" terlalu kecil. Variasi dalam satu sesi ~2-10%, tetapi antar-sesi angka bergeser 35-60% (benchmark pertama jauh lebih lambat; kondisi laptop tidak diketahui). Perbandingan antarmodel hanya valid dalam satu sesi dengan kondisi tercatat. Anomali "total < inferensi" tidak muncul lagi (artefak gangguan sesaat).
+- Urutan kecepatan stabil di dua sesi: anti-spoof-mn3 < face-antispoof-onnx < ansambel MiniFASNet (sekitar 2-3x). Detektor (22 ms) lebih mahal daripada model liveness mana pun.
+- TEMUAN: YuNet tidak menemukan wajah pada gambar 4032x2688 (face.jpg dibesarkan 5.4x, rasio sama); pada ukuran asli 750x500 skor 0.94. Penyebab belum diketahui (wajah terlalu besar bagi detektor atau pembesaran digital yang buram). Dugaan: deteksi harus dijalankan pada gambar diperkecil lalu koordinat dikembalikan ke gambar asli. Diuji dengan scripts/test_resolusi.py.
