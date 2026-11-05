@@ -146,3 +146,9 @@
 - Catatan interpretasi: satu gambar tidak membedakan indeks 0 dan 2 MiniFASNet; anti-spoof-mn3 sebelumnya juga menjawab "real" 98% untuk derau acak, jadi kesepakatan tiga model bukan bukti kinerja.
 - Perbaikan skrip: parameter threads pada LivenessModels; metadata mencatat skrip_belum_di_commit (hash commit tidak mewakili kode bila folder scripts punya perubahan yang belum di-commit).
 - Modul 4 (benchmark_latency.py) ditulis; butuh psutil.
+
+## 2026-11-05 - Benchmark latensi awal (laptop pengembangan, CPU)
+- Gambar face.jpg 500x750, 100 ulangan, warm-up 10; median (ms) 1 thread / 4 thread: YuNet 31.4 / 16.6; MiniFASNet V2 inferensi 8.1 / 10.1; V1SE 7.8 / 10.9; ansambel total 15.2 / 21.4; face-antispoof-onnx total 6.7 / 4.6; anti-spoof-mn3 total 5.6 / 4.3. Memori RSS: memuat model menambah ~42-46 MB (dasar ~232 MB, puncak ~326-332 MB; kasar).
+- Derau: pada 1 thread ansambel_total (15.2) < ansambel_inferensi (17.5) dan p95 V1SE 14.0 vs median 7.8 -> variasi antar pengukuran ~10-15%; selisih lebih kecil dari ~15-20% belum bermakna.
+- Multithread: ONNX Runtime dan YuNet lebih cepat dengan 4 thread; MiniFASNet (PyTorch) lebih lambat.
+- Kondisi laptop (daya, mode performa) tidak dicatat; angka bukan angka server produksi. Resolusi gambar yang dikirim aplikasi HRMS belum diketahui.
