@@ -137,3 +137,12 @@
 - Uji pada repositories/face-antispoof-onnx/assets/docs/face.jpg (500x750, gambar dokumentasi repo, bukan data relawan): 1 wajah, bbox (293.9, 73.6, 157.2, 200.9), skor 0.94. Landmark 5 titik masuk akal (mata sejajar y~152-154, hidung y 196.7, sudut mulut y 223-225) dan terletak di dalam bbox.
 - Keluaran: MiniFASNet (1,3,80,80) float32 rentang 0-255; face-antispoof-onnx (1,3,128,128) rentang 0-1; anti-spoof-mn3 (1,3,128,128) rentang -2.400 s/d 2.675 (sama dengan batas matematis normalisasi mean/scale). Ini uji bentuk dan rentang, BUKAN uji kualitas dan belum menguji urutan warna.
 - Crop anti-spoof-mn3 masih ASUMSI (persegi x1,5 seperti face-antispoof-onnx); belum diverifikasi.
+
+## 2026-11-04 - Koreksi: uji warna lolos
+- scripts/test_warna.py (gambar sintetis biru murni): MiniFASNet V2 dan V1SE [255, 0, 0] (BGR, 0-255); face-antispoof-onnx [0, 0, 1] (RGB, 0-1); anti-spoof-mn3 [-2.4002, -2.1183, 2.6755] (RGB, mean/scale). SEMUA OK. Urutan warna dan skala terverifikasi untuk tiga preprocessing liveness (koreksi atas kalimat "belum menguji urutan warna" di entri sebelumnya).
+
+## 2026-11-05 - Modul 3 (infer_liveness.py) lolos uji
+- Uji pada face.jpg (gambar dokumentasi repo; BUKAN data relawan dan BUKAN pengukuran kinerja): status ok; MiniFASNet rata-rata p1 = 0.9998 (V2 0.99995; V1SE 0.99972), pred_real 1; face-antispoof-onnx logit_real 4.118, logit_spoof -4.118, diff +8.236, pred_real 1; anti-spoof-mn3 p_real 0.988, pred_real 1. CSV dan .meta.json terbentuk; hash empat berkas bobot di metadata sama dengan logs/checksums-models.txt.
+- Catatan interpretasi: satu gambar tidak membedakan indeks 0 dan 2 MiniFASNet; anti-spoof-mn3 sebelumnya juga menjawab "real" 98% untuk derau acak, jadi kesepakatan tiga model bukan bukti kinerja.
+- Perbaikan skrip: parameter threads pada LivenessModels; metadata mencatat skrip_belum_di_commit (hash commit tidak mewakili kode bila folder scripts punya perubahan yang belum di-commit).
+- Modul 4 (benchmark_latency.py) ditulis; butuh psutil.

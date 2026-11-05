@@ -10,3 +10,4 @@ repositories/
 *.caffemodel
 *.zip
 .venv-omz/
+results/_uji/
