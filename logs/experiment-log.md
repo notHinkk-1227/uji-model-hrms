@@ -165,3 +165,6 @@
 - Benchmark dijalankan dengan charger tercolok dan mode Turbo. Penyebab benchmark pertama yang lebih lambat tetap tidak diketahui.
 - Pengumpulan data relawan dilaporkan sudah dilakukan; kelas replay dan uji stres tidak dikumpulkan (lihat reports/amandemen-protokol-1.md). Konfirmasi formulir persetujuan TERTANDATANGANI semua relawan menunggu jawaban peneliti; analisis model pada data relawan ditahan sampai itu dikonfirmasi.
 - Resolusi unggahan aplikasi HRMS belum ditentukan: skenario 640, 1280, penuh; opsi --max_side ditambahkan pada infer_liveness.py.
+
+## 2026-11-05 - Data S01 dirapikan
+- Foto S01 dipindahkan dari datasets/_masuk dengan scripts/rename_foto.py (log: datasets/rename_log.csv, tidak ikut Git). Jumlah dan ukuran per kelas: lihat output inventaris_data.py (diisi peneliti).
