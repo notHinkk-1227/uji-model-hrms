@@ -14,13 +14,29 @@ CONF_THRESHOLD = 0.8   # sama dengan referensi face-antispoof-onnx; dicatat di s
 NMS_THRESHOLD = 0.3
 TOP_K = 5000
 
+DETECT_MAX_SIDE = 640  # deteksi pada salinan diperkecil (sisi terpanjang maks 640 px); None = nonaktif
+
 DETECTOR_CONFIG = {
     "model": "face_detection_yunet_2023mar.onnx",
     "conf_threshold": CONF_THRESHOLD,
     "nms_threshold": NMS_THRESHOLD,
     "top_k": TOP_K,
+    "detect_max_side": DETECT_MAX_SIDE,
     "opencv": cv2.__version__,
 }
+
+
+def limit_resolution(img_bgr, max_side):
+    """Perkecil gambar (INTER_AREA) hingga sisi terpanjang <= max_side; tidak pernah memperbesar.
+
+    max_side 0 atau None = tanpa batas (resolusi penuh). Dipakai untuk skenario resolusi
+    (mis. 640, 1280, penuh) sebelum seluruh pipeline; lihat reports/amandemen-protokol-1.md.
+    """
+    h, w = img_bgr.shape[:2]
+    if not max_side or max(h, w) <= max_side:
+        return img_bgr
+    s = max_side / float(max(h, w))
+    return cv2.resize(img_bgr, (int(round(w * s)), int(round(h * s))), interpolation=cv2.INTER_AREA)
 
 
 def load_image(path):
@@ -37,21 +53,33 @@ def create_detector(model_path=YUNET_PATH):
     )
 
 
-def detect_faces(img_bgr, detector):
+def detect_faces(img_bgr, detector, max_side=DETECT_MAX_SIDE):
     """Kembalikan daftar wajah, diurutkan dari yang terbesar.
 
     Tiap wajah: {"bbox_xywh": (x, y, w, h), "landmarks": array (5, 2), "score": float}.
     Daftar kosong bila tidak ada wajah (dicatat pemanggil sebagai kegagalan deteksi).
+
+    Bila sisi terpanjang gambar > max_side, deteksi dijalankan pada salinan yang diperkecil
+    (INTER_AREA), lalu kotak dan landmark dikembalikan ke koordinat gambar ASLI. Alasan: YuNet
+    gagal pada wajah yang sangat besar (lihat catatan 2026-11-05) dan waktu deteksi naik
+    seiring jumlah piksel. Crop untuk model liveness/pengenalan tetap diambil dari gambar asli.
     """
     h, w = img_bgr.shape[:2]
-    detector.setInputSize((w, h))
-    _, faces = detector.detect(img_bgr)
+    scale = 1.0
+    work = img_bgr
+    if max_side and max(h, w) > max_side:
+        scale = max_side / float(max(h, w))
+        work = cv2.resize(img_bgr, (int(round(w * scale)), int(round(h * scale))),
+                          interpolation=cv2.INTER_AREA)
+    wh, ww = work.shape[:2]
+    detector.setInputSize((ww, wh))
+    _, faces = detector.detect(work)
     if faces is None or len(faces) == 0:
         return []
     out = []
     for f in faces:
-        x, y, bw, bh = (float(v) for v in f[:4])
-        landmarks = np.asarray(f[4:14], dtype=np.float32).reshape(5, 2)
+        x, y, bw, bh = (float(v) / scale for v in f[:4])
+        landmarks = np.asarray(f[4:14], dtype=np.float32).reshape(5, 2) / scale
         out.append({"bbox_xywh": (x, y, bw, bh), "landmarks": landmarks, "score": float(f[14])})
     out.sort(key=lambda d: d["bbox_xywh"][2] * d["bbox_xywh"][3], reverse=True)
     return out

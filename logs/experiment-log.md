@@ -158,3 +158,10 @@
 - KOREKSI: perkiraan derau "10-15%" terlalu kecil. Variasi dalam satu sesi ~2-10%, tetapi antar-sesi angka bergeser 35-60% (benchmark pertama jauh lebih lambat; kondisi laptop tidak diketahui). Perbandingan antarmodel hanya valid dalam satu sesi dengan kondisi tercatat. Anomali "total < inferensi" tidak muncul lagi (artefak gangguan sesaat).
 - Urutan kecepatan stabil di dua sesi: anti-spoof-mn3 < face-antispoof-onnx < ansambel MiniFASNet (sekitar 2-3x). Detektor (22 ms) lebih mahal daripada model liveness mana pun.
 - TEMUAN: YuNet tidak menemukan wajah pada gambar 4032x2688 (face.jpg dibesarkan 5.4x, rasio sama); pada ukuran asli 750x500 skor 0.94. Penyebab belum diketahui (wajah terlalu besar bagi detektor atau pembesaran digital yang buram). Dugaan: deteksi harus dijalankan pada gambar diperkecil lalu koordinat dikembalikan ke gambar asli. Diuji dengan scripts/test_resolusi.py.
+
+## 2026-11-05 - Detektor pada gambar besar terjelaskan; amandemen protokol
+- Ambang 0,05 pada gambar 3000 dan 4032 px: 23 dan 39 deteksi, skor tertinggi 0.734 dan 0.638 dengan lebar kotak ~511 dan ~509 px (lebar wajah sebenarnya 621 dan 835): detektor tidak dapat menghasilkan kotak > ~510 px; kegagalan = skor di bawah ambang 0,8.
+- Setelah perbaikan common.py (deteksi pada salinan <= 640 px): semua ukuran 375-4032 mendeteksi 1 wajah, skor 0.94, waktu 3.6-14.8 ms (sebelumnya sampai 512 ms). test_modul1 dan test_warna lolos. Kotak pada face.jpg bergeser ~1-3% (295.5, 72.5, 155.3, 204.3 vs 293.9, 73.6, 157.2, 200.9).
+- Benchmark dijalankan dengan charger tercolok dan mode Turbo. Penyebab benchmark pertama yang lebih lambat tetap tidak diketahui.
+- Pengumpulan data relawan dilaporkan sudah dilakukan; kelas replay dan uji stres tidak dikumpulkan (lihat reports/amandemen-protokol-1.md). Konfirmasi formulir persetujuan TERTANDATANGANI semua relawan menunggu jawaban peneliti; analisis model pada data relawan ditahan sampai itu dikonfirmasi.
+- Resolusi unggahan aplikasi HRMS belum ditentukan: skenario 640, 1280, penuh; opsi --max_side ditambahkan pada infer_liveness.py.

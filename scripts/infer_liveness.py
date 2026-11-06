@@ -28,7 +28,14 @@ import onnxruntime as ort
 import torch
 import torch.nn.functional as F
 
-from common import DETECTOR_CONFIG, create_detector, detect_faces, load_image, primary_face
+from common import (
+    DETECTOR_CONFIG,
+    create_detector,
+    detect_faces,
+    limit_resolution,
+    load_image,
+    primary_face,
+)
 from preprocess_liveness import (
     _load_module,
     preprocess_antispoof_mn3,
@@ -47,6 +54,7 @@ MN3_ONNX = "models/anti-spoof-mn3/public/anti-spoof-mn3/anti-spoof-mn3.onnx"
 FIELDS = [
     "sample_id", "filename", "status", "n_faces", "det_score",
     "bbox_x", "bbox_y", "bbox_w", "bbox_h", "edge_margin_px", "img_h", "img_w",
+    "orig_h", "orig_w", "max_side",
     "minifas_v2_p0", "minifas_v2_p1", "minifas_v2_p2",
     "minifas_v1se_p0", "minifas_v1se_p1", "minifas_v1se_p2",
     "minifas_avg_p0", "minifas_avg_p1", "minifas_avg_p2", "minifas_pred_real",
@@ -99,11 +107,16 @@ class LivenessModels:
         return self.mn3.run(None, {self.mn3_in: x})[0][0]
 
 
-def score_image(models, detector, img):
-    """Kembalikan dict skor untuk satu gambar BGR (kolom sesuai FIELDS)."""
+def score_image(models, detector, img, orig_hw=None, max_side=0):
+    """Kembalikan dict skor untuk satu gambar BGR (kolom sesuai FIELDS).
+
+    img adalah gambar yang diproses (setelah batas resolusi); orig_hw ukuran asli (tinggi, lebar).
+    """
     row = {k: "" for k in FIELDS}
     h, w = img.shape[:2]
     row["img_h"], row["img_w"] = h, w
+    row["orig_h"], row["orig_w"] = orig_hw if orig_hw else (h, w)
+    row["max_side"] = max_side if max_side else "penuh"
     faces = detect_faces(img, detector)
     face, n = primary_face(faces)
     row["n_faces"] = n
@@ -174,9 +187,10 @@ def scripts_dirty():
         return None
 
 
-def write_meta(path, n_rows):
+def write_meta(path, n_rows, max_side=0):
     meta = {
         "dibuat": datetime.now().isoformat(timespec="seconds"),
+        "batas_resolusi_sisi_terpanjang_px": max_side if max_side else "penuh (tanpa batas)",
         "git_commit_skrip": git_commit(),
         "skrip_belum_di_commit": scripts_dirty(),
         "jumlah_baris": n_rows,
@@ -208,6 +222,8 @@ def main():
     ap.add_argument("--manifest")
     ap.add_argument("--root", default=".")
     ap.add_argument("--out")
+    ap.add_argument("--max_side", type=int, default=0,
+                    help="batasi sisi terpanjang gambar (px) sebelum pipeline; 0 = resolusi penuh")
     args = ap.parse_args()
     if not args.image and not (args.manifest and args.out):
         ap.error("gunakan --image, atau --manifest bersama --out")
@@ -216,7 +232,8 @@ def main():
     detector = create_detector()
 
     if args.image:
-        row = score_image(models, detector, load_image(args.image))
+        orig = load_image(args.image)
+        row = score_image(models, detector, limit_resolution(orig, args.max_side), orig.shape[:2], args.max_side)
         for k in FIELDS:
             print(f"{k:22s} {row[k]}")
         return
@@ -233,7 +250,9 @@ def main():
                 parts += [item["subject"], item["device_code"]]
             path = os.path.join(*parts, item["filename"])
             try:
-                row = score_image(models, detector, load_image(path))
+                orig = load_image(path)
+                row = score_image(models, detector, limit_resolution(orig, args.max_side),
+                                  orig.shape[:2], args.max_side)
             except Exception as e:
                 row = {k: "" for k in FIELDS}
                 row["status"] = f"error:load:{type(e).__name__}"
@@ -241,7 +260,7 @@ def main():
             writer.writerow(row)
             if i % 25 == 0 or i == len(items):
                 print(f"{i}/{len(items)} selesai")
-    write_meta(args.out + ".meta.json", len(items))
+    write_meta(args.out + ".meta.json", len(items), args.max_side)
     print("ditulis:", args.out, "dan", args.out + ".meta.json")
 
 
