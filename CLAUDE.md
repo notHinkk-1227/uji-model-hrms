@@ -124,7 +124,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 2. SELESAI 2026-11-08: `manifest.csv` (16 kolom, `scripts/buat_manifest.py`); model ponsel/OS/detail pengaturan tidak dicatat (penanda eksplisit).
 3. SELESAI 2026-11-08: Modul 5 `metrics.py` (uji `test_metrics.py` 32/32). Aturan threshold dan gagal deteksi: amandemen 4.
 4. SELESAI 2026-11-08: `recognition.py` (uji `test_pengenalan.py` 11/11). Uji "identitas berbeda" belum (tidak ada wajah kedua non-relawan).
-5. Evaluasi leave-one-subject-out pada skenario resolusi 640/1280/penuh (utama sementara 1280 = ASUMSI).
+5. SELESAI 2026-11-08: evaluasi LOSO 640/1280/penuh (results/liveness, results/recognition; ringkasan di log). Embedding .npz tidak ikut Git.
 6. (crop anti-spoof-mn3 SELESAI 2026-11-08, amandemen 5) Makna indeks MiniFASNet; lisensi WIDER Face dan BlazeFace (detektor produksi).
 7. Laporan akhir + analisis kelayakan integrasi Frappe (desain saja).
 
