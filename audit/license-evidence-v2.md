@@ -62,3 +62,14 @@ Perubahan dari revisi 1: CDCN dikeluarkan; face-antispoof-onnx ditambahkan; bukt
 - README resmi menyatakan kode hanya untuk tujuan riset dan penggunaan komersial tidak diizinkan. https://github.com/ZitongYu/CDCN
 - Repo tidak memiliki Releases dan bobot RGB siap pakai tidak ditemukan; kode membaca data OULU-NPU olahan (`.dat`). Isu GitHub (2021-2022) melaporkan kesulitan mendapatkan berkas olahan dan akses dataset. https://github.com/zitongyu/cdcn/issues/44
 - Status: TIDAK DILANJUTKAN.
+
+## Pembaruan 9 November 2026 (detektor; rincian di logs/experiment-log.md)
+
+- WIDER Face: situs resmi gagal dibuka (sertifikat TLS tidak cocok; pemeriksaan tidak dilewati). Kartu dataset Hugging Face organisasi CUHK-CSE: "cc-by-nc-nd-4.0" (CC BY-NC-ND 4.0 International) [S, lebih dekat ke pemilik]. https://huggingface.co/datasets/CUHK-CSE/wider_face/blob/main/README.md
+- BlazeFace short-range: model card resmi Google ("MediaPipe BlazeFace Model Card (Short Range)", tanggal 9 Juni 2021, SHA-256 PDF cd335c06...f758) dibaca langsung [V]:
+  - "LICENSED UNDER Apache License, Version 2.0".
+  - Data latih: "consented images of people using a mobile AR application captured with smartphone cameras"; data tidak dirilis.
+  - Out-of-scope: "Any form of surveillance or identity recognition is explicitly out of scope and not enabled by this technology"; "not intended for human life-critical decisions".
+  - Syarat input: sisi kotak wajah >= 20% sisi gambar; roll/pitch <= 45 derajat; >= 70% kotak di dalam gambar; jarak <= 2 m; terutama kamera depan.
+  - Keluaran 6 titik (dua mata, ujung hidung, mulut, dua tragion), bukan 5 titik ArcFace (tanpa dua sudut mulut).
+  - https://storage.googleapis.com/mediapipe-assets/MediaPipe%20BlazeFace%20Model%20Card%20(Short%20Range).pdf

@@ -78,3 +78,11 @@ Intel i7-11800H (8 core/16 thread), RAM 15,7 GB, RTX 3060 Laptop, Windows 11, Gi
 - #6: dataset latih bobot ONNX OpenCV Zoo.
 - Detektor: lisensi WIDER Face di situs resmi; model card BlazeFace Google.
 - Dataset evaluasi publik: syarat akses dan lisensi masing-masing belum dibaca; akses OULU-NPU dilaporkan bermasalah.
+
+## Pembaruan 9 November 2026: detektor
+
+- YuNet: data latih WIDER Face berlisensi CC BY-NC-ND 4.0 menurut kartu dataset CUHK-CSE [S]; status tetap TERTAHAN-LISENSI untuk produksi.
+- BlazeFace short-range: bobot Apache-2.0 [V: model card resmi]; data latih gambar berpersetujuan milik Google [V klaim sumber; tidak dirilis]. Dua catatan untuk kelayakan:
+  1. Model card menyatakan "identity recognition" di luar cakupan. Ini pernyataan cakupan pemakaian, bukan syarat lisensi Apache-2.0; tafsir hukum untuk pemakaian sebagai detektor sebelum pengenalan wajah perlu dikonfirmasi [T].
+  2. Keluaran 6 titik tidak sama dengan 5 titik ArcFace (dua sudut mulut tidak ada), sehingga alignment AuraFace memerlukan penyesuaian atau landmark lain (mis. FaceMesh) dan harus diuji ulang [T].
+- Status BlazeFace: kandidat detektor produksi, BELUM DIUJI pada pipeline ini.
