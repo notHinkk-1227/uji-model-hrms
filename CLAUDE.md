@@ -77,7 +77,7 @@ scripts/          lihat di bawah
 - `common.py` juga berisi `crop_to_3x4` (potong tengah tepat 3:4 sebelum pipeline; amandemen 2), diuji `test_potong34.py`.
 - `benchmark_latency.py`: latensi (median, p95) dan memori CPU; `test_modul1.py`, `test_warna.py`,
   `test_resolusi.py`: uji kode; `smoke_*.py`: smoke test bobot.
-- `rename_foto.py`, `inventaris_data.py`, `periksa_data.py`: penataan dan pemeriksaan administratif data.
+- `rename_foto.py`, `inventaris_data.py`, `periksa_data.py`, `buat_manifest.py`: penataan, pemeriksaan administratif, dan manifest.
 
 Perintah umum (dari akar proyek, venv aktif): `python scripts/infer_liveness.py --image JALUR [--max_side 1280]`,
 `python scripts/benchmark_latency.py --image JALUR --threads 1 --repeat 100 --out results/_uji/x.json`.
@@ -119,7 +119,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 ## Status dan langkah berikutnya (urut)
 
 1. SELESAI 2026-11-08: `periksa_data.py`; persetujuan relawan dikonfirmasi; amandemen 2 (3:4) dan 3 (enrollment).
-2. Kumpulkan model ponsel dan OS tiap relawan; buat `manifest.csv` (16 kolom).
+2. SELESAI 2026-11-08: `manifest.csv` (16 kolom, `scripts/buat_manifest.py`); model ponsel/OS/detail pengaturan tidak dicatat (penanda eksplisit).
 3. Modul 5: metrik (APCER/BPCER/ACER/AUC, FAR/FRR, CI Clopper-Pearson, perbandingan berpasangan), diuji dengan data tiruan berlabel.
 4. Modul pengenalan wajah: alignment (verifikasi templat ArcFace dari kode resmi insightface), embedding, cosine.
 5. Evaluasi leave-one-subject-out pada skenario resolusi 640/1280/penuh (utama sementara 1280 = ASUMSI).

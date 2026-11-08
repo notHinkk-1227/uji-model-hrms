@@ -201,3 +201,9 @@
 - Peneliti memutuskan enrollment dipakai apa adanya (tidak diambil ulang); 18 foto raw yang identik dengan enrollment dikeluarkan dari probe. Alasan peneliti: foto berperan sebagai pendaftaran sehingga dapat diterima. Diputuskan sebelum model pengenalan dijalankan.
 - Rincian dan keterbatasan (sesi sama, sebagian redup, hash hanya salinan persis): reports/amandemen-protokol-3.md. Probe 62, genuine 62, impostor 186, batas FAR sekitar 1,6%.
 - CLAUDE.md dan PRD diperbarui (status langkah 1, angka batas FAR 1,7% -> 1,6%).
+
+## 2026-11-08 - manifest.csv 16 kolom dibuat
+- scripts/buat_manifest.py (hanya membaca nama berkas) -> datasets/liveness/internal/manifest.csv (tidak ikut Git): 160 baris, 16 kolom, header sama dengan header lama (sebelumnya hanya header). Semua jalur root/subject/device_code/filename ada; tidak ada sel kosong. Per relawan: real 10+10, print 5+5, screen 5+5 (terang+redup).
+- Keterangan peneliti: semua pengaturan diatur sesuai protokol tetapi detailnya tidak dicatat; semua foto diambil pada hari yang sama; model ponsel dan OS belum ditanyakan.
+- Maka: device_model = inisial samaran HP-S01..HP-S04; os = tidak_dicatat; mirror_setting, lux_catatan, night_mode, screen_brightness (screen) = sesuai_protokol_tidak_dicatat; attack_display = cetak_tidak_dicatat / layar_tidak_dicatat; session = sesi-1; pose = frontal (protokol).
+- Keterbatasan: tanpa model ponsel, OS, lux, dan jenis layar, hasil tidak dapat dikaitkan dengan karakteristik perangkat atau penampil serangan; satu relawan = satu perangkat sehingga pengaruh orang dan ponsel tidak terpisahkan (protokol bagian 2).
