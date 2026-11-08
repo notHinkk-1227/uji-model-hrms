@@ -256,6 +256,22 @@ def recognition_from_npz(path):
     return {"sumber_embedding": path, "status_deteksi": dict(Counter(meta["status"])), "model": hasil}
 
 
+def jejak_embed(threads):
+    """Jejak reproduksibilitas (aturan 6): commit kode, status kode, versi pustaka, hash bobot, konfigurasi."""
+    import cv2
+    import onnxruntime as ort
+    from common import DETECTOR_CONFIG
+    from infer_liveness import git_commit, scripts_dirty, sha256_file
+    from recognition import AURAFACE_ONNX, BUFFALO_ONNX, SFACE_ONNX
+    return {"git_commit_skrip": git_commit(), "skrip_belum_di_commit": scripts_dirty(), "threads": threads,
+            "versi": {"python": sys.version.split()[0], "numpy": np.__version__, "onnxruntime": ort.__version__,
+                      "opencv": cv2.__version__},
+            "detektor": DETECTOR_CONFIG,
+            "berkas_model_sha256": {"auraface": sha256_file(AURAFACE_ONNX), "buffalo_l": sha256_file(BUFFALO_ONNX),
+                                    "sface": sha256_file(SFACE_ONNX)},
+            "templat": "rata-rata embedding enrollment ternormalisasi L2, lalu L2 (amandemen 4)"}
+
+
 def main():
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     sp = ap.add_subparsers(dest="cmd", required=True)
@@ -267,7 +283,7 @@ def main():
     if args.cmd == "embed":
         data, emb = embed_all(args.max_side, args.threads)
         meta = {**data, "models": list(emb), "max_side": args.max_side or "penuh",
-                "dibuat": datetime.now().isoformat(timespec="seconds")}
+                "dibuat": datetime.now().isoformat(timespec="seconds"), **jejak_embed(args.threads)}
         np.savez(args.out, meta=json.dumps(meta), **emb)
         print("ditulis:", args.out, "| status:", dict(Counter(data["status"])))
         return
