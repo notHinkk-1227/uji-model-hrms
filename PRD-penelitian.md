@@ -60,7 +60,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 | K4 | Benchmark latensi dan memori | SELESAI (awal) | median/p95 per model; kondisi laptop tercatat |
 | K5 | Penataan dan pemeriksaan data | SELESAI | `periksa_data.py`: duplikat, rasio, orientasi terlaporkan |
 | K6 | Manifest 16 kolom | SELESAI | 160 baris; detail perangkat/pengaturan diberi penanda "tidak_dicatat" |
-| K7 | Modul metrik (APCER dll., CI, berpasangan) | BELUM | lolos uji pada data tiruan berlabel dengan jawaban diketahui |
+| K7 | Modul metrik (APCER dll., CI, berpasangan) | SELESAI | lolos uji pada data tiruan berlabel dengan jawaban diketahui |
 | K8 | Modul pengenalan (alignment, embedding, cosine) | BELUM | templat ArcFace dari kode resmi; uji pasangan sama/beda |
 | K9 | Evaluasi penuh (LOSO x skenario resolusi) | BELUM | CSV skor mentah + tabel metrik; tanpa threshold pada data uji |
 | K10 | Laporan akhir + rekomendasi + kelayakan Frappe | BELUM | memenuhi "definisi selesai" di bawah |

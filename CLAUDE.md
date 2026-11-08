@@ -120,7 +120,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 
 1. SELESAI 2026-11-08: `periksa_data.py`; persetujuan relawan dikonfirmasi; amandemen 2 (3:4) dan 3 (enrollment).
 2. SELESAI 2026-11-08: `manifest.csv` (16 kolom, `scripts/buat_manifest.py`); model ponsel/OS/detail pengaturan tidak dicatat (penanda eksplisit).
-3. Modul 5: metrik (APCER/BPCER/ACER/AUC, FAR/FRR, CI Clopper-Pearson, perbandingan berpasangan), diuji dengan data tiruan berlabel.
+3. SELESAI 2026-11-08: Modul 5 `metrics.py` (uji `test_metrics.py` 32/32). Belum diputuskan: aturan threshold pengenalan, perlakuan gagal deteksi.
 4. Modul pengenalan wajah: alignment (verifikasi templat ArcFace dari kode resmi insightface), embedding, cosine.
 5. Evaluasi leave-one-subject-out pada skenario resolusi 640/1280/penuh (utama sementara 1280 = ASUMSI).
 6. Verifikasi asumsi crop anti-spoof-mn3; makna indeks MiniFASNet; lisensi WIDER Face dan BlazeFace (detektor produksi).
