@@ -38,7 +38,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 
 ## 4. Data dan protokol
 
-- Protokol: `reports/protokol-evaluasi-v1.0.md` (dibekukan) + `reports/amandemen-protokol-1.md` + `reports/amandemen-protokol-2.md`.
+- Protokol: `reports/protokol-evaluasi-v1.0.md` (dibekukan) + amandemen 1, 2, 3 (`reports/amandemen-protokol-*.md`).
 - Relawan: 4 (S01-S04), ponsel masing-masing, kamera depan, foto rasio 3:4 JPEG, cahaya terang/redup diatur fisik.
 - Kelas: real, print (foto cetak), screen (foto di layar). Replay dan uji stres tidak dikumpulkan.
 - Jumlah: per relawan real 20 (10 terang, 10 redup), print 10, screen 10; enrollment 5. Total 160 foto liveness + 20 enrollment.
@@ -73,8 +73,9 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 - Data latih bobot MiniFASNet dan face-antispoof-onnx tidak dinyatakan; lisensi WIDER Face (YuNet) belum dibaca dari situs resmi.
 - Templat 5 titik ArcFace dan implementasi `norm_crop` belum dibaca dari kode resmi insightface.
 - Resolusi dan format unggahan aplikasi HRMS belum ditentukan.
-- Kebocoran enrollment -> probe (foto sama) dan enrollment sesi yang sama dengan probe: bias optimistis pada pengenalan.
-- Data kecil (4 relawan): hasil = perbandingan relatif; tidak ada analisis demografis; FAR di bawah ~1,7% tidak dapat dibuktikan.
+- Kebocoran enrollment -> probe: 18 dari 20 foto identik dikeluarkan dari probe (62 probe tersisa; `reports/amandemen-protokol-3.md`).
+  Enrollment sesi yang sama dengan probe dan sebagian redup: bias optimistis pada pengenalan.
+- Data kecil (4 relawan): hasil = perbandingan relatif; tidak ada analisis demografis; FAR di bawah ~1,6% (3/186) tidak dapat dibuktikan.
 - Akses dataset publik (mis. OULU-NPU) dilaporkan bermasalah; tidak diandalkan.
 - Liveness pasif RGB tidak melindungi dari injeksi kamera virtual atau topeng 3D.
 

@@ -196,3 +196,8 @@
 - Hash hanya menangkap salinan persis; foto yang hampir sama (mis. jepretan beruntun) tidak terdeteksi [T].
 - Rasio dan orientasi per relawan sama dengan entri sebelumnya (30 bukan 3:4: S02 print 10, S03 print 10 + screen 10).
 - scripts/periksa_data.py di-commit (versi yang menghasilkan angka ini).
+
+## 2026-11-08 - Keputusan "B" final (amandemen 3)
+- Peneliti memutuskan enrollment dipakai apa adanya (tidak diambil ulang); 18 foto raw yang identik dengan enrollment dikeluarkan dari probe. Alasan peneliti: foto berperan sebagai pendaftaran sehingga dapat diterima. Diputuskan sebelum model pengenalan dijalankan.
+- Rincian dan keterbatasan (sesi sama, sebagian redup, hash hanya salinan persis): reports/amandemen-protokol-3.md. Probe 62, genuine 62, impostor 186, batas FAR sekitar 1,6%.
+- CLAUDE.md dan PRD diperbarui (status langkah 1, angka batas FAR 1,7% -> 1,6%).

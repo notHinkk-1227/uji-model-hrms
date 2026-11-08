@@ -112,13 +112,14 @@ Spesifikasi preprocessing (rinci di `reports/spesifikasi-preprocessing-v2.md`; t
 4 relawan (S01-S04), ponsel masing-masing, kamera depan. Per relawan: real 20, print 10, screen 10 (replay dan
 uji stres TIDAK dikumpulkan; lihat amandemen-protokol-1.md) + enrollment 5. Foto sangat besar (sisi sampai
 ~6500 px); 30 foto bukan rasio 3:4; EXIF orientasi 5 dan 0 ditemukan. **Temuan: foto enrollment sama dengan
-sebagian foto real (kebocoran enrollment->probe)**; foto identik dikecualikan dari probe pengenalan (keputusan
-sementara "B"); enrollment umumnya sesi yang sama dengan probe (bias optimistis, harus dicatat).
+sebagian foto real (kebocoran enrollment->probe)**: 18 dari 20 identik; foto identik dikecualikan dari probe
+(keputusan "B", FINAL, `reports/amandemen-protokol-3.md`): 62 probe, 186 pasangan impostor. Enrollment sesi yang
+sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gambar dipotong 3:4 (amandemen 2).
 
 ## Status dan langkah berikutnya (urut)
 
-1. (Peneliti sedang menjalankan) `scripts/periksa_data.py`: duplikat enrollment-probe, rasio, orientasi.
-2. Konfirmasi persetujuan relawan; kumpulkan model ponsel dan OS tiap relawan; buat `manifest.csv` (16 kolom).
+1. SELESAI 2026-11-08: `periksa_data.py`; persetujuan relawan dikonfirmasi; amandemen 2 (3:4) dan 3 (enrollment).
+2. Kumpulkan model ponsel dan OS tiap relawan; buat `manifest.csv` (16 kolom).
 3. Modul 5: metrik (APCER/BPCER/ACER/AUC, FAR/FRR, CI Clopper-Pearson, perbandingan berpasangan), diuji dengan data tiruan berlabel.
 4. Modul pengenalan wajah: alignment (verifikasi templat ArcFace dari kode resmi insightface), embedding, cosine.
 5. Evaluasi leave-one-subject-out pada skenario resolusi 640/1280/penuh (utama sementara 1280 = ASUMSI).
@@ -126,4 +127,4 @@ sementara "B"); enrollment umumnya sesi yang sama dengan probe (bias optimistis,
 7. Laporan akhir + analisis kelayakan integrasi Frappe (desain saja).
 
 Batas klaim di laporan: serangan cetak dan foto di layar saja (replay video tidak diuji); 4 relawan = perbandingan
-relatif, bukan estimasi akurasi populasi; FAR di bawah ~1,7% tidak dapat dibuktikan; angka latensi dari laptop pengembangan.
+relatif, bukan estimasi akurasi populasi; FAR di bawah ~1,6% (3/186) tidak dapat dibuktikan; angka latensi dari laptop pengembangan.
