@@ -234,3 +234,15 @@
 - scripts/test_evaluasi.py (data palsu, tanpa model, tanpa data relawan): 30/30 lolos, termasuk dua uji kebocoran (mengubah ekstrem data relawan uji tidak mengubah threshold lipatannya). Satu kegagalan di putaran pertama adalah harapan yang salah di skrip uji (lupa mengeluarkan probe gagal dari hitungan pasangan latih lipatan S01: benar 8/16, bukan 9/18); evaluasi.py tidak diubah.
 - Uji ujung-ke-ujung sub-perintah liveness dengan CSV palsu di scratchpad: JSON sah (inf/nan ditulis null); BPCER 1/8 dan AUC 0,875 sesuai hitungan tangan.
 - Belum teruji: sub-perintah embed (hanya dapat dijalankan pada data relawan); diperiksa lewat jumlah status pada run pertama.
+
+## 2026-11-08 - Run pertama data relawan: liveness skenario 1280
+- Perintah: python scripts/infer_liveness.py --manifest datasets/liveness/internal/manifest.csv --root datasets/liveness/internal/raw --max_side 1280 --out results/liveness/skor_1280.csv (26 detik); lalu python scripts/evaluasi.py liveness --scores results/liveness/skor_1280.csv --out results/liveness/metrik_1280.json. Kode commit 6a81568 (skrip_belum_di_commit = False).
+- Pipeline: 160/160 ok, 1 wajah per foto, skor deteksi min 0,889 (median 0,944), semua 960x1280 setelah potong 3:4; lebar kotak wajah 190-588 px; 2 foto real dengan wajah < 5 px dari tepi.
+- Aturan bawaan (hasil utama; CI Clopper-Pearson 95%, optimistis):
+  - MiniFASNet: BPCER 0/80 (0-4,5%); APCER print 16/40 = 40,0% (24,9-56,7); screen 7/40 = 17,5% (7,3-32,8); ACER 20,0%; AUC 0,995.
+  - face-antispoof-onnx: BPCER 4/80 = 5,0% (1,4-12,3); APCER print 17/40 = 42,5% (27,0-59,1); screen 14/40 = 35,0% (20,6-51,7); ACER 23,8%; AUC 0,878. S01: semua 20 serangan diterima.
+  - anti-spoof-mn3 (crop ASUMSI): BPCER 42/80 = 52,5% (41,0-63,8; S02 20/20 dan S04 20/20 real ditolak); APCER print 0/40; screen 9/40 = 22,5%; ACER 37,5%; AUC 0,812.
+- Tambahan EER-LOSO (ACER gabungan): MiniFASNet 8,1% (BPCER 7/80, APCER print 3/40, screen 0/40; threshold p1 0,82-0,93); face-antispoof-onnx 28,1% (threshold sangat berbeda antarlipatan: 0,50 vs 3,87-4,83); anti-spoof-mn3 44,4% (threshold p_real 0,002-0,022).
+- McNemar (aturan bawaan): MiniFAS vs facenox 23 vs 11, p 0,058; MiniFAS vs mn3 50 vs 22, p 0,0013; facenox vs mn3 40 vs 24, p 0,060 (p optimistis karena korelasi dalam relawan).
+- Catatan tafsir (BUKAN kesimpulan akhir): (1) dengan aturan bawaan tidak ada model yang menolak serangan dengan baik; (2) AUC MiniFASNet tinggi tetapi titik keputusan bawaan (argmax) terlalu longgar; (3) AUC gabungan dapat terpengaruh perbedaan pengaturan kamera antara foto real dan serangan (amandemen 2 bagian 2) [T]; (4) pola mn3 (semua real S02/S04 ditolak, threshold EER mendekati 0) konsisten dengan, tetapi tidak membuktikan, asumsi crop yang salah [T]; (5) 4 relawan: CI lebar.
+- Skenario 640 dan penuh, serta pengenalan, belum dijalankan.
