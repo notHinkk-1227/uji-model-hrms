@@ -63,7 +63,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 | K7 | Modul metrik (APCER dll., CI, berpasangan) | SELESAI | lolos uji pada data tiruan berlabel dengan jawaban diketahui |
 | K8 | Modul pengenalan (alignment, embedding, cosine) | SELESAI (uji identitas berbeda belum) | templat ArcFace dari kode resmi; uji pasangan sama/beda |
 | K9 | Evaluasi penuh (LOSO x skenario resolusi) | SELESAI 2026-11-08 (liveness + pengenalan, 640/1280/penuh) | CSV skor mentah + tabel metrik; tanpa threshold pada data uji |
-| K10 | Laporan akhir + rekomendasi + kelayakan Frappe | BELUM | memenuhi "definisi selesai" di bawah |
+| K10 | Laporan akhir + rekomendasi + kelayakan Frappe | DRAF 2026-11-09 (`reports/laporan-akhir.md`), menunggu tinjauan peneliti | memenuhi "definisi selesai" di bawah |
 
 ## 6. Asumsi, risiko, dan hal belum terverifikasi
 

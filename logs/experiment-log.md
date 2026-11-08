@@ -295,3 +295,10 @@
 - PDF model card short-range (SHA-256 cd335c06fc0de7807cd815a0777a697932598bcdb28fa98adaaabf847485f758, 6 halaman, tanggal 9 Juni 2021) diekstrak dengan pypdf ke scratchpad (tidak ikut repo).
 - Temuan [V]: bobot "Apache License, Version 2.0"; data latih "consented images" dari aplikasi AR ponsel (tidak dirilis); "identity recognition" dan pengawasan dinyatakan di luar cakupan; keluaran 6 titik (bukan 5 titik ArcFace); syarat wajah >= 20% sisi gambar, <= 2 m.
 - Dicatat di audit/license-evidence-v2.md dan audit/model-audit-v3.md (bagian pembaruan baru di akhir; isi lama tidak diubah). Implikasi: lisensi BlazeFace layak, tetapi pernyataan out-of-scope perlu tafsir hukum [T] dan alignment AuraFace perlu disesuaikan dan diuji [T]. BlazeFace belum diuji di pipeline ini.
+
+## 2026-11-09 - Draf laporan akhir (K10)
+- reports/laporan-akhir.md v1.0 (draf) ditulis dari metrik_*.json dan log; tidak ada eksperimen baru. Angka dicek ulang dari JSON (CI Clopper-Pearson) dan baris lisensi dicocokkan dengan audit/model-audit-v3.md (koreksi saat penulisan: mn3 MIT, buffalo_l tanpa klaim lisensi kode, facenox data latih [T]).
+- Isi keputusan (usulan, menunggu peneliti): liveness MiniFASNet = kandidat untuk pilot, BELUM layak produksi (aturan bawaan meloloskan 33-43% foto cetak; dengan threshold EER-LOSO ACER 8,1% pada 1280); pengenalan AuraFace = layak bersyarat; detektor produksi belum ada (BlazeFace belum diuji). Format foto usulan: 3:4, sisi terpanjang 1280.
+- Latensi pada laporan berasal dari benchmark awal 2026-11-05 (sebelum amandemen 2 dan 5); latensi pengenalan belum diukur.
+- Kelayakan Frappe: desain saja (layanan inferensi terpisah, data biometrik/UU PDP [T]).
+- Catatan: PRD berada di akar proyek (PRD-penelitian.md), bukan reports/ seperti tertulis di CLAUDE.md.
