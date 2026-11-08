@@ -1,7 +1,7 @@
 {
-  "dibuat": "2026-11-08T22:57:48",
+  "dibuat": "2026-11-08T23:14:17",
   "batas_resolusi_sisi_terpanjang_px": 1280,
-  "git_commit_skrip": "6a81568a51846610329197809f5ef23de838a2e6",
+  "git_commit_skrip": "a2b6ca8acfaed6075bddaded69d74e02375f28e8",
   "skrip_belum_di_commit": false,
   "jumlah_baris": 160,
   "versi": {
@@ -29,10 +29,10 @@
   "aturan_keputusan": {
     "minifasnet": "rata-rata softmax dua model; real bila argmax = indeks 1 (menurut kode asli)",
     "face_antispoof_onnx": "real bila logit_real - logit_spoof >= 0",
-    "anti_spoof_mn3": "real bila p_real > p_spoof"
+    "anti_spoof_mn3": "real bila p_spoof <= 0,4 (demo sumber, amandemen 5)"
   },
   "catatan": [
-    "Crop anti-spoof-mn3 adalah ASUMSI (persegi x1,5) dan belum diverifikasi.",
+    "Crop anti-spoof-mn3: kotak diperluas 1,1 x 1,05, INTER_CUBIC (kode sumber, amandemen 5); ketatnya kotak YuNet vs detektor asli [T].",
     "Makna indeks keluaran 0 dan 2 MiniFASNet belum diverifikasi.",
     "Satu detektor YuNet (BGR) dipakai bersama; wajah terbesar dipilih."
   ]

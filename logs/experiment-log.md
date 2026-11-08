@@ -255,3 +255,10 @@
 - Warna dan normalisasi [V]: BGR->RGB, x/255 lalu (x - mean)/std dengan mean [0.5931, 0.4690, 0.4229], std [0.2471, 0.2214, 0.2157]; x255 = [151.24, 119.60, 107.84] dan [63.01, 56.46, 55.00], cocok dengan mean/scale dokumen OMZ yang kita pakai. Normalisasi kita benar.
 - Aturan keputusan [V]: demo menyatakan spoof bila p_spoof > 0,4 (--spoof_thresh bawaan 0,4, "makin rendah makin berorientasi spoof"). Aturan kita (real bila p_real > p_spoof, setara spoof bila p_spoof > 0,5) adalah usulan yang ditandai [T] di spesifikasi-preprocessing-v2.
 - Akibat: hasil anti-spoof-mn3 pada run 1280 (2026-11-08) memakai crop yang salah dan tidak boleh dipakai untuk kesimpulan. Koreksi kode menunggu keputusan peneliti.
+
+## 2026-11-08 - Liveness 1280 dijalankan ulang setelah amandemen 5
+- Kode commit a2b6ca8 (bersih). test_mn3.py 5/5 (kotak sama dengan hitungan tangan dari rumus demo; gambar sintetis membuktikan potongan tepat pada kotak, tidak persegi, tanpa padding); test_warna, test_modul1, test_potong34 tetap lolos.
+- Run ulang: perintah sama dengan run pertama; hasil menimpa results/liveness/skor_1280.csv dan metrik_1280.json (versi lama tetap di commit e5775d3). Perbandingan dengan run lama: 33/36 kolom identik untuk 160 sampel; hanya mn3_p_real, mn3_p_spoof (160) dan mn3_pred_real (9) berubah. MiniFASNet dan face-antispoof-onnx tidak berubah (ACER 20,0% dan 23,8%).
+- anti-spoof-mn3 (preprocessing dan aturan sesuai sumber): BPCER 45/80 = 56,2% (44,7-67,3; S02 20/20 dan S04 20/20 real ditolak, S01 2/20, S03 3/20); APCER print 0/40 (0-8,8); screen 7/40 = 17,5% (7,3-32,8); ACER 36,9%; AUC 0,835. EER-LOSO: threshold p_real 0,002-0,013, ACER 42,5%.
+- Tafsir: koreksi crop bukan penyebab utama kinerja buruk mn3; penolakan seluruh foto real dua relawan tetap terjadi. Penyebab [T] (mis. pergeseran domain dari CelebA-Spoof ke kamera ponsel relawan; README sumber sendiri melaporkan ACER 16,3% lintas-dataset pada LCC_FASD). Tidak diselidiki lebih jauh tanpa keputusan peneliti.
+- McNemar (aturan bawaan): MiniFAS vs facenox 23 vs 11, p 0,058; MiniFAS vs mn3 52 vs 23, p 0,0011; facenox vs mn3 42 vs 25, p 0,050.

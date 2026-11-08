@@ -48,3 +48,6 @@ Yang harus dikonfirmasi sebelum evaluasi pengenalan: nilai lima titik templat Ar
 - Normalisasi AuraFace dan buffalo_l [V]: aturan `arcface_onnx.py` (commit sama, SHA-256 89041694a9c2ec9f84c506797a810b5dc95ab57f89407de541de62a6fea981a9):
   8 node pertama kedua graf tidak memuat Sub/Mul -> mean = std = 127,5; `blobFromImages(..., swapRB=True)` -> RGB.
 - Urutan landmark YuNet sama dengan urutan templat [V pada face.jpg]: mata kiri-gambar, mata kanan-gambar, hidung, mulut kiri-gambar, mulut kanan-gambar.
+- anti-spoof-mn3 [V] (amandemen 5; kprokofi/light-weight-face-anti-spoofing commit 82a2c26): crop kotak detektor diperluas
+  lebar 1,1 dan tinggi 1,05 (tidak persegi, tanpa padding), resize 128x128 INTER_CUBIC, RGB, mean/std sumber = mean/scale OMZ;
+  aturan keputusan demo: spoof bila p_spoof > 0,4. Menggantikan baris "Crop [T]" dan "Aturan keputusan" pada tabel di atas.

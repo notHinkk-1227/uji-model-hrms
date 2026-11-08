@@ -737,11 +737,11 @@
       },
       "utama_aturan_bawaan": {
         "bpcer": {
-          "k": 42,
+          "k": 45,
           "n": 80,
-          "nilai": 0.525,
-          "ci_bawah": 0.41022784137675716,
-          "ci_atas": 0.6378664183228475
+          "nilai": 0.5625,
+          "ci_bawah": 0.4469975713881681,
+          "ci_atas": 0.6732360465662208
         },
         "apcer": {
           "print": {
@@ -752,38 +752,38 @@
             "ci_atas": 0.08809730287880235
           },
           "screen": {
-            "k": 9,
+            "k": 7,
             "n": 40,
-            "nilai": 0.225,
-            "ci_bawah": 0.10839663898405688,
-            "ci_atas": 0.3845116773034222
+            "nilai": 0.175,
+            "ci_bawah": 0.07338272935207346,
+            "ci_atas": 0.32779013336158513
           }
         },
         "apcer_terburuk": "screen",
-        "acer": 0.375,
+        "acer": 0.36875,
         "confusion": {
           "print": {
             "diterima_real": 0,
             "ditolak": 40
           },
           "real": {
-            "diterima_real": 38,
-            "ditolak": 42
+            "diterima_real": 35,
+            "ditolak": 45
           },
           "screen": {
-            "diterima_real": 9,
-            "ditolak": 31
+            "diterima_real": 7,
+            "ditolak": 33
           }
         }
       },
       "per_relawan": {
         "S01": {
           "bpcer": {
-            "k": 0,
+            "k": 2,
             "n": 20,
-            "nilai": 0.0,
-            "ci_bawah": 0.0,
-            "ci_atas": 0.1684334709830853
+            "nilai": 0.1,
+            "ci_bawah": 0.012348527170294776,
+            "ci_atas": 0.3169827140190823
           },
           "apcer": {
             "print": {
@@ -794,11 +794,11 @@
               "ci_atas": 0.3084971078187607
             },
             "screen": {
-              "k": 6,
+              "k": 5,
               "n": 10,
-              "nilai": 0.6,
-              "ci_bawah": 0.26237807660694334,
-              "ci_atas": 0.8784477418801726
+              "nilai": 0.5,
+              "ci_bawah": 0.18708602844739824,
+              "ci_atas": 0.8129139715526013
             }
           },
           "apcer_terburuk": "screen",
@@ -809,12 +809,12 @@
               "ditolak": 10
             },
             "real": {
-              "diterima_real": 20,
-              "ditolak": 0
+              "diterima_real": 18,
+              "ditolak": 2
             },
             "screen": {
-              "diterima_real": 6,
-              "ditolak": 4
+              "diterima_real": 5,
+              "ditolak": 5
             }
           }
         },
@@ -861,11 +861,11 @@
         },
         "S03": {
           "bpcer": {
-            "k": 2,
+            "k": 3,
             "n": 20,
-            "nilai": 0.1,
-            "ci_bawah": 0.012348527170294776,
-            "ci_atas": 0.3169827140190823
+            "nilai": 0.15,
+            "ci_bawah": 0.032070937185463555,
+            "ci_atas": 0.37892682654531384
           },
           "apcer": {
             "print": {
@@ -876,27 +876,27 @@
               "ci_atas": 0.3084971078187607
             },
             "screen": {
-              "k": 3,
+              "k": 2,
               "n": 10,
-              "nilai": 0.3,
-              "ci_bawah": 0.06673951117773483,
-              "ci_atas": 0.6524528500599971
+              "nilai": 0.2,
+              "ci_bawah": 0.02521072632683348,
+              "ci_atas": 0.5560954623076415
             }
           },
           "apcer_terburuk": "screen",
-          "acer": 0.2,
+          "acer": 0.175,
           "confusion": {
             "print": {
               "diterima_real": 0,
               "ditolak": 10
             },
             "real": {
-              "diterima_real": 18,
-              "ditolak": 2
+              "diterima_real": 17,
+              "ditolak": 3
             },
             "screen": {
-              "diterima_real": 3,
-              "ditolak": 7
+              "diterima_real": 2,
+              "ditolak": 8
             }
           }
         },
@@ -945,11 +945,11 @@
       "per_cahaya": {
         "redup": {
           "bpcer": {
-            "k": 21,
+            "k": 24,
             "n": 40,
-            "nilai": 0.525,
-            "ci_bawah": 0.3612801352640398,
-            "ci_atas": 0.6848802933650135
+            "nilai": 0.6,
+            "ci_bawah": 0.43326705219327266,
+            "ci_atas": 0.7513500134122557
           },
           "apcer": {
             "print": {
@@ -960,27 +960,27 @@
               "ci_atas": 0.1684334709830853
             },
             "screen": {
-              "k": 6,
+              "k": 4,
               "n": 20,
-              "nilai": 0.3,
-              "ci_bawah": 0.1189315904057276,
-              "ci_atas": 0.5427891822762891
+              "nilai": 0.2,
+              "ci_bawah": 0.057333997050032254,
+              "ci_atas": 0.4366140029966684
             }
           },
           "apcer_terburuk": "screen",
-          "acer": 0.4125,
+          "acer": 0.4,
           "confusion": {
             "print": {
               "diterima_real": 0,
               "ditolak": 20
             },
             "real": {
-              "diterima_real": 19,
-              "ditolak": 21
+              "diterima_real": 16,
+              "ditolak": 24
             },
             "screen": {
-              "diterima_real": 6,
-              "ditolak": 14
+              "diterima_real": 4,
+              "ditolak": 16
             }
           }
         },
@@ -1026,64 +1026,64 @@
           }
         }
       },
-      "auc_gabungan": 0.8125,
+      "auc_gabungan": 0.83453125,
       "tambahan_eer_loso": {
         "lipatan": {
           "S01": {
-            "threshold": 0.0016980820219032466,
-            "auc_uji": 0.8225
+            "threshold": 0.001665083400439471,
+            "auc_uji": 0.83
           },
           "S02": {
-            "threshold": 0.015391381457448006,
-            "auc_uji": 1.0
+            "threshold": 0.012793411035090685,
+            "auc_uji": 0.9425
           },
           "S03": {
-            "threshold": 0.0030283554224297404,
-            "auc_uji": 0.9475
+            "threshold": 0.003099828027188778,
+            "auc_uji": 0.9775
           },
           "S04": {
-            "threshold": 0.02180088311433792,
-            "auc_uji": 0.88
+            "threshold": 0.011455020867288113,
+            "auc_uji": 1.0
           }
         },
         "metrik_gabungan": {
           "bpcer": {
-            "k": 31,
+            "k": 30,
             "n": 80,
-            "nilai": 0.3875,
-            "ci_bawah": 0.2805651331247715,
-            "ci_atas": 0.5030244574981004
+            "nilai": 0.375,
+            "ci_bawah": 0.269193169946794,
+            "ci_atas": 0.490354764407112
           },
           "apcer": {
             "print": {
-              "k": 4,
+              "k": 6,
               "n": 40,
-              "nilai": 0.1,
-              "ci_bawah": 0.02792541529421494,
-              "ci_atas": 0.23663739987609922
+              "nilai": 0.15,
+              "ci_bawah": 0.05710225815451661,
+              "ci_atas": 0.2983526668395756
             },
             "screen": {
-              "k": 20,
+              "k": 19,
               "n": 40,
-              "nilai": 0.5,
-              "ci_bawah": 0.33801781373721207,
-              "ci_atas": 0.6619821862627648
+              "nilai": 0.475,
+              "ci_bawah": 0.315119706634965,
+              "ci_atas": 0.6387198647359371
             }
           },
           "apcer_terburuk": "screen",
-          "acer": 0.44375,
+          "acer": 0.425,
           "confusion": {
             "print": {
-              "diterima_real": 4,
-              "ditolak": 36
+              "diterima_real": 6,
+              "ditolak": 34
             },
             "real": {
-              "diterima_real": 49,
-              "ditolak": 31
+              "diterima_real": 50,
+              "ditolak": 30
             },
             "screen": {
-              "diterima_real": 20,
-              "ditolak": 20
+              "diterima_real": 19,
+              "ditolak": 21
             }
           }
         }
@@ -1097,16 +1097,16 @@
       "p_value": 0.05761267291381972
     },
     "minifasnet_vs_anti_spoof_mn3": {
-      "a_benar_b_salah": 50,
-      "a_salah_b_benar": 22,
-      "p_value": 0.0012935849626762948
+      "a_benar_b_salah": 52,
+      "a_salah_b_benar": 23,
+      "p_value": 0.0010795155066662535
     },
     "face_antispoof_onnx_vs_anti_spoof_mn3": {
-      "a_benar_b_salah": 40,
-      "a_salah_b_benar": 24,
-      "p_value": 0.059941189567001917
+      "a_benar_b_salah": 42,
+      "a_salah_b_benar": 25,
+      "p_value": 0.04980011429472683
     }
   },
   "sumber_skor": "results/liveness/skor_1280.csv",
-  "dibuat": "2026-11-08T22:58:18"
+  "dibuat": "2026-11-08T23:14:39"
 }

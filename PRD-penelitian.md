@@ -69,7 +69,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 
 - Persetujuan relawan ditandatangani semua: SUDAH DIKONFIRMASI peneliti (8 November 2026).
 - Semua gambar dipotong tengah ke tepat 3:4 sebelum pipeline (`reports/amandemen-protokol-2.md`).
-- Crop anti-spoof-mn3: ASUMSI (persegi x1,5). Makna indeks keluaran 0 dan 2 MiniFASNet: belum diverifikasi.
+- Crop anti-spoof-mn3: terverifikasi dari kode sumber (amandemen 5); ketatnya kotak YuNet vs detektor asli [T]. Makna indeks keluaran 0 dan 2 MiniFASNet: belum diverifikasi.
 - Data latih bobot MiniFASNet dan face-antispoof-onnx tidak dinyatakan; lisensi WIDER Face (YuNet) belum dibaca dari situs resmi.
 - Templat 5 titik ArcFace dan `norm_crop`: terverifikasi dari kode resmi insightface (commit ffa12d3); SimilarityTransform skimage diganti Umeyama numpy (diuji).
 - Resolusi dan format unggahan aplikasi HRMS belum ditentukan.
