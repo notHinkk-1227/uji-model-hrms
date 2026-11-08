@@ -125,8 +125,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 3. SELESAI 2026-11-08: Modul 5 `metrics.py` (uji `test_metrics.py` 32/32). Aturan threshold dan gagal deteksi: amandemen 4.
 4. SELESAI 2026-11-08: `recognition.py` (uji `test_pengenalan.py` 11/11). Uji "identitas berbeda" belum (tidak ada wajah kedua non-relawan).
 5. SELESAI 2026-11-08: evaluasi LOSO 640/1280/penuh (results/liveness, results/recognition; ringkasan di log). Embedding .npz tidak ikut Git.
-6. (crop anti-spoof-mn3 SELESAI 2026-11-08, amandemen 5) Makna indeks MiniFASNet; lisensi WIDER Face dan BlazeFace (detektor produksi).
-6. SELESAI 2026-11-09 sejauh dapat diverifikasi: indeks MiniFASNet 0/2 tetap [T]; WIDER Face CC BY-NC-ND 4.0 [S]; BlazeFace Apache-2.0 [V] (belum diuji, 6 titik).
+6. SELESAI 2026-11-09 sejauh dapat diverifikasi (crop mn3 selesai 2026-11-08, amandemen 5): indeks MiniFASNet 0/2 tetap [T]; WIDER Face CC BY-NC-ND 4.0 [S]; BlazeFace Apache-2.0 [V] (belum diuji, 6 titik).
 7. DRAF 2026-11-09: `reports/laporan-akhir.md` (menunggu tinjauan peneliti).
 
 Batas klaim di laporan: serangan cetak dan foto di layar saja (replay video tidak diuji); 4 relawan = perbandingan
