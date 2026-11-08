@@ -218,3 +218,13 @@
 - Peneliti menyetujui (sebelum skor apa pun dilihat): (1) threshold pengenalan = EER pada lipatan latih LOSO; (2) liveness: aturan bawaan sebagai utama, EER lipatan latih + AUC sebagai tambahan; (3) gagal deteksi/gagal proses dihitung "ditolak" dan dilaporkan terpisah. Rincian: reports/amandemen-protokol-4.md.
 - Diperjelas saat penulisan: pasangan latih hanya melibatkan relawan latih sebagai probe DAN sebagai identitas yang diklaim (enrollment relawan uji tidak dipakai untuk threshold). Akibatnya lipatan latih hanya sekitar 90 pasangan impostor (koreksi atas perkiraan "sekitar 140" yang diucapkan asisten sebelumnya di percakapan).
 - Masih terbuka: cara menggabungkan 5 foto enrollment menjadi skor pasangan.
+
+## 2026-11-08 - Modul pengenalan wajah (recognition.py) lolos uji
+- Izin peneliti untuk membaca kode resmi insightface. Berkas diambil dengan curl ke scratchpad (bukan ke proyek), terkunci pada commit ffa12d315041c0505b077c7ff057ca914bb8dc7e (commit terakhir face_align.py, 2022-12-17): face_align.py SHA-256 a8b34ddd...d922; arcface_onnx.py SHA-256 89041694...81a9. Templat dan aturan normalisasi kini [V] (sebelumnya [S]). Tidak ada paket dipasang, tidak ada bobot diunduh.
+- skimage dan onnx tidak terpasang (tidak dipasang, aturan 7). Pengganti: (1) similarity_umeyama (numpy) untuk SimilarityTransform; (2) scripts/onnx_nodes.py, pembaca protobuf minimal untuk nama node.
+- onnx_nodes: 8 node pertama glintr100 dan w600k_r50 = Conv, PRelu, BatchNormalization, Conv, PRelu, Conv, Conv, Add (tanpa Sub/Mul) -> mean = std = 127,5 menurut aturan insightface.
+- scripts/recognition.py: align_arcface (Umeyama + warpAffine 112x112), embedding ArcFace via blobFromImages(1/127,5, mean 127,5, swapRB=True), SFace via cv2.FaceRecognizerSF (alignCrop + feature), L2-normalize, templat = rata-rata embedding ternormalisasi lalu L2 (keputusan peneliti), cosine.
+- scripts/test_pengenalan.py: 11/11 lolos. Umeyama memulihkan transformasi eksak (galat 5,7e-14) dan optimum kuadrat terkecil (0/2000 gangguan lebih baik); face.jpg (setelah potong 3:4): urutan landmark sesuai templat, RMS landmark ke templat 2,68 px; dimensi 512/512/128, norma 1, deterministik.
+- Informatif, identitas sama (face.jpg diubah; BUKAN pengukuran kinerja): diperkecil 0,5x auraface 0,925 / buffalo_l 0,973 / sface 0,942; JPEG 60: 0,956 / 0,977 / 0,985; dicerminkan: 0,851 / 0,951 / 0,959. Skala cosine berbeda antarmodel, jadi angka ini tidak dapat dibandingkan langsung antarmodel.
+- Keterbatasan uji: "identitas berbeda" tidak dapat diuji tanpa wajah kedua yang boleh dipakai (aturan 1).
+- Dokumen: spesifikasi-preprocessing-v2.md mendapat bagian "Pembaruan 8 November 2026" (tabel lama tidak diubah); CLAUDE.md dan PRD (K8) diperbarui.

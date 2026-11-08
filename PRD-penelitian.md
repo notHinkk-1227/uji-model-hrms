@@ -61,7 +61,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 | K5 | Penataan dan pemeriksaan data | SELESAI | `periksa_data.py`: duplikat, rasio, orientasi terlaporkan |
 | K6 | Manifest 16 kolom | SELESAI | 160 baris; detail perangkat/pengaturan diberi penanda "tidak_dicatat" |
 | K7 | Modul metrik (APCER dll., CI, berpasangan) | SELESAI | lolos uji pada data tiruan berlabel dengan jawaban diketahui |
-| K8 | Modul pengenalan (alignment, embedding, cosine) | BELUM | templat ArcFace dari kode resmi; uji pasangan sama/beda |
+| K8 | Modul pengenalan (alignment, embedding, cosine) | SELESAI (uji identitas berbeda belum) | templat ArcFace dari kode resmi; uji pasangan sama/beda |
 | K9 | Evaluasi penuh (LOSO x skenario resolusi) | BELUM | CSV skor mentah + tabel metrik; tanpa threshold pada data uji |
 | K10 | Laporan akhir + rekomendasi + kelayakan Frappe | BELUM | memenuhi "definisi selesai" di bawah |
 
@@ -71,7 +71,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 - Semua gambar dipotong tengah ke tepat 3:4 sebelum pipeline (`reports/amandemen-protokol-2.md`).
 - Crop anti-spoof-mn3: ASUMSI (persegi x1,5). Makna indeks keluaran 0 dan 2 MiniFASNet: belum diverifikasi.
 - Data latih bobot MiniFASNet dan face-antispoof-onnx tidak dinyatakan; lisensi WIDER Face (YuNet) belum dibaca dari situs resmi.
-- Templat 5 titik ArcFace dan implementasi `norm_crop` belum dibaca dari kode resmi insightface.
+- Templat 5 titik ArcFace dan `norm_crop`: terverifikasi dari kode resmi insightface (commit ffa12d3); SimilarityTransform skimage diganti Umeyama numpy (diuji).
 - Resolusi dan format unggahan aplikasi HRMS belum ditentukan.
 - Kebocoran enrollment -> probe: 18 dari 20 foto identik dikeluarkan dari probe (62 probe tersisa; `reports/amandemen-protokol-3.md`).
   Enrollment sesi yang sama dengan probe dan sebagian redup: bias optimistis pada pengenalan.

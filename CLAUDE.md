@@ -104,7 +104,7 @@ Spesifikasi preprocessing (rinci di `reports/spesifikasi-preprocessing-v2.md`; t
 - anti-spoof-mn3: RGB, (x - mean)/scale (mean 151.2405/119.5950/107.8395; scale 63.0105/56.4570/55.0035),
   128x128; indeks 0 = real. **Crop = ASUMSI (belum diverifikasi).**
 - AuraFace dan buffalo_l: 112x112, alignment 5 landmark (templat ArcFace), RGB, (x-127,5)/127,5, 512-d, L2-normalize
-  [S: kode insightface via salinan; nilai templat belum dibaca]. SFace: alignCrop OpenCV, RGB 0-255 mentah, 128-d.
+  [V: kode resmi insightface commit ffa12d3, dibaca 2026-11-08; mean/std 127,5 dari node graf]. SFace: alignCrop OpenCV, RGB 0-255 mentah, 128-d.
 - YuNet: landmark di kolom 4-13, skor kolom 14; gagal pada wajah > ~510 px sehingga deteksi dilakukan pada salinan 640 px.
 
 ## Data (hanya ringkasan, jangan dibuka)
@@ -121,7 +121,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 1. SELESAI 2026-11-08: `periksa_data.py`; persetujuan relawan dikonfirmasi; amandemen 2 (3:4) dan 3 (enrollment).
 2. SELESAI 2026-11-08: `manifest.csv` (16 kolom, `scripts/buat_manifest.py`); model ponsel/OS/detail pengaturan tidak dicatat (penanda eksplisit).
 3. SELESAI 2026-11-08: Modul 5 `metrics.py` (uji `test_metrics.py` 32/32). Aturan threshold dan gagal deteksi: amandemen 4.
-4. Modul pengenalan wajah: alignment (verifikasi templat ArcFace dari kode resmi insightface), embedding, cosine.
+4. SELESAI 2026-11-08: `recognition.py` (uji `test_pengenalan.py` 11/11). Uji "identitas berbeda" belum (tidak ada wajah kedua non-relawan).
 5. Evaluasi leave-one-subject-out pada skenario resolusi 640/1280/penuh (utama sementara 1280 = ASUMSI).
 6. Verifikasi asumsi crop anti-spoof-mn3; makna indeks MiniFASNet; lisensi WIDER Face dan BlazeFace (detektor produksi).
 7. Laporan akhir + analisis kelayakan integrasi Frappe (desain saja).

@@ -38,3 +38,13 @@ Catatan smoke test anti-spoof-mn3: pada input acak model menghasilkan [0.983, 0.
 | Pasca-proses | L2-normalize lalu cosine similarity | sama | sama (OpenCV `match` mendukung cosine) |
 
 Yang harus dikonfirmasi sebelum evaluasi pengenalan: nilai lima titik templat ArcFace dan implementasi `norm_crop` dari kode resmi insightface (hanya bagian kode, tanpa bobot); verifikasi empiris bahwa AuraFace dan buffalo_l menghasilkan kemiripan tinggi untuk dua foto orang yang sama dan rendah untuk orang berbeda (dengan foto uji non-biometrik atau relawan setelah persetujuan).
+
+## Pembaruan 8 November 2026 (pengenalan; isi tabel di atas tidak diubah)
+
+- Templat ArcFace dan `norm_crop` [V]: kode resmi insightface commit ffa12d315041c0505b077c7ff057ca914bb8dc7e
+  (`python-package/insightface/utils/face_align.py`, SHA-256 a8b34ddd06716f5ca7e7501415cbd3789ccbce18db9e557b35e537695290d922).
+  Templat `[[38.2946, 51.6963], [73.5318, 51.5014], [56.0252, 71.7366], [41.5493, 92.3655], [70.7299, 92.2041]]`;
+  SimilarityTransform (skimage) lalu `cv2.warpAffine` 112x112, borderValue 0. Implementasi kita: Umeyama numpy (skimage tidak terpasang), diuji.
+- Normalisasi AuraFace dan buffalo_l [V]: aturan `arcface_onnx.py` (commit sama, SHA-256 89041694a9c2ec9f84c506797a810b5dc95ab57f89407de541de62a6fea981a9):
+  8 node pertama kedua graf tidak memuat Sub/Mul -> mean = std = 127,5; `blobFromImages(..., swapRB=True)` -> RGB.
+- Urutan landmark YuNet sama dengan urutan templat [V pada face.jpg]: mata kiri-gambar, mata kanan-gambar, hidung, mulut kiri-gambar, mulut kanan-gambar.
