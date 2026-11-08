@@ -228,3 +228,9 @@
 - Informatif, identitas sama (face.jpg diubah; BUKAN pengukuran kinerja): diperkecil 0,5x auraface 0,925 / buffalo_l 0,973 / sface 0,942; JPEG 60: 0,956 / 0,977 / 0,985; dicerminkan: 0,851 / 0,951 / 0,959. Skala cosine berbeda antarmodel, jadi angka ini tidak dapat dibandingkan langsung antarmodel.
 - Keterbatasan uji: "identitas berbeda" tidak dapat diuji tanpa wajah kedua yang boleh dipakai (aturan 1).
 - Dokumen: spesifikasi-preprocessing-v2.md mendapat bagian "Pembaruan 8 November 2026" (tabel lama tidak diubah); CLAUDE.md dan PRD (K8) diperbarui.
+
+## 2026-11-08 - Modul 6 (evaluasi.py) lolos uji data palsu
+- scripts/evaluasi.py, tiga sub-perintah: liveness (metrik dari CSV skor infer_liveness + manifest), embed (embedding probe dan enrollment, tiga model, satu skenario resolusi, ke .npz), recognition (pasangan, templat rata-rata, threshold EER LOSO, FAR/FRR). Aturan sesuai amandemen 2-4: gagal = ditolak (skor -inf untuk AUC), sampel gagal tidak ikut menentukan threshold, pasangan latih hanya relawan latih sebagai probe dan klaim, sampel manifest tanpa skor menghentikan proses.
+- scripts/test_evaluasi.py (data palsu, tanpa model, tanpa data relawan): 30/30 lolos, termasuk dua uji kebocoran (mengubah ekstrem data relawan uji tidak mengubah threshold lipatannya). Satu kegagalan di putaran pertama adalah harapan yang salah di skrip uji (lupa mengeluarkan probe gagal dari hitungan pasangan latih lipatan S01: benar 8/16, bukan 9/18); evaluasi.py tidak diubah.
+- Uji ujung-ke-ujung sub-perintah liveness dengan CSV palsu di scratchpad: JSON sah (inf/nan ditulis null); BPCER 1/8 dan AUC 0,875 sesuai hitungan tangan.
+- Belum teruji: sub-perintah embed (hanya dapat dijalankan pada data relawan); diperiksa lewat jumlah status pada run pertama.

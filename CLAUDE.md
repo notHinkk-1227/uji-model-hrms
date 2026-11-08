@@ -75,6 +75,7 @@ scripts/          lihat di bawah
 - `preprocess_liveness.py`: preprocessing per model liveness (memakai fungsi crop repo sumber langsung).
 - `infer_liveness.py`: skor mentah tiga model liveness ke CSV + `.meta.json` (opsi `--max_side`, `--manifest`).
 - `common.py` juga berisi `crop_to_3x4` (potong tengah tepat 3:4 sebelum pipeline; amandemen 2), diuji `test_potong34.py`.
+- `metrics.py`, `recognition.py`, `evaluasi.py` (liveness | embed | recognition): metrik, pengenalan, evaluasi LOSO; diuji `test_metrics.py`, `test_pengenalan.py`, `test_evaluasi.py`.
 - `benchmark_latency.py`: latensi (median, p95) dan memori CPU; `test_modul1.py`, `test_warna.py`,
   `test_resolusi.py`: uji kode; `smoke_*.py`: smoke test bobot.
 - `rename_foto.py`, `inventaris_data.py`, `periksa_data.py`, `buat_manifest.py`: penataan, pemeriksaan administratif, dan manifest.
