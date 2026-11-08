@@ -11,6 +11,8 @@ Skor yang disimpan (aturan keputusan sesuai reports/spesifikasi-preprocessing-v2
   MiniFASNet            softmax 3 kelas per model, rata-rata dua model, real bila argmax = indeks 1
   face-antispoof-onnx   dua logit [real, spoof], diff = real - spoof, real bila diff >= 0
   anti-spoof-mn3        dua probabilitas [real, spoof], real bila p_real > p_spoof
+Sebelum pipeline, gambar dipotong tengah ke tepat 3:4 lalu dibatasi resolusinya (--max_side);
+lihat reports/amandemen-protokol-2.md. Kolom crop34_* mencatat potongan pada gambar asli.
 Tidak ada threshold yang disetel di sini. Waktu proses sengaja tidak diukur (modul latensi terpisah).
 """
 import argparse
@@ -31,6 +33,7 @@ import torch.nn.functional as F
 from common import (
     DETECTOR_CONFIG,
     create_detector,
+    crop_to_3x4,
     detect_faces,
     limit_resolution,
     load_image,
@@ -54,7 +57,7 @@ MN3_ONNX = "models/anti-spoof-mn3/public/anti-spoof-mn3/anti-spoof-mn3.onnx"
 FIELDS = [
     "sample_id", "filename", "status", "n_faces", "det_score",
     "bbox_x", "bbox_y", "bbox_w", "bbox_h", "edge_margin_px", "img_h", "img_w",
-    "orig_h", "orig_w", "max_side",
+    "orig_h", "orig_w", "crop34_x", "crop34_y", "crop34_w", "crop34_h", "max_side",
     "minifas_v2_p0", "minifas_v2_p1", "minifas_v2_p2",
     "minifas_v1se_p0", "minifas_v1se_p1", "minifas_v1se_p2",
     "minifas_avg_p0", "minifas_avg_p1", "minifas_avg_p2", "minifas_pred_real",
@@ -105,6 +108,14 @@ class LivenessModels:
     def mn3_probs(self, img, bbox):
         x = preprocess_antispoof_mn3(img, bbox)
         return self.mn3.run(None, {self.mn3_in: x})[0][0]
+
+
+def score_original(models, detector, orig, max_side=0):
+    """Pipeline lengkap dari gambar asli: potong 3:4 (amandemen 2) -> batas resolusi -> score_image."""
+    cut, info = crop_to_3x4(orig)
+    row = score_image(models, detector, limit_resolution(cut, max_side), orig.shape[:2], max_side)
+    row.update(info)
+    return row
 
 
 def score_image(models, detector, img, orig_hw=None, max_side=0):
@@ -232,8 +243,7 @@ def main():
     detector = create_detector()
 
     if args.image:
-        orig = load_image(args.image)
-        row = score_image(models, detector, limit_resolution(orig, args.max_side), orig.shape[:2], args.max_side)
+        row = score_original(models, detector, load_image(args.image), args.max_side)
         for k in FIELDS:
             print(f"{k:22s} {row[k]}")
         return
@@ -250,9 +260,7 @@ def main():
                 parts += [item["subject"], item["device_code"]]
             path = os.path.join(*parts, item["filename"])
             try:
-                orig = load_image(path)
-                row = score_image(models, detector, limit_resolution(orig, args.max_side),
-                                  orig.shape[:2], args.max_side)
+                row = score_original(models, detector, load_image(path), args.max_side)
             except Exception as e:
                 row = {k: "" for k in FIELDS}
                 row["status"] = f"error:load:{type(e).__name__}"

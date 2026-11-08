@@ -22,8 +22,28 @@ DETECTOR_CONFIG = {
     "nms_threshold": NMS_THRESHOLD,
     "top_k": TOP_K,
     "detect_max_side": DETECT_MAX_SIDE,
+    "pemotongan_rasio": "tengah, tepat 3:4, sebelum batas resolusi (amandemen-protokol-2)",
     "opencv": cv2.__version__,
 }
+
+
+def crop_to_3x4(img_bgr):
+    """Potong tengah ke ukuran TEPAT 3:4 (lebar:tinggi); lihat reports/amandemen-protokol-2.md.
+
+    k = min(floor(lebar/3), floor(tinggi/4)); ukuran baru (3k, 4k); offset floor((lebar-3k)/2),
+    floor((tinggi-4k)/2). Hanya memotong, tidak mengubah nilai piksel. Gambar yang sudah tepat 3:4
+    tidak berubah. Dipanggil setelah load_image dan SEBELUM limit_resolution.
+
+    Mengembalikan (gambar_terpotong, info) dengan info = {"crop34_x", "crop34_y", "crop34_w", "crop34_h"}.
+    """
+    h, w = img_bgr.shape[:2]
+    k = min(w // 3, h // 4)
+    if k < 1:
+        raise ValueError(f"Gambar terlalu kecil untuk dipotong 3:4: {w}x{h}")
+    nw, nh = 3 * k, 4 * k
+    ox, oy = (w - nw) // 2, (h - nh) // 2
+    out = np.ascontiguousarray(img_bgr[oy:oy + nh, ox:ox + nw])
+    return out, {"crop34_x": ox, "crop34_y": oy, "crop34_w": nw, "crop34_h": nh}
 
 
 def limit_resolution(img_bgr, max_side):

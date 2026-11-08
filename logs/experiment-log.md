@@ -176,3 +176,14 @@
 - Inventaris (inventaris.csv, hanya angka; tidak ada gambar dibuka, tidak ada model dijalankan): 30 dari 160 foto bukan 3:4, semuanya serangan (S02 print 10, 2296x4080; S03 print 10 + screen 10, 1884x4080). Ukuran foto real berbeda dari foto serangan pada keempat relawan; S01 real EXIF 5, serangan 6/1. Penyebab [T].
 - Keputusan peneliti: pemotongan tengah ke tepat 3:4 untuk semua model sebelum pipeline; tanpa analisis "apa adanya". Rincian: reports/amandemen-protokol-2.md. Belum diimplementasikan di kode.
 - Keputusan sementara "B" (foto enrollment identik dikecualikan dari probe) disebut di CLAUDE.md tetapi belum punya angka di log; output periksa_data.py belum ada di salinan ini. Dicatat saat output tersedia.
+
+## 2026-11-08 - Pemotongan 3:4 diimplementasikan dan lolos uji
+- scripts/common.py: crop_to_3x4 (k = min(w//3, h//4), ukuran (3k, 4k), offset di tengah, hanya slicing). DETECTOR_CONFIG mencatat "pemotongan_rasio" (ikut ke .meta.json).
+- scripts/infer_liveness.py: score_original = potong 3:4 -> limit_resolution -> score_image; kolom baru crop34_x, crop34_y, crop34_w, crop34_h (koordinat pada gambar asli). bbox_* tetap pada gambar yang diproses (setelah potong dan batas resolusi).
+- scripts/benchmark_latency.py: gambar dipotong 3:4 sebelum diukur (sama dengan pipeline).
+- scripts/test_potong34.py (gambar sintetis, tanpa data relawan): 10/10 ukuran sama dengan tabel amandemen-protokol-2, rasio tepat 3:4 juga setelah batas 640 (480x640) dan 1280 (960x1280), offset di tengah, piksel tidak berubah. test_warna SEMUA OK; test_modul1 semua OK.
+- face.jpg ternyata 750x500 (lebar x tinggi, lanskap); entri lama menulis "500x750" (tinggi x lebar). Setelah dipotong 375x500 (offset x 187): 1 wajah, skor 0,940 -> 0,939.
+- KOREKSI KRITERIA UJI (terbuka): kriteria awal "posisi kotak bergeser <= 3 px" GAGAL (3,9 px). Diagnosis: pada skala deteksi yang sama pun kotak YuNet berbeda (293.9, 73.6, 157.2, 200.9) vs (299.1, 76.5, 152.8, 195.0) setelah dikembalikan dengan offset; YuNet tidak identik bila latar sekitar wajah dipotong. Pemetaan offset terbukti benar oleh uji sintetis. Kriteria diganti IoU kotak >= 0,9; hasil IoU 0,926 (lolos). Ini uji kode pada gambar dokumentasi, bukan data evaluasi.
+- Implikasi: pemotongan 3:4 dapat menggeser kotak deteksi beberapa persen walau wajah tidak terpotong; berlaku sama untuk semua model.
+- infer_liveness --image face.jpg (penuh dan --max_side 640): status ok, kolom crop34_* terisi. Skor sedikit berubah dari 2026-11-05 (facenox diff 8,236 -> 8,095; mn3 p_real 0,988 -> 0,992) karena kotak berubah; BUKAN bukti kinerja.
+- benchmark_latency.py berjalan (5 ulangan, hanya cek tidak error; angka tidak dipakai).

@@ -74,6 +74,7 @@ scripts/          lihat di bawah
   maks 640 px lalu koordinat dikembalikan), `limit_resolution` (skenario 640/1280/penuh).
 - `preprocess_liveness.py`: preprocessing per model liveness (memakai fungsi crop repo sumber langsung).
 - `infer_liveness.py`: skor mentah tiga model liveness ke CSV + `.meta.json` (opsi `--max_side`, `--manifest`).
+- `common.py` juga berisi `crop_to_3x4` (potong tengah tepat 3:4 sebelum pipeline; amandemen 2), diuji `test_potong34.py`.
 - `benchmark_latency.py`: latensi (median, p95) dan memori CPU; `test_modul1.py`, `test_warna.py`,
   `test_resolusi.py`: uji kode; `smoke_*.py`: smoke test bobot.
 - `rename_foto.py`, `inventaris_data.py`, `periksa_data.py`: penataan dan pemeriksaan administratif data.

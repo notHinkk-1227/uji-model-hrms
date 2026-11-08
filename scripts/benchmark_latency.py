@@ -27,7 +27,7 @@ import onnxruntime as ort
 import psutil
 import torch
 
-from common import create_detector, detect_faces, load_image, primary_face
+from common import create_detector, crop_to_3x4, detect_faces, load_image, primary_face
 from infer_liveness import LivenessModels
 from preprocess_liveness import (
     preprocess_antispoof_mn3,
@@ -69,7 +69,7 @@ def main():
 
     cv2.setNumThreads(args.threads)
     detector = create_detector()
-    img = load_image(args.image)
+    img, _ = crop_to_3x4(load_image(args.image))  # sama dengan pipeline (amandemen-protokol-2)
     face, n = primary_face(detect_faces(img, detector))
     if face is None:
         sys.exit("Tidak ada wajah terdeteksi pada gambar; gunakan gambar lain.")
