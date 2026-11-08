@@ -262,3 +262,13 @@
 - anti-spoof-mn3 (preprocessing dan aturan sesuai sumber): BPCER 45/80 = 56,2% (44,7-67,3; S02 20/20 dan S04 20/20 real ditolak, S01 2/20, S03 3/20); APCER print 0/40 (0-8,8); screen 7/40 = 17,5% (7,3-32,8); ACER 36,9%; AUC 0,835. EER-LOSO: threshold p_real 0,002-0,013, ACER 42,5%.
 - Tafsir: koreksi crop bukan penyebab utama kinerja buruk mn3; penolakan seluruh foto real dua relawan tetap terjadi. Penyebab [T] (mis. pergeseran domain dari CelebA-Spoof ke kamera ponsel relawan; README sumber sendiri melaporkan ACER 16,3% lintas-dataset pada LCC_FASD). Tidak diselidiki lebih jauh tanpa keputusan peneliti.
 - McNemar (aturan bawaan): MiniFAS vs facenox 23 vs 11, p 0,058; MiniFAS vs mn3 52 vs 23, p 0,0011; facenox vs mn3 42 vs 25, p 0,050.
+
+## 2026-11-08 - Liveness skenario 640 dan penuh
+- Perintah sama dengan run 1280 dengan --max_side 640 dan 0 (penuh); keluaran results/liveness/skor_{640,penuh}.csv (+ meta) dan metrik_{640,penuh}.json. Kode commit 73960b1 (kode sama dengan a2b6ca8; commit itu hanya menambah dokumen). Ketiga skenario: 160/160 ok, 1 wajah per foto, skor deteksi min 0,889-0,890.
+- Aturan bawaan, ACER (BPCER k/80; APCER print k/40; screen k/40) untuk 640 / 1280 / penuh:
+  - MiniFASNet: 21,2% (0; 17; 8) / 20,0% (0; 16; 7) / 16,2% (0; 13; 8); AUC 0,991 / 0,995 / 0,992.
+  - face-antispoof-onnx: 21,9% (3; 16; 16) / 23,8% (4; 17; 14) / 25,6% (1; 20; 14); AUC 0,875 / 0,878 / 0,880.
+  - anti-spoof-mn3: 33,8% (44; 0; 5) / 36,9% (45; 0; 7) / 35,0% (44; 0; 6); AUC 0,867 / 0,835 / 0,829.
+- Tambahan EER-LOSO, ACER (BPCER/APCER print/screen): MiniFASNet 13,1% (11/5/1) / 8,1% (7/3/0) / 7,5% (6/3/1); facenox 28,7% / 28,1% / 26,9%; mn3 37,5% / 42,5% / 43,8%.
+- McNemar MiniFAS vs facenox: p 0,121 / 0,058 / 0,024; MiniFAS vs mn3: p 0,007 / 0,001 / 0,0008; facenox vs mn3: p 0,114 / 0,050 / 0,101 (optimistis).
+- Pengamatan (bukan kesimpulan akhir): urutan model sama di ketiga skenario (MiniFASNet terbaik, mn3 terburuk); dengan aturan bawaan tidak ada model yang menolak serangan dengan baik (APCER print MiniFASNet 33-43%); hanya MiniFASNet dengan threshold EER dari relawan latih yang mendekati kinerja berguna, dan membaik dengan resolusi lebih tinggi (640 terburuk).
