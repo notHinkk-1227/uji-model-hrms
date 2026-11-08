@@ -187,3 +187,12 @@
 - Implikasi: pemotongan 3:4 dapat menggeser kotak deteksi beberapa persen walau wajah tidak terpotong; berlaku sama untuk semua model.
 - infer_liveness --image face.jpg (penuh dan --max_side 640): status ok, kolom crop34_* terisi. Skor sedikit berubah dari 2026-11-05 (facenox diff 8,236 -> 8,095; mn3 p_real 0,988 -> 0,992) karena kotak berubah; BUKAN bukti kinerja.
 - benchmark_latency.py berjalan (5 ulangan, hanya cek tidak error; angka tidak dipakai).
+
+## 2026-11-08 - periksa_data.py: duplikat enrollment-probe
+- Dijalankan di salinan uji (python scripts/periksa_data.py, exit 0). Hanya hash SHA-256 berkas dan inventaris.csv; tidak ada gambar dibuka, tidak ada model dijalankan. Daftar: datasets/recognition/internal/duplikat_enrollment.csv (tidak ikut Git).
+- 18 dari 20 foto enrollment identik (byte demi byte) dengan foto raw: S01 5/5, S02 5/5, S03 5/5, S04 3/5. Pemetaan 1:1 (18 berkas raw unik); semuanya kelas real. Tidak ada berkas identik di dalam raw sendiri.
+- Berkas raw yang identik per cahaya: terang 3/3/3/2, redup 2/2/2/1 (S01/S02/S03/S04). Penyimpangan: 7 foto enrollment berasal dari kondisi redup, padahal protokol v1.0 bagian 5 meminta enrollment frontal terang dan sesi berbeda.
+- Bila keputusan sementara "B" (foto identik dikecualikan dari probe) dipakai: probe real tersisa 62 dari 80 (S01 15, S02 15, S03 15, S04 17; terang 29, redup 33). Perkiraan pasangan: genuine 62, impostor 62 x 3 = 186; batas atas FAR tanpa kesalahan (aturan 3/N) sekitar 1,6%.
+- Hash hanya menangkap salinan persis; foto yang hampir sama (mis. jepretan beruntun) tidak terdeteksi [T].
+- Rasio dan orientasi per relawan sama dengan entri sebelumnya (30 bukan 3:4: S02 print 10, S03 print 10 + screen 10).
+- scripts/periksa_data.py di-commit (versi yang menghasilkan angka ini).
