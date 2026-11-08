@@ -168,3 +168,11 @@
 
 ## 2026-11-05 - Data S01 dirapikan
 - Foto S01 dipindahkan dari datasets/_masuk dengan scripts/rename_foto.py (log: datasets/rename_log.csv, tidak ikut Git). Jumlah dan ukuran per kelas: lihat output inventaris_data.py (diisi peneliti).
+
+## 2026-11-08 - Persetujuan relawan; amandemen 2 (pemotongan 3:4); temuan ukuran per kelas
+- Dikerjakan di salinan uji D:\dev\model-research-face-cc (uji cara kerja Claude Code); repo resmi tetap C:\dev\model-research-face. Bila dipakai, entri ini dipindahkan ke repo resmi.
+- Peneliti mengonfirmasi formulir persetujuan keempat relawan (S01-S04) SUDAH ditandatangani. Gerbang untuk menjalankan model pada data relawan terbuka mulai entri ini.
+- Peneliti mengonfirmasi cara pengambilan foto serangan sesuai protokol (kamera depan ponsel relawan).
+- Inventaris (inventaris.csv, hanya angka; tidak ada gambar dibuka, tidak ada model dijalankan): 30 dari 160 foto bukan 3:4, semuanya serangan (S02 print 10, 2296x4080; S03 print 10 + screen 10, 1884x4080). Ukuran foto real berbeda dari foto serangan pada keempat relawan; S01 real EXIF 5, serangan 6/1. Penyebab [T].
+- Keputusan peneliti: pemotongan tengah ke tepat 3:4 untuk semua model sebelum pipeline; tanpa analisis "apa adanya". Rincian: reports/amandemen-protokol-2.md. Belum diimplementasikan di kode.
+- Keputusan sementara "B" (foto enrollment identik dikecualikan dari probe) disebut di CLAUDE.md tetapi belum punya angka di log; output periksa_data.py belum ada di salinan ini. Dicatat saat output tersedia.
