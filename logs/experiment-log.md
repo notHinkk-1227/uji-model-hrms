@@ -213,3 +213,8 @@
 - scripts/test_metrics.py: 32/32 lolos. Harapan dihitung terpisah dari kode (hitung tangan, rumus tertutup CP untuk 0/n dan n/n, definisi ekor binomial dengan math.comb untuk 5/20). CP 5/20 = 0,0866-0,4910 (sama dengan nilai tabel terbitan yang diingat asisten [S]). Uji LOSO: subjek uji tidak pernah di latih; threshold tidak berubah bila skor data uji diubah ekstrem.
 - Dua kegagalan pada putaran pertama adalah kesalahan skrip uji, bukan metrics.py: (1) harapan McNemar b=1,c=9 salah hitung (1+9 seharusnya C(10,0)+C(10,1)=1+10; kode memberi 22/1024 = 0,021484, benar); (2) fungsi pembanding mencoba mengurangkan string. Keduanya diperbaiki di test_metrics.py; metrics.py tidak diubah.
 - Belum diputuskan (perlu sebelum evaluasi): aturan threshold pengenalan dari lipatan latih; perlakuan sampel gagal deteksi dalam metrik.
+
+## 2026-11-08 - Amandemen 4: aturan threshold dan perlakuan gagal deteksi
+- Peneliti menyetujui (sebelum skor apa pun dilihat): (1) threshold pengenalan = EER pada lipatan latih LOSO; (2) liveness: aturan bawaan sebagai utama, EER lipatan latih + AUC sebagai tambahan; (3) gagal deteksi/gagal proses dihitung "ditolak" dan dilaporkan terpisah. Rincian: reports/amandemen-protokol-4.md.
+- Diperjelas saat penulisan: pasangan latih hanya melibatkan relawan latih sebagai probe DAN sebagai identitas yang diklaim (enrollment relawan uji tidak dipakai untuk threshold). Akibatnya lipatan latih hanya sekitar 90 pasangan impostor (koreksi atas perkiraan "sekitar 140" yang diucapkan asisten sebelumnya di percakapan).
+- Masih terbuka: cara menggabungkan 5 foto enrollment menjadi skor pasangan.

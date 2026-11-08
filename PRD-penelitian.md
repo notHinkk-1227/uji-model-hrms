@@ -38,7 +38,7 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 
 ## 4. Data dan protokol
 
-- Protokol: `reports/protokol-evaluasi-v1.0.md` (dibekukan) + amandemen 1, 2, 3 (`reports/amandemen-protokol-*.md`).
+- Protokol: `reports/protokol-evaluasi-v1.0.md` (dibekukan) + amandemen 1-4 (`reports/amandemen-protokol-*.md`).
 - Relawan: 4 (S01-S04), ponsel masing-masing, kamera depan, foto rasio 3:4 JPEG, cahaya terang/redup diatur fisik.
 - Kelas: real, print (foto cetak), screen (foto di layar). Replay dan uji stres tidak dikumpulkan.
 - Jumlah: per relawan real 20 (10 terang, 10 redup), print 10, screen 10; enrollment 5. Total 160 foto liveness + 20 enrollment.

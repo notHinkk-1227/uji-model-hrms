@@ -63,7 +63,7 @@ datasets/         DATA RELAWAN (jangan dibaca): liveness/internal/raw/S01..S04/o
 logs/             experiment-log.md (kronologi, tambah di akhir), checksums-*.txt
 models/           bobot (auraface, buffalo_l, sface, yunet, anti-spoof-mn3)
 repositories/     kode sumber MiniFASNet (Silent-Face-Anti-Spoofing) dan face-antispoof-onnx
-reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2.md (potong 3:4), spesifikasi-preprocessing-v2.md, PRD
+reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..4.md (3:4, enrollment, threshold), spesifikasi-preprocessing-v2.md, PRD
 results/          hasil evaluasi (results/_uji = uji kode, tidak ikut Git)
 scripts/          lihat di bawah
 ```
@@ -120,7 +120,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 
 1. SELESAI 2026-11-08: `periksa_data.py`; persetujuan relawan dikonfirmasi; amandemen 2 (3:4) dan 3 (enrollment).
 2. SELESAI 2026-11-08: `manifest.csv` (16 kolom, `scripts/buat_manifest.py`); model ponsel/OS/detail pengaturan tidak dicatat (penanda eksplisit).
-3. SELESAI 2026-11-08: Modul 5 `metrics.py` (uji `test_metrics.py` 32/32). Belum diputuskan: aturan threshold pengenalan, perlakuan gagal deteksi.
+3. SELESAI 2026-11-08: Modul 5 `metrics.py` (uji `test_metrics.py` 32/32). Aturan threshold dan gagal deteksi: amandemen 4.
 4. Modul pengenalan wajah: alignment (verifikasi templat ArcFace dari kode resmi insightface), embedding, cosine.
 5. Evaluasi leave-one-subject-out pada skenario resolusi 640/1280/penuh (utama sementara 1280 = ASUMSI).
 6. Verifikasi asumsi crop anti-spoof-mn3; makna indeks MiniFASNet; lisensi WIDER Face dan BlazeFace (detektor produksi).
