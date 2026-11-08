@@ -129,7 +129,7 @@ def main():
         },
         "catatan": ["Latensi diukur pada laptop pengembangan, bukan server produksi.",
                     "Inferensi tidak termasuk softmax/aturan keputusan (selisih diabaikan).",
-                    "Crop anti-spoof-mn3 adalah ASUMSI."],
+                    "Crop anti-spoof-mn3: kotak 1,1 x 1,05, INTER_CUBIC (amandemen 5)."],
     }
     os.makedirs(os.path.dirname(args.out) or ".", exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:

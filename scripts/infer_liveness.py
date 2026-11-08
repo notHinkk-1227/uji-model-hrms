@@ -10,7 +10,7 @@ jalur gambar = root/subject/device_code/filename; selain itu root/filename.
 Skor yang disimpan (aturan keputusan sesuai reports/spesifikasi-preprocessing-v2.md):
   MiniFASNet            softmax 3 kelas per model, rata-rata dua model, real bila argmax = indeks 1
   face-antispoof-onnx   dua logit [real, spoof], diff = real - spoof, real bila diff >= 0
-  anti-spoof-mn3        dua probabilitas [real, spoof], real bila p_real > p_spoof
+  anti-spoof-mn3        dua probabilitas [real, spoof], real bila p_spoof <= 0,4 (demo sumber; amandemen 5)
 Sebelum pipeline, gambar dipotong tengah ke tepat 3:4 lalu dibatasi resolusinya (--max_side);
 lihat reports/amandemen-protokol-2.md. Kolom crop34_* mencatat potongan pada gambar asli.
 Tidak ada threshold yang disetel di sini. Waktu proses sengaja tidak diukur (modul latensi terpisah).
@@ -53,6 +53,7 @@ MINIFAS_WEIGHTS = {
 }
 FACENOX_ONNX = "repositories/face-antispoof-onnx/models/best/98.20/best_model.onnx"
 MN3_ONNX = "models/anti-spoof-mn3/public/anti-spoof-mn3/anti-spoof-mn3.onnx"
+MN3_SPOOF_THRESH = 0.4  # demo.py --spoof_thresh bawaan (amandemen 5)
 
 FIELDS = [
     "sample_id", "filename", "status", "n_faces", "det_score",
@@ -165,7 +166,7 @@ def score_image(models, detector, img, orig_hw=None, max_side=0):
     try:
         pr = models.mn3_probs(img, bbox)
         row["mn3_p_real"], row["mn3_p_spoof"] = float(pr[0]), float(pr[1])
-        row["mn3_pred_real"] = int(pr[0] > pr[1])
+        row["mn3_pred_real"] = int(pr[1] <= MN3_SPOOF_THRESH)
     except Exception as e:
         errors.append(f"mn3:{type(e).__name__}")
 
@@ -217,9 +218,9 @@ def write_meta(path, n_rows, max_side=0):
         "aturan_keputusan": {
             "minifasnet": "rata-rata softmax dua model; real bila argmax = indeks 1 (menurut kode asli)",
             "face_antispoof_onnx": "real bila logit_real - logit_spoof >= 0",
-            "anti_spoof_mn3": "real bila p_real > p_spoof",
+            "anti_spoof_mn3": "real bila p_spoof <= 0,4 (demo sumber, amandemen 5)",
         },
-        "catatan": ["Crop anti-spoof-mn3 adalah ASUMSI (persegi x1,5) dan belum diverifikasi.",
+        "catatan": ["Crop anti-spoof-mn3: kotak diperluas 1,1 x 1,05, INTER_CUBIC (kode sumber, amandemen 5); ketatnya kotak YuNet vs detektor asli [T].",
                     "Makna indeks keluaran 0 dan 2 MiniFASNet belum diverifikasi.",
                     "Satu detektor YuNet (BGR) dipakai bersama; wajah terbesar dipilih."],
     }

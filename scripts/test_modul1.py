@@ -45,4 +45,4 @@ for nama, skala in MINIFAS_SCALES.items():
     laporan(f"MiniFASNet {nama}", preprocess_minifasnet(img, bbox, skala), (1, 3, 80, 80), "0-255, BGR")
 
 laporan("face-antispoof-onnx", preprocess_facenox(img, bbox), (1, 3, 128, 128), "0-1, RGB")
-laporan("anti-spoof-mn3 (crop ASUMSI)", preprocess_antispoof_mn3(img, bbox), (1, 3, 128, 128), "sekitar -2 sampai 2, RGB")
+laporan("anti-spoof-mn3 (crop 1,1x1,05, amandemen 5)", preprocess_antispoof_mn3(img, bbox), (1, 3, 128, 128), "sekitar -2 sampai 2, RGB")

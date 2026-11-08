@@ -59,18 +59,27 @@ def preprocess_facenox(img_bgr, bbox_xywh, expansion=1.5, size=128):
     return mod.preprocess(face_crop, size)[None]
 
 
-def preprocess_antispoof_mn3(img_bgr, bbox_xywh, expansion=1.5, size=128):
-    """anti-spoof-mn3 (model asli): RGB, (x - mean) / scale pada skala 0-255.
+MN3_EXPAND = (1.1, 1.05)  # (lebar, tinggi), FaceDetector.expand_ratio di demo_tools/wrapers.py
 
-    ASUMSI (belum terverifikasi): dokumen OMZ tidak menjelaskan cara crop. Di sini dipakai
-    crop persegi x1,5 yang sama dengan face-antispoof-onnx. Asumsi ini harus diperiksa
-    terhadap kode pelatihan sumbernya sebelum hasil model ini dipakai untuk kesimpulan.
+
+def mn3_crop_box(bbox_xywh, expand=MN3_EXPAND):
+    """Kotak crop anti-spoof-mn3 (left, top, right, bottom) persis seperti demo penulis (amandemen 5).
+
+    Sumber: kprokofi/light-weight-face-anti-spoofing commit 82a2c26, FaceDetector.__decode_detections.
     """
-    mod = _load_module("facenox_preprocess", FACENOX_PREPROCESS)
     x, y, w, h = bbox_xywh
-    rgb = cv2.cvtColor(img_bgr, cv2.COLOR_BGR2RGB)
-    face_crop = mod.crop(rgb, (x, y, x + w, y + h), expansion)
-    interp = cv2.INTER_AREA if face_crop.shape[0] > size else cv2.INTER_LINEAR
-    face_crop = cv2.resize(face_crop, (size, size), interpolation=interp)
-    arr = (face_crop.astype(np.float32) - MN3_MEAN) / MN3_SCALE
+    left, top, right, bottom = int(x), int(y), int(x + w), int(y + h)
+    dw = (right - left) * (expand[0] - 1.0) / 2
+    dh = (bottom - top) * (expand[1] - 1.0) / 2
+    return max(int(left - dw), 0), max(int(top - dh), 0), int(right + dw), int(bottom + dh)
+
+
+def preprocess_antispoof_mn3(img_bgr, bbox_xywh, size=128):
+    """anti-spoof-mn3 (model asli): crop kotak diperluas 1,1 x 1,05 (tidak persegi), resize 128x128 INTER_CUBIC,
+    RGB, (x - mean) / scale pada skala 0-255. Terverifikasi dari kode sumber (amandemen 5)."""
+    left, top, right, bottom = mn3_crop_box(bbox_xywh)
+    face_crop = img_bgr[top:bottom, left:right]  # seperti demo: tepi kanan/bawah dibatasi oleh slicing
+    face_crop = cv2.resize(face_crop, (size, size), interpolation=cv2.INTER_CUBIC)
+    rgb = cv2.cvtColor(face_crop, cv2.COLOR_BGR2RGB)
+    arr = (rgb.astype(np.float32) - MN3_MEAN) / MN3_SCALE
     return arr.transpose(2, 0, 1)[None].astype(np.float32)
