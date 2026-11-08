@@ -11,3 +11,5 @@ repositories/
 *.zip
 .venv-omz/
 results/_uji/
+# embedding wajah relawan = data biometrik; tidak ikut Git
+results/recognition/*.npz

@@ -272,3 +272,15 @@
 - Tambahan EER-LOSO, ACER (BPCER/APCER print/screen): MiniFASNet 13,1% (11/5/1) / 8,1% (7/3/0) / 7,5% (6/3/1); facenox 28,7% / 28,1% / 26,9%; mn3 37,5% / 42,5% / 43,8%.
 - McNemar MiniFAS vs facenox: p 0,121 / 0,058 / 0,024; MiniFAS vs mn3: p 0,007 / 0,001 / 0,0008; facenox vs mn3: p 0,114 / 0,050 / 0,101 (optimistis).
 - Pengamatan (bukan kesimpulan akhir): urutan model sama di ketiga skenario (MiniFASNet terbaik, mn3 terburuk); dengan aturan bawaan tidak ada model yang menolak serangan dengan baik (APCER print MiniFASNet 33-43%); hanya MiniFASNet dengan threshold EER dari relawan latih yang mendekati kinerja berguna, dan membaik dengan resolusi lebih tinggi (640 terburuk).
+
+## 2026-11-08 - Pengenalan wajah: tiga skenario resolusi
+- Run pertama embed (1280) menemukan celah: metadata .npz tidak mencatat commit, hash bobot, versi pustaka (aturan 6). Diperbaiki (evaluasi.py jejak_embed, commit 1a61a5a; test_evaluasi tetap 30/30) lalu 1280 dijalankan ulang. Hash bobot di metadata cocok dengan logs/checksums-models.txt.
+- Perintah: python scripts/evaluasi.py embed --max_side {640,1280,0} --threads 4 --out results/recognition/emb_{640,1280,penuh}.npz; lalu evaluasi.py recognition --emb ... --out results/recognition/metrik_{...}.json. Sekitar 22 detik per skenario.
+- Ketiga skenario: 82/82 ok (62 probe: S01 15, S02 15, S03 15, S04 17; enrollment 5 per relawan, semua terpakai); tanpa embedding kosong; norma 1. Pasangan: genuine 62, impostor 186; lipatan latih 45-47 genuine / 90-94 impostor.
+- Hasil LOSO (threshold EER lipatan latih), FRR k/62 dan FAR k/186 untuk 640 / 1280 / penuh:
+  - AuraFace: FRR 1 / 1 / 1; FAR 0 / 2 / 15; AUC 1,0000 di ketiga skenario; median genuine 0,88-0,90, impostor 0,28-0,30.
+  - buffalo_l: FRR 0 / 0 / 0; FAR 0 / 0 / 0 (batas atas FAR 1,6%); AUC 1,0000; median genuine 0,90-0,91, impostor 0,12.
+  - SFace: FRR 1 / 1 / 1; FAR 7 / 8 / 16; AUC 1,0000 / 0,9999 / 0,9994; median genuine 0,91-0,92, impostor 0,31.
+- Pengamatan: AuraFace mencapai AUC 1,0 (pemisahan sempurna gabungan) tetapi FAR 15/186 pada penuh: threshold EER pada data latih yang terpisah sempurna jatuh di titik tengah celah, dan impostor lipatan uji (S02, S03) masuk ke celah itu. FAR sensitif terhadap aturan threshold bila data latih terpisah sempurna. Aturan tidak diubah (amandemen 4).
+- Batasan: enrollment dan probe sesi yang sama (bias optimistis, amandemen 3); hanya 4 identitas, 186 impostor; FAR di bawah ~1,6% tidak dapat dibuktikan; buffalo_l RISET SAJA (lisensi).
+- Privasi: berkas embedding (results/recognition/*.npz) adalah data biometrik relawan; ditambahkan ke .gitignore (tetap di disk lokal). Hanya metrik agregat di-commit.

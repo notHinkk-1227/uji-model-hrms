@@ -1,0 +1,493 @@
+{
+  "sumber_embedding": "results/recognition/emb_1280.npz",
+  "status_deteksi": {
+    "ok": 82
+  },
+  "model": {
+    "auraface": {
+      "enrollment_dipakai": {
+        "S01": 5,
+        "S02": 5,
+        "S03": 5,
+        "S04": 5
+      },
+      "jumlah_pasangan": {
+        "genuine": 62,
+        "impostor": 186
+      },
+      "probe_gagal": 0,
+      "gabungan_loso": {
+        "frr": {
+          "k": 1,
+          "n": 62,
+          "nilai": 0.016129032258064516,
+          "ci_bawah": 0.00040826837745732173,
+          "ci_atas": 0.08662101220691945
+        },
+        "far": {
+          "k": 2,
+          "n": 186,
+          "nilai": 0.010752688172043012,
+          "ci_bawah": 0.0013048634469969107,
+          "ci_atas": 0.03830067883398994
+        }
+      },
+      "per_cahaya": {
+        "redup": {
+          "frr": {
+            "k": 1,
+            "n": 33,
+            "nilai": 0.030303030303030304,
+            "ci_bawah": 0.0007669120750481075,
+            "ci_atas": 0.157593972272497
+          },
+          "far": {
+            "k": 2,
+            "n": 99,
+            "nilai": 0.020202020202020204,
+            "ci_bawah": 0.0024559907935273323,
+            "ci_atas": 0.07107612246187722
+          }
+        },
+        "terang": {
+          "frr": {
+            "k": 0,
+            "n": 29,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.11944486906950269
+          },
+          "far": {
+            "k": 0,
+            "n": 87,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.04151456599263781
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.03384761068161957,
+            "aturan_3_per_n": 0.034482758620689655
+          }
+        }
+      },
+      "lipatan": {
+        "S01": {
+          "threshold": 0.5955403700092865,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 1,
+            "n": 15,
+            "nilai": 0.06666666666666667,
+            "ci_bawah": 0.0016864302413526987,
+            "ci_atas": 0.31948456657830315
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S02": {
+          "threshold": 0.4783484113259011,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 2,
+            "n": 45,
+            "nilai": 0.044444444444444446,
+            "ci_bawah": 0.005428488700250899,
+            "ci_atas": 0.15149290024333906
+          }
+        },
+        "S03": {
+          "threshold": 0.453981268314755,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S04": {
+          "threshold": 0.532928740729613,
+          "pasangan_latih_genuine": 45,
+          "pasangan_latih_impostor": 90,
+          "frr": {
+            "k": 0,
+            "n": 17,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.1950643229690932
+          },
+          "far": {
+            "k": 0,
+            "n": 51,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.06977703074953864
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.0570479523604428,
+            "aturan_3_per_n": 0.058823529411764705
+          }
+        }
+      },
+      "auc_gabungan": 1.0,
+      "skor_genuine_median": 0.8961899292766968,
+      "skor_impostor_median": 0.2951040549022161
+    },
+    "buffalo_l": {
+      "enrollment_dipakai": {
+        "S01": 5,
+        "S02": 5,
+        "S03": 5,
+        "S04": 5
+      },
+      "jumlah_pasangan": {
+        "genuine": 62,
+        "impostor": 186
+      },
+      "probe_gagal": 0,
+      "gabungan_loso": {
+        "frr": {
+          "k": 0,
+          "n": 62,
+          "nilai": 0.0,
+          "ci_bawah": 0.0,
+          "ci_atas": 0.05776263442929093
+        },
+        "far": {
+          "k": 0,
+          "n": 186,
+          "nilai": 0.0,
+          "ci_bawah": 0.0,
+          "ci_atas": 0.01963731126397706
+        },
+        "far_batas_atas_tanpa_kesalahan": {
+          "eksak": 0.01597707800636816,
+          "aturan_3_per_n": 0.016129032258064516
+        }
+      },
+      "per_cahaya": {
+        "redup": {
+          "frr": {
+            "k": 0,
+            "n": 33,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.10576281007457927
+          },
+          "far": {
+            "k": 0,
+            "n": 99,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.036575744983478944
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.02980667377335089,
+            "aturan_3_per_n": 0.030303030303030304
+          }
+        },
+        "terang": {
+          "frr": {
+            "k": 0,
+            "n": 29,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.11944486906950269
+          },
+          "far": {
+            "k": 0,
+            "n": 87,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.04151456599263781
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.03384761068161957,
+            "aturan_3_per_n": 0.034482758620689655
+          }
+        }
+      },
+      "lipatan": {
+        "S01": {
+          "threshold": 0.5088177330640091,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S02": {
+          "threshold": 0.4845118143669591,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S03": {
+          "threshold": 0.43589765456306623,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S04": {
+          "threshold": 0.46942531658781095,
+          "pasangan_latih_genuine": 45,
+          "pasangan_latih_impostor": 90,
+          "frr": {
+            "k": 0,
+            "n": 17,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.1950643229690932
+          },
+          "far": {
+            "k": 0,
+            "n": 51,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.06977703074953864
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.0570479523604428,
+            "aturan_3_per_n": 0.058823529411764705
+          }
+        }
+      },
+      "auc_gabungan": 1.0,
+      "skor_genuine_median": 0.9042553198033465,
+      "skor_impostor_median": 0.12247797938339142
+    },
+    "sface": {
+      "enrollment_dipakai": {
+        "S01": 5,
+        "S02": 5,
+        "S03": 5,
+        "S04": 5
+      },
+      "jumlah_pasangan": {
+        "genuine": 62,
+        "impostor": 186
+      },
+      "probe_gagal": 0,
+      "gabungan_loso": {
+        "frr": {
+          "k": 1,
+          "n": 62,
+          "nilai": 0.016129032258064516,
+          "ci_bawah": 0.00040826837745732173,
+          "ci_atas": 0.08662101220691945
+        },
+        "far": {
+          "k": 8,
+          "n": 186,
+          "nilai": 0.043010752688172046,
+          "ci_bawah": 0.018749178044224504,
+          "ci_atas": 0.08298678334116147
+        }
+      },
+      "per_cahaya": {
+        "redup": {
+          "frr": {
+            "k": 0,
+            "n": 33,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.10576281007457927
+          },
+          "far": {
+            "k": 2,
+            "n": 99,
+            "nilai": 0.020202020202020204,
+            "ci_bawah": 0.0024559907935273323,
+            "ci_atas": 0.07107612246187722
+          }
+        },
+        "terang": {
+          "frr": {
+            "k": 1,
+            "n": 29,
+            "nilai": 0.034482758620689655,
+            "ci_bawah": 0.0008726468835799207,
+            "ci_atas": 0.1776442954887229
+          },
+          "far": {
+            "k": 6,
+            "n": 87,
+            "nilai": 0.06896551724137931,
+            "ci_bawah": 0.025728162231785055,
+            "ci_atas": 0.14408659386185835
+          }
+        }
+      },
+      "lipatan": {
+        "S01": {
+          "threshold": 0.577307572279337,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 1,
+            "n": 15,
+            "nilai": 0.06666666666666667,
+            "ci_bawah": 0.0016864302413526987,
+            "ci_atas": 0.31948456657830315
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S02": {
+          "threshold": 0.45621781977203824,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 0,
+            "n": 45,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.07870510040684303
+          },
+          "far_batas_atas_tanpa_kesalahan": {
+            "eksak": 0.06440428880778348,
+            "aturan_3_per_n": 0.06666666666666667
+          }
+        },
+        "S03": {
+          "threshold": 0.43297293948610227,
+          "pasangan_latih_genuine": 47,
+          "pasangan_latih_impostor": 94,
+          "frr": {
+            "k": 0,
+            "n": 15,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.21801936091053398
+          },
+          "far": {
+            "k": 7,
+            "n": 45,
+            "nilai": 0.15555555555555556,
+            "ci_bawah": 0.06490921200837857,
+            "ci_atas": 0.29455160109805323
+          }
+        },
+        "S04": {
+          "threshold": 0.44512463533200985,
+          "pasangan_latih_genuine": 45,
+          "pasangan_latih_impostor": 90,
+          "frr": {
+            "k": 0,
+            "n": 17,
+            "nilai": 0.0,
+            "ci_bawah": 0.0,
+            "ci_atas": 0.1950643229690932
+          },
+          "far": {
+            "k": 1,
+            "n": 51,
+            "nilai": 0.0196078431372549,
+            "ci_bawah": 0.0004963044077377703,
+            "ci_atas": 0.10447489639551613
+          }
+        }
+      },
+      "auc_gabungan": 0.999913284772806,
+      "skor_genuine_median": 0.9155304179754366,
+      "skor_impostor_median": 0.3113868827128669
+    }
+  },
+  "dibuat": "2026-11-08T23:44:10"
+}
