@@ -356,3 +356,11 @@
 - Dasar: commit e346f4c (analisis_celah.py dan test_analisis_celah.py, uji 16/16) dan commit 560e2c2 (CLAUDE.md sinkron dengan laporan v1.2). Tidak ada eksperimen baru, tidak ada model dijalankan, tidak ada data relawan dibuka.
 - Perubahan teks pada CLAUDE.md (diff diperiksa: tepat 1 baris ditambahkan, tanpa baris dihapus): bullet baru `analisis_celah.py` di bagian "Skrip yang ada", tepat setelah bullet metrics.py/recognition.py/evaluasi.py. Isi bullet hanya mengulang fakta dari entri log "Analisis celah skor pengenalan".
 - Temuan terpisah, belum ditindaklanjuti: git log menunjukkan origin/main (remote), sedangkan CLAUDE.md menulis "Repo Git lokal, tanpa remote". Tujuan remote dan apakah publik belum diperiksa; tidak ada push dilakukan.
+
+## 2026-11-09 - Remote GitHub ditemukan; riwayat Git diperiksa; CLAUDE.md dikoreksi
+- Temuan: git log menampilkan origin/main, dan git remote -v menunjukkan origin = https://github.com/notHinkk-1227/uji-model-hrms.git (fetch dan push). CLAUDE.md sebelumnya menulis "Repo Git lokal, tanpa remote".
+- Pemeriksaan riwayat Git (hanya nama berkas, tidak ada isi gambar dibuka): git log --all --name-only, disaring untuk jpg/jpeg/png/heic/webp/npz dan awalan datasets/. Hasil: kosong, tidak ada berkas gambar, embedding, atau datasets/ yang pernah ter-commit.
+- Isi berkas hasil yang ter-commit (pemeriksaan pada salinan zip): hanya ID samaran (S01...), kotak wajah, ukuran gambar, dan skor model; tanpa gambar dan tanpa embedding.
+- CLAUDE.md baris 48 (bagian Lingkungan, Proyek): "tanpa remote" diganti keterangan remote GitHub, visibilitas [T] belum diverifikasi, dan hasil pemeriksaan riwayat. Diff diperiksa: 1 baris diganti 1 baris. Bagian lain tidak diubah.
+- Tidak ada git push dilakukan. Commit lokal yang belum ada di origin saat entri ini ditulis: 560e2c2 dan 083f60c (origin/main masih f05056e).
+- Masih terbuka (peneliti): (1) visibilitas repo GitHub, publik atau privat, belum diverifikasi; (2) belum dipastikan apakah formulir persetujuan relawan mengizinkan data turunan (skor, kotak wajah, ID samaran) disimpan di layanan seperti GitHub. Push ditunda sampai keduanya jelas.

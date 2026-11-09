@@ -45,7 +45,7 @@ Implementasi backend Frappe BUKAN bagian tahap ini (hanya analisis kelayakan).
 
 ## Lingkungan
 
-- Proyek: `C:\dev\model-research-face` (Git Bash: `/c/dev/model-research-face`). Repo Git lokal, tanpa remote.
+- Proyek: `C:\dev\model-research-face` (Git Bash: `/c/dev/model-research-face`). Repo Git dengan remote `origin` ke GitHub (github.com/notHinkk-1227/uji-model-hrms); visibilitas repo [T] belum diverifikasi; riwayat Git diperiksa 2026-11-09: tidak ada gambar, .npz, atau datasets/ yang pernah ter-commit.
 - Python 3.12.10, venv utama `.venv` (aktifkan: `source .venv/Scripts/activate`). Lingkungan terpisah
   `.venv-omz` hanya untuk alat unduh OpenVINO (jangan dipakai untuk eksperimen).
 - Pustaka utama: numpy 2.5.4, onnxruntime 1.31.1, opencv-python-headless 5.0.0 (OpenCV 5), torch 2.15.0+cpu,
