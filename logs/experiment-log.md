@@ -315,3 +315,8 @@
   5. Bagian 5: ukuran face.jpg dikoreksi menjadi 750x500 (lanskap), sesuai koreksi 2026-11-08.
   6. Bagian 7.2: usulan 1280 px dinyatakan sebagai asumsi kompromi, dengan angka pembanding 640/1280/penuh; klaim "FAR jauh lebih rendah" dihapus karena selisih 0 vs 2 dari 186 tidak bermakna.
 - Masih terbuka: (a) bandingkan skor genuine terendah dan impostor tertinggi per skenario untuk memisahkan efek aturan threshold dari efek resolusi; (b) periksa apakah ukuran/EXIF saja dapat memisahkan foto asli dari serangan (hanya metadata, tanpa membuka gambar).
+
+## 2026-11-09 - PRD dipindah ke reports/
+- PRD-penelitian.md dipindah dari akar proyek ke reports/PRD-penelitian.md. Isi tidak berubah (dibandingkan dengan versi di HEAD memakai diff: sama).
+- Lokasi baru sesuai dengan yang tertulis di CLAUDE.md (reports/PRD-penelitian.md); catatan entri 2026-11-09 sebelumnya (PRD di akar proyek) berlaku untuk keadaan sebelum pemindahan ini.
+- Pembaruan tanggal dan baris status di CLAUDE.md dikerjakan terpisah.
