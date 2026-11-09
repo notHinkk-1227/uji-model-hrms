@@ -45,7 +45,7 @@ Implementasi backend Frappe BUKAN bagian tahap ini (hanya analisis kelayakan).
 
 ## Lingkungan
 
-- Proyek: `C:\dev\model-research-face` (Git Bash: `/c/dev/model-research-face`). Repo Git dengan remote `origin` ke GitHub (github.com/notHinkk-1227/uji-model-hrms); visibilitas repo [T] belum diverifikasi; riwayat Git diperiksa 2026-11-09: tidak ada gambar, .npz, atau datasets/ yang pernah ter-commit.
+- Proyek: `C:\dev\model-research-face` (Git Bash: `/c/dev/model-research-face`). Per 2026-11-09 pekerjaan dilakukan di SALINAN `D:\dev\model-research-face-cc` (`/d/dev/model-research-face-cc`); `git push` ditunda; jalankan kode dengan `.venv/Scripts/python.exe` milik salinan. Repo Git dengan remote `origin` ke GitHub (github.com/notHinkk-1227/uji-model-hrms); visibilitas repo [T] belum diverifikasi; riwayat Git diperiksa 2026-11-09: tidak ada gambar, .npz, atau datasets/ yang pernah ter-commit.
 - Python 3.12.10, venv utama `.venv` (aktifkan: `source .venv/Scripts/activate`). Lingkungan terpisah
   `.venv-omz` hanya untuk alat unduh OpenVINO (jangan dipakai untuk eksperimen).
 - Pustaka utama: numpy 2.5.4, onnxruntime 1.31.1, opencv-python-headless 5.0.0 (OpenCV 5), torch 2.15.0+cpu,
@@ -63,7 +63,7 @@ datasets/         DATA RELAWAN (jangan dibaca): liveness/internal/raw/S01..S04/o
 logs/             experiment-log.md (kronologi, tambah di akhir), checksums-*.txt
 models/           bobot (auraface, buffalo_l, sface, yunet, anti-spoof-mn3)
 repositories/     kode sumber MiniFASNet (Silent-Face-Anti-Spoofing) dan face-antispoof-onnx
-reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..6.md (3:4, enrollment, threshold, crop mn3, kamera belakang untuk serangan), spesifikasi-preprocessing-v2.md, PRD-penelitian.md, laporan-akhir.md (v1.3.1, draf)
+reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..6.md (3:4, enrollment, threshold, crop mn3, kamera belakang untuk serangan), spesifikasi-preprocessing-v2.md, amandemen-protokol-7.md (DRAF, belum dibekukan), handover-penelitian-v3.md (posisi dan langkah berikutnya), PRD-penelitian.md, laporan-akhir.md (v1.3.1, draf)
 results/          hasil evaluasi (results/_uji = uji kode, tidak ikut Git)
 scripts/          lihat di bawah
 ```
@@ -129,6 +129,8 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 6. SELESAI 2026-11-09 sejauh dapat diverifikasi (crop mn3 selesai 2026-11-08, amandemen 5): indeks MiniFASNet 0/2 tetap [T]; WIDER Face CC BY-NC-ND 4.0 [S]; BlazeFace Apache-2.0 [V] (belum diuji, 6 titik).
 7. DRAF v1.3.1 2026-11-09: `reports/laporan-akhir.md` (menunggu tinjauan peneliti).
 8. TEMUAN 2026-11-09: foto serangan liveness diambil dengan KAMERA BELAKANG (amandemen 6); hasil liveness TIDAK dipakai untuk memilih model; pengambilan ulang serangan kamera depan ditunda (relawan belum tersedia).
+9. SELESAI 2026-11-09: sinkronisasi dokumen (laporan v1.3.1, PRD v1.1); benchmark latensi pengenalan dan pipeline (`benchmark_recognition.py`, hasil di `results/latensi/`).
+10. BERIKUTNYA: baca `reports/handover-penelitian-v3.md` (posisi, lingkungan salinan D:, langkah berikutnya, keputusan terbuka). Amandemen 7 masih DRAF.
 
 Batas klaim di laporan: serangan cetak dan foto di layar saja (replay video tidak diuji); 4 relawan = perbandingan
 relatif, bukan estimasi akurasi populasi; FAR di bawah ~1,6% (3/186) tidak dapat dibuktikan; angka latensi dari laptop pengembangan.
