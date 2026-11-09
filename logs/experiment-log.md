@@ -302,3 +302,16 @@
 - Latensi pada laporan berasal dari benchmark awal 2026-11-05 (sebelum amandemen 2 dan 5); latensi pengenalan belum diukur.
 - Kelayakan Frappe: desain saja (layanan inferensi terpisah, data biometrik/UU PDP [T]).
 - Catatan: PRD berada di akar proyek (PRD-penelitian.md), bukan reports/ seperti tertulis di CLAUDE.md.
+
+## 2026-11-09 - Tinjauan angka draf laporan akhir dan revisi v1.1
+- Pemeriksaan dilakukan asisten pada salinan zip repo (membaca dokumen, log, dan metrik_*.json; tidak ada kode atau model dijalankan, tidak ada eksperimen baru, tidak ada data relawan dibuka).
+- Hasil pencocokan: semua angka tabel 3.1, 3.2, dan 4 laporan sama dengan results/liveness/metrik_{640,1280,penuh}.json dan results/recognition/metrik_{640,1280,penuh}.json (termasuk rentang threshold MiniFASNet 0,82-0,93, rincian per cahaya dan per relawan, nilai McNemar, jumlah sampel 160/160 dan 82/82). Angka latensi sesuai benchmark sesi kedua 2026-11-05.
+- Tidak diverifikasi dalam tinjauan ini: hash dan commit (zip tanpa riwayat Git) serta tabel lisensi secara menyeluruh.
+- Revisi laporan-akhir.md menjadi v1.1 (6 butir, hanya teks; tidak ada angka hasil diubah):
+  1. Ringkasan (bagian 1): ditambah catatan bahwa perbedaan ukuran dan EXIF antara foto asli dan serangan dapat memengaruhi AUC MiniFASNet [T].
+  2. Bagian 3.3: "p <= 0,007" diganti "p < 0,01 (0,0008-0,0071)" (nilai pada 640 adalah 0,0071); ditambah catatan bahwa nilai p optimistis karena korelasi dalam relawan.
+  3. Bagian 4: klaim FAR AuraFace 15/186 "disebabkan aturan threshold, bukan model" dilunakkan menjadi "kemungkinan besar terkait aturan threshold [T]"; median genuine turun (0,898 -> 0,884) dan impostor naik (0,284 -> 0,300) dari 640 ke penuh sehingga resolusi mungkin ikut berperan. Pemisahan penyebab belum dilakukan.
+  4. Bagian 6: lisensi bobot MiniFASNet diubah dari [V] menjadi "mengikuti repo [T]" (yang terverifikasi hanya lisensi repo), disamakan dengan face-antispoof-onnx.
+  5. Bagian 5: ukuran face.jpg dikoreksi menjadi 750x500 (lanskap), sesuai koreksi 2026-11-08.
+  6. Bagian 7.2: usulan 1280 px dinyatakan sebagai asumsi kompromi, dengan angka pembanding 640/1280/penuh; klaim "FAR jauh lebih rendah" dihapus karena selisih 0 vs 2 dari 186 tidak bermakna.
+- Masih terbuka: (a) bandingkan skor genuine terendah dan impostor tertinggi per skenario untuk memisahkan efek aturan threshold dari efek resolusi; (b) periksa apakah ukuran/EXIF saja dapat memisahkan foto asli dari serangan (hanya metadata, tanpa membuka gambar).

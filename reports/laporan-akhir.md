@@ -1,6 +1,6 @@
 # Laporan Akhir: Penelitian Komparatif Liveness Detection dan Face Recognition untuk Absensi HRMS Mobile
 
-Versi 1.0 (draf untuk ditinjau peneliti), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
+Versi 1.1 (draf revisi setelah pemeriksaan angka terhadap JSON), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
 Sumber angka: `results/liveness/metrik_{640,1280,penuh}.json`, `results/recognition/metrik_{640,1280,penuh}.json`,
 `logs/experiment-log.md`. Penanda: [V] terverifikasi, [S] klaim sumber/sekunder, [T] belum terverifikasi.
 Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, kecuali disebut lain.
@@ -12,6 +12,10 @@ Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, ke
 | Liveness | **MiniFASNet V2 + V1SE** (terbaik relatif, satu-satunya yang lulus audit lisensi) | **BELUM LAYAK apa adanya.** Dengan aturan bawaan, 33-43% foto cetak lolos. Hanya dengan threshold yang dikalibrasi, kinerjanya mendekati berguna (ACER 8,1% pada 1280), dan itu pun belum cukup bukti. |
 | Face recognition | **AuraFace-v1** (lisensi lulus audit; pemisahan sempurna, AUC 1,0) | **LAYAK BERSYARAT.** Kalibrasi threshold perlu data lebih banyak, enrollment harus sesi terpisah, dan detektor produksi harus diuji. |
 | Detektor wajah | YuNet hanya untuk eksperimen; **BlazeFace** kandidat produksi | **BELUM ADA.** Data latih YuNet nonkomersial [S]; BlazeFace berlisensi Apache-2.0 [V] tetapi belum diuji dan titik wajahnya tidak cocok dengan alignment AuraFace. |
+
+Catatan membaca hasil liveness: ukuran dan EXIF foto asli berbeda dari foto serangan pada keempat relawan, sehingga
+skor yang memisahkan keduanya (AUC MiniFASNet 0,99) mungkin sebagian mencerminkan perbedaan pengambilan foto, bukan
+kemampuan mendeteksi serangan [T] (lihat bagian 9).
 
 Kesimpulan jujur: **pipeline absensi wajah yang siap produksi belum ada.** Komponen pengenalan (AuraFace)
 menjanjikan. Komponen liveness adalah titik lemah utama. Detektor produksi masih harus dipilih dan diuji.
@@ -64,8 +68,9 @@ BPCER = foto asli yang ditolak (dari 80). APCER = serangan yang lolos (dari 40 p
   aturan bawaannya terlalu longgar: tidak ada foto asli yang ditolak, sementara 13-17 dari 40 foto cetak lolos.
   Dengan threshold yang dikalibrasi, kesalahan turun ke sekitar 3/40 foto cetak lolos dan 7/80 foto asli ditolak (1280).
   Threshold per lipatan cukup stabil, yaitu p(real) 0,82-0,93.
-- Perbedaan MiniFASNet dengan mn3 bermakna: McNemar p ≤ 0,007 di ketiga skenario. Dengan face-antispoof-onnx
-  belum konsisten bermakna (p 0,024-0,121).
+- Perbedaan MiniFASNet dengan mn3 bermakna: McNemar p < 0,01 di ketiga skenario (0,0008-0,0071). Dengan face-antispoof-onnx
+  belum konsisten bermakna (p 0,024-0,121). Semua nilai p ini optimistis: foto dari relawan yang sama saling berkorelasi,
+  sedangkan uji McNemar menganggap pasangan sampel saling bebas.
 - **anti-spoof-mn3 menolak semua foto asli S02 dan S04** (20/20 masing-masing), jadi tidak dapat dipakai pada
   kamera relawan ini. Penyebabnya [T], dugaan terkuat adalah pergeseran domain. Lisensinya juga tertahan karena dilatih pada CelebA-Spoof yang nonkomersial.
 - **face-antispoof-onnx** meloloskan semua serangan S01 (10/10 print, 10/10 screen pada 1280). Kinerjanya tidak
@@ -86,9 +91,12 @@ FRR = orang yang benar ditolak (dari 62). FAR = orang lain diterima (dari 186). 
 | SFace | 640 / 1280 / penuh | 1/62 | 7 / 8 / 16 dari 186 | 0,999-1,000 | 0,92 / 0,31 |
 
 - **buffalo_l paling bersih**, tetapi bobotnya berlisensi **riset saja** sehingga tidak boleh dipakai komersial tanpa lisensi dari InsightFace.
-- **AuraFace** memisahkan genuine dan impostor dengan sempurna (AUC 1,0). Kenaikan FAR pada skenario penuh (15/186) disebabkan
-  aturan threshold, bukan model. Data latih tiap lipatan terpisah sempurna, sehingga threshold EER jatuh di tengah celah
-  (0,425-0,59), dan sebagian impostor relawan uji (S02, S03) masuk ke celah itu. Implikasi untuk produksi: threshold
+- **AuraFace** memisahkan genuine dan impostor dengan sempurna (AUC 1,0). Kenaikan FAR pada skenario penuh (15/186) kemungkinan besar
+  terkait aturan threshold [T]. Data latih tiap lipatan terpisah sempurna, sehingga threshold EER jatuh di tengah celah
+  (0,425-0,59), dan sebagian impostor relawan uji (S02, S03) masuk ke celah itu. Namun median skor genuine juga turun (0,898 pada 640
+  menjadi 0,884 pada penuh) dan median impostor naik (0,284 menjadi 0,300), jadi celahnya ikut menyempit dan resolusi
+  mungkin berperan. Memisahkan kedua penyebab butuh perbandingan skor genuine terendah dan impostor tertinggi per
+  skenario, yang belum dilakukan [T]. Implikasi untuk produksi: threshold
   AuraFace harus dipilih untuk FAR rendah, tidak memakai EER, dan dikalibrasi pada data yang lebih banyak.
 - SFace lebih lemah daripada AuraFace di semua skenario, dan lisensinya tertahan.
 - Bias optimistis: enrollment dan probe diambil di sesi yang sama dan hanya ada 4 identitas. FAR di bawah sekitar 1,6% (3/186) tidak
@@ -96,7 +104,7 @@ FRR = orang yang benar ditolak (dari 62). FAR = orang lain diterima (dari 186). 
 
 ## 5. Latensi dan sumber daya (awal)
 
-Angka dari laptop pengembangan (i7-11800H, CPU, 1 thread, gambar uji face.jpg 500x750; 5 November 2026, sebelum
+Angka dari laptop pengembangan (i7-11800H, CPU, 1 thread, gambar uji face.jpg 750x500 (lebar x tinggi, lanskap; entri log 5 November menulis 500x750, dikoreksi 8 November); 5 November 2026, sebelum
 amandemen 2 dan 5). Antar-sesi angkanya bergeser 35-60%, jadi hanya urutan besarnya yang dapat dipakai:
 
 - YuNet sekitar 22 ms; ansambel MiniFASNet sekitar 11 ms; face-antispoof-onnx sekitar 5 ms; anti-spoof-mn3 sekitar 3 ms.
@@ -109,7 +117,7 @@ amandemen 2 dan 5). Antar-sesi angkanya bergeser 35-60%, jadi hanya urutan besar
 
 | Komponen | Kode | Bobot | Data latih | Status |
 |---|---|---|---|---|
-| MiniFASNet | Apache-2.0 [V] | Apache-2.0 (repo) [V] | Tidak dijelaskan [V: tidak ada] | Lulus audit awal |
+| MiniFASNet | Apache-2.0 [V] | Lisensi bobot mengikuti repo (Apache-2.0) [T] | Tidak dijelaskan [V: tidak ada] | Lulus audit awal |
 | face-antispoof-onnx | Apache-2.0 [V] | Di repo; lisensi bobot mengikuti repo [T] | Tidak dinyatakan; kemungkinan CelebA-Spoof [T] | Tertahan sementara |
 | anti-spoof-mn3 | MIT [V] | MIT [V] | CelebA-Spoof, nonkomersial [V] | Tertahan |
 | AuraFace-v1 | Apache-2.0 [V] | Apache-2.0 [V] | Data komersial/publik menurut model card [V]; cakupan etnis terbatas [V] | Lulus audit awal |
@@ -135,9 +143,14 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
    (menolak semua foto asli dua relawan, lisensi tertahan), face-antispoof-onnx (tidak stabil, data latih tidak jelas).
 
 ### 7.2 Format foto dari aplikasi
-- Kamera depan, potong ke 3:4, JPEG, **sisi terpanjang 1280 px**. Pada skenario ini MiniFASNet hampir sebaik resolusi
-  penuh, sementara FAR AuraFace jauh lebih rendah daripada pada resolusi penuh. Ukuran unggahan juga jauh lebih kecil.
-  Ini hasil dari 4 relawan dan perlu dikonfirmasi di pilot.
+- Kamera depan, potong ke 3:4, JPEG. Usulan awal untuk pilot: **sisi terpanjang 1280 px** (ASUMSI, bukan hasil yang
+  terbukti). Alasannya kompromi:
+  - Liveness: MiniFASNet terburuk pada 640 (ACER threshold EER 13,1%, dibanding 8,1% pada 1280). Selisih 1280 dan penuh
+    kecil pada angka EER (8,1% vs 7,5%), tetapi lebih besar pada aturan bawaan (20,0% vs 16,2%).
+  - Pengenalan: FAR AuraFace 0/186 (640), 2/186 (1280), 15/186 (penuh). Selisih 0 vs 2 tidak bermakna, dan kenaikan pada
+    resolusi penuh belum terpisah dari efek aturan threshold (bagian 4).
+  - Ukuran unggahan 1280 jauh lebih kecil daripada resolusi penuh.
+  - Pilot sebaiknya membandingkan 1280 dengan resolusi lain secara langsung.
 
 ### 7.3 Pertahanan berlapis (karena liveness pasif terbatas)
 - Liveness pasif berbasis satu foto tidak melindungi dari injeksi kamera virtual, emulator, atau topeng 3D.
