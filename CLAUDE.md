@@ -63,7 +63,7 @@ datasets/         DATA RELAWAN (jangan dibaca): liveness/internal/raw/S01..S04/o
 logs/             experiment-log.md (kronologi, tambah di akhir), checksums-*.txt
 models/           bobot (auraface, buffalo_l, sface, yunet, anti-spoof-mn3)
 repositories/     kode sumber MiniFASNet (Silent-Face-Anti-Spoofing) dan face-antispoof-onnx
-reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..5.md (3:4, enrollment, threshold, crop mn3), spesifikasi-preprocessing-v2.md, PRD-penelitian.md, laporan-akhir.md (v1.1, draf)
+reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..5.md (3:4, enrollment, threshold, crop mn3), spesifikasi-preprocessing-v2.md, PRD-penelitian.md, laporan-akhir.md (v1.2, draf)
 results/          hasil evaluasi (results/_uji = uji kode, tidak ikut Git)
 scripts/          lihat di bawah
 ```
@@ -126,7 +126,7 @@ sama dengan probe dan sebagian redup (bias optimistis, harus dicatat). Semua gam
 4. SELESAI 2026-11-08: `recognition.py` (uji `test_pengenalan.py` 11/11). Uji "identitas berbeda" belum (tidak ada wajah kedua non-relawan).
 5. SELESAI 2026-11-08: evaluasi LOSO 640/1280/penuh (results/liveness, results/recognition; ringkasan di log). Embedding .npz tidak ikut Git.
 6. SELESAI 2026-11-09 sejauh dapat diverifikasi (crop mn3 selesai 2026-11-08, amandemen 5): indeks MiniFASNet 0/2 tetap [T]; WIDER Face CC BY-NC-ND 4.0 [S]; BlazeFace Apache-2.0 [V] (belum diuji, 6 titik).
-7. DRAF 2026-11-09: `reports/laporan-akhir.md` (menunggu tinjauan peneliti).
+7. DRAF v1.2 2026-11-09: `reports/laporan-akhir.md` (menunggu tinjauan peneliti).
 
 Batas klaim di laporan: serangan cetak dan foto di layar saja (replay video tidak diuji); 4 relawan = perbandingan
 relatif, bukan estimasi akurasi populasi; FAR di bawah ~1,6% (3/186) tidak dapat dibuktikan; angka latensi dari laptop pengembangan.

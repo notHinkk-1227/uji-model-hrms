@@ -343,3 +343,11 @@
   3. Bagian 7.2, butir pengenalan: resolusi penuh tidak dipilih untuk AuraFace (celah 0,011); 640 vs 1280 tidak terbedakan; usulan 1280 tetap sebagai asumsi.
   4. Bagian 9: ditambah keterbatasan celah skor AuraFace sempit dengan 4 identitas [T].
 - Penyebab sensitivitas resolusi AuraFace tetap [T] dan belum diuji.
+
+## 2026-11-09 - CLAUDE.md: versi laporan akhir disamakan dengan v1.2
+- Dasar: commit f05056e (laporan-akhir.md v1.2, hasil analisis celah skor). Tidak ada eksperimen baru, tidak ada model dijalankan, tidak ada data relawan dibuka.
+- Dua perubahan teks pada CLAUDE.md (diff diperiksa: tepat 2 baris berubah):
+  1. Baris 66 (daftar reports/): "laporan-akhir.md (v1.1, draf)" menjadi "(v1.2, draf)".
+  2. Baris 129 (langkah 7): "DRAF 2026-11-09" menjadi "DRAF v1.2 2026-11-09". Status tetap menunggu tinjauan peneliti.
+- Bagian lain CLAUDE.md tidak diubah, termasuk tanggal "Terakhir diperbarui" (9 November 2026).
+- Catatan terbuka: daftar "Skrip yang ada" di CLAUDE.md belum diperiksa apakah memuat analisis_celah.py dan test_analisis_celah.py; dikerjakan sebagai langkah terpisah.
