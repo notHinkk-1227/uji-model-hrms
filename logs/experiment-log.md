@@ -364,3 +364,15 @@
 - CLAUDE.md baris 48 (bagian Lingkungan, Proyek): "tanpa remote" diganti keterangan remote GitHub, visibilitas [T] belum diverifikasi, dan hasil pemeriksaan riwayat. Diff diperiksa: 1 baris diganti 1 baris. Bagian lain tidak diubah.
 - Tidak ada git push dilakukan. Commit lokal yang belum ada di origin saat entri ini ditulis: 560e2c2 dan 083f60c (origin/main masih f05056e).
 - Masih terbuka (peneliti): (1) visibilitas repo GitHub, publik atau privat, belum diverifikasi; (2) belum dipastikan apakah formulir persetujuan relawan mengizinkan data turunan (skor, kotak wajah, ID samaran) disimpan di layanan seperti GitHub. Push ditunda sampai keduanya jelas.
+
+## 2026-11-09 - Cek confound ukuran foto asli vs serangan (hanya CSV, tanpa membuka gambar)
+- Dasar: results/liveness/skor_penuh.csv (kolom orig_w, orig_h, dan kelas dari sample_id). Tidak ada model dijalankan, tidak ada gambar dibuka, tidak ada data relawan dibaca selain CSV hasil. Dihitung dengan modul csv bawaan Python (pandas tidak terpasang di .venv; tidak ada paket dipasang). Skrip sekali pakai lewat heredoc, belum disimpan sebagai berkas.
+- Jumlah: real 80, serangan 80 (print 40 + screen 40), semua sample_id cocok pola.
+- Hasil [V]: pada keempat relawan, himpunan ukuran foto asli dan foto serangan TIDAK tumpang tindih.
+  - S01 real 2316x3088; serangan 3000x4001, 3024x4032.
+  - S02 real 3120x4208; serangan 2296x4080, 3072x4080.
+  - S03 real 2448x3264, 4896x6528; serangan 1884x4080.
+  - S04 real 2448x3264; serangan 3072x4080.
+  Ukuran saja cukup untuk memisahkan asli dari serangan di dalam setiap relawan pada data ini.
+- Tafsir [T]: konsisten dengan kekhawatiran di laporan-akhir.md (bagian 1 dan 9) bahwa AUC MiniFASNet 0,99 sebagian mencerminkan perbedaan pengambilan foto. Belum terbukti model memakai sinyal ini: model tidak menerima ukuran asli (gambar dipotong 3:4, diperkecil, wajah dipotong ke 80x80 atau 128x128); yang mungkin terbawa adalah karakter tangkapan (kamera, kompresi, ketajaman). Besar pengaruhnya pada AUC belum diukur.
+- Belum dilakukan: pemeriksaan EXIF (butir (b) pada entri 2026-11-09 "Tinjauan angka draf laporan akhir"); kolom EXIF mungkin ada di datasets/liveness/internal/manifest.csv (belum diperiksa). Tidak ada perubahan pada laporan-akhir.md; usulan revisi menunggu persetujuan peneliti.
