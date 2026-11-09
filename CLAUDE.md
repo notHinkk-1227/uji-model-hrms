@@ -1,7 +1,7 @@
 # CLAUDE.md: Penelitian Komparatif Liveness Detection dan Face Recognition
 
 Dokumen ini dibaca otomatis oleh Claude Code. Detail lengkap ada di `reports/PRD-penelitian.md`.
-Terakhir diperbarui: 6 November 2026.
+Terakhir diperbarui: 9 November 2026.
 
 ## Tujuan proyek
 
@@ -63,7 +63,7 @@ datasets/         DATA RELAWAN (jangan dibaca): liveness/internal/raw/S01..S04/o
 logs/             experiment-log.md (kronologi, tambah di akhir), checksums-*.txt
 models/           bobot (auraface, buffalo_l, sface, yunet, anti-spoof-mn3)
 repositories/     kode sumber MiniFASNet (Silent-Face-Anti-Spoofing) dan face-antispoof-onnx
-reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..4.md (3:4, enrollment, threshold), spesifikasi-preprocessing-v2.md, PRD
+reports/          protokol-evaluasi-v1.0.md, amandemen-protokol-1.md, amandemen-protokol-2..5.md (3:4, enrollment, threshold, crop mn3), spesifikasi-preprocessing-v2.md, PRD-penelitian.md, laporan-akhir.md (v1.1, draf)
 results/          hasil evaluasi (results/_uji = uji kode, tidak ikut Git)
 scripts/          lihat di bawah
 ```

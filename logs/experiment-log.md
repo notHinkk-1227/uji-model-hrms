@@ -320,3 +320,8 @@
 - PRD-penelitian.md dipindah dari akar proyek ke reports/PRD-penelitian.md. Isi tidak berubah (dibandingkan dengan versi di HEAD memakai diff: sama).
 - Lokasi baru sesuai dengan yang tertulis di CLAUDE.md (reports/PRD-penelitian.md); catatan entri 2026-11-09 sebelumnya (PRD di akar proyek) berlaku untuk keadaan sebelum pemindahan ini.
 - Pembaruan tanggal dan baris status di CLAUDE.md dikerjakan terpisah.
+
+## 2026-11-09 - CLAUDE.md: tanggal dan daftar reports/ diperbarui
+- CLAUDE.md: "Terakhir diperbarui" dari 6 November menjadi 9 November 2026.
+- CLAUDE.md, daftar isi reports/: ditambah amandemen-protokol-5.md (crop mn3), nama lengkap PRD-penelitian.md, dan laporan-akhir.md (v1.1, draf).
+- Bagian lain CLAUDE.md tidak diubah, termasuk status langkah 7 (laporan akhir masih menunggu persetujuan peneliti) dan jalur proyek utama C:\dev\model-research-face.
