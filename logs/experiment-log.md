@@ -407,3 +407,10 @@
   9. Bagian 9: butir confound diganti temuan terverifikasi; ditambah butir pengambilan ulang ditunda.
 - CLAUDE.md: penanda versi laporan v1.2 menjadi v1.3 di dua tempat (daftar reports/ dan langkah 7). Bagian lain tidak diubah.
 - Belum dilakukan: bagian 10 (langkah lanjutan) belum menyebut pengambilan ulang foto serangan kamera depan secara eksplisit. Laporan tetap draf yang menunggu tinjauan peneliti.
+
+## 2026-11-09 - Sinkronisasi dokumen setelah amandemen 6 (salinan D:)
+- Dikerjakan di salinan `D:\dev\model-research-face-cc` (HEAD 911dc96, bersih, sama dengan origin/main). Tidak ada eksperimen baru, tidak ada model dijalankan, tidak ada data relawan dibuka, tidak ada angka hasil diubah. Tidak ada git push.
+- `reports/laporan-akhir.md`: bagian 2 baris Data kini menyatakan foto asli kamera depan dan foto serangan kamera belakang (amandemen 6); daftar amandemen menjadi 1-6. Bagian 10: butir baru 1 (ambil ulang foto serangan dengan kamera depan, lalu evaluasi ulang liveness), butir lain digeser menjadi 2-5.
+- `reports/PRD-penelitian.md`: versi 1.1; amandemen 1-6; baris K9 diberi catatan hasil liveness tidak sah (amandemen 6); bagian 4 baris Relawan membedakan kamera foto asli dan serangan; bagian 6 butir baru tentang kamera belakang.
+- `reports/handover-penelitian-v2.md` dipindah ke `reports/arsip/` (git mv, isi tidak diubah): usang (langkah "Berikutnya" sudah selesai dan persetujuan relawan sudah dikonfirmasi). Tidak ada dokumen lain yang merujuknya selain log.
+- Belum dilakukan: protokol atau amandemen 7 untuk pengambilan ulang foto serangan; CLAUDE.md tidak diubah dalam entri ini.

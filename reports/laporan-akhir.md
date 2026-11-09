@@ -24,15 +24,16 @@ Rekomendasinya adalah melanjutkan ke **tahap pilot terbatas**, bukan rilis produ
 
 ## 2. Apa yang diuji
 
-- Data: 4 relawan (S01-S04) dengan ponsel masing-masing, kamera depan, satu sesi pada hari yang sama. Liveness:
+- Data: 4 relawan (S01-S04) dengan ponsel masing-masing, satu sesi pada hari yang sama. Foto asli (liveness dan pengenalan) diambil dengan kamera depan, tetapi foto serangan liveness (print dan screen) diambil dengan KAMERA BELAKANG (amandemen 6). Liveness:
   160 foto (real 80, print 40, screen 40). Pengenalan: enrollment 5 per relawan, 62 probe, 186 pasangan impostor.
   Replay video, topeng 3D, dan injeksi kamera virtual **tidak diuji**.
-- Protokol: `protokol-evaluasi-v1.0.md` (dibekukan) dengan amandemen 1-5:
+- Protokol: `protokol-evaluasi-v1.0.md` (dibekukan) dengan amandemen 1-6:
   1. replay tidak dikumpulkan;
   2. potong tengah 3:4;
   3. foto enrollment yang identik dengan probe dikeluarkan;
   4. threshold EER pada lipatan latih, dan gagal deteksi dihitung ditolak;
-  5. koreksi crop anti-spoof-mn3.
+  5. koreksi crop anti-spoof-mn3;
+  6. foto serangan liveness diambil dengan kamera belakang (hasil liveness tidak dipakai memilih model).
 - Leave-one-subject-out: threshold dihitung dari 3 relawan lalu diuji pada relawan keempat. Ini meniru "pengguna baru dengan ponsel baru".
 - Tiga skenario resolusi (sisi terpanjang): 640, 1280, penuh. Detektor YuNet 2023mar dipakai bersama oleh semua model.
 - Semua run: 160/160 foto liveness dan 82/82 foto pengenalan diproses tanpa gagal deteksi.
@@ -228,14 +229,15 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 - Detektor eksperimen (YuNet) berbeda dari kandidat detektor produksi (BlazeFace), jadi hasil bisa berubah saat detektor diganti.
 
 ## 10. Langkah lanjutan yang disarankan
-1. Uji BlazeFace dan sumber landmark untuk alignment pada data yang ada, lalu bandingkan hasil AuraFace dan MiniFASNet dengan hasil YuNet.
-2. Benchmark latensi AuraFace dan pipeline lengkap di CPU.
-3. Pilot data baru dengan protokol baru yang dibekukan sebelum pengambilan:
+1. Ambil ulang foto serangan liveness (print 10 dan screen 10 per relawan) dengan KAMERA DEPAN, lalu jalankan ulang evaluasi liveness (amandemen 6). Tanpa ini liveness belum punya kesimpulan yang sahih. Protokol atau amandemen baru dibekukan sebelum pengambilan; EXIF, ukuran, dan lensa foto asli dan serangan diperiksa sebelum evaluasi.
+2. Uji BlazeFace dan sumber landmark untuk alignment pada data yang ada, lalu bandingkan hasil AuraFace dan MiniFASNet dengan hasil YuNet.
+3. Benchmark latensi AuraFace dan pipeline lengkap di CPU.
+4. Pilot data baru dengan protokol baru yang dibekukan sebelum pengambilan:
    - lebih banyak relawan dan ponsel;
    - enrollment dari sesi berbeda;
    - serangan replay;
    - foto dari kamera aplikasi HRMS sendiri.
-4. Tinjauan hukum: lisensi bobot dan data latih (MiniFASNet, AuraFace, BlazeFace), pernyataan cakupan BlazeFace, serta UU PDP.
+5. Tinjauan hukum: lisensi bobot dan data latih (MiniFASNet, AuraFace, BlazeFace), pernyataan cakupan BlazeFace, serta UU PDP.
 
 ## 11. Reproduksibilitas
 Kode, konfigurasi, hash bobot, versi pustaka, skor mentah per foto (CSV), dan metadata tiap run tercatat di repo

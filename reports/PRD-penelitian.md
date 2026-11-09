@@ -1,6 +1,6 @@
 # PRD: Penelitian Komparatif Liveness Detection dan Face Recognition untuk Absensi HRMS Mobile
 
-Versi 1.0, 6 November 2026. Dokumen rujukan untuk peneliti dan alat bantu (termasuk Claude Code). Aturan kerja ada di `CLAUDE.md`.
+Versi 1.1, 6 November 2026 (diperbarui 9 November 2026: amandemen 5-6 dan status hasil liveness). Dokumen rujukan untuk peneliti dan alat bantu (termasuk Claude Code). Aturan kerja ada di `CLAUDE.md`.
 
 ## 1. Latar belakang
 
@@ -38,8 +38,8 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 
 ## 4. Data dan protokol
 
-- Protokol: `reports/protokol-evaluasi-v1.0.md` (dibekukan) + amandemen 1-4 (`reports/amandemen-protokol-*.md`).
-- Relawan: 4 (S01-S04), ponsel masing-masing, kamera depan, foto rasio 3:4 JPEG, cahaya terang/redup diatur fisik.
+- Protokol: `reports/protokol-evaluasi-v1.0.md` (dibekukan) + amandemen 1-6 (`reports/amandemen-protokol-*.md`).
+- Relawan: 4 (S01-S04), ponsel masing-masing, foto rasio 3:4 JPEG, cahaya terang/redup diatur fisik. Foto asli dan enrollment: kamera depan; foto serangan liveness: kamera belakang (penyimpangan dari protokol, amandemen 6).
 - Kelas: real, print (foto cetak), screen (foto di layar). Replay dan uji stres tidak dikumpulkan.
 - Jumlah: per relawan real 20 (10 terang, 10 redup), print 10, screen 10; enrollment 5. Total 160 foto liveness + 20 enrollment.
 - Pembagian: leave-one-subject-out (threshold dari 3 relawan, uji pada 1). Aturan keputusan bawaan tiap model; ROC terpisah.
@@ -62,12 +62,13 @@ Detektor wajah bersama: YuNet 2023mar (eksperimen); detektor produksi belum dite
 | K6 | Manifest 16 kolom | SELESAI | 160 baris; detail perangkat/pengaturan diberi penanda "tidak_dicatat" |
 | K7 | Modul metrik (APCER dll., CI, berpasangan) | SELESAI | lolos uji pada data tiruan berlabel dengan jawaban diketahui |
 | K8 | Modul pengenalan (alignment, embedding, cosine) | SELESAI (uji identitas berbeda belum) | templat ArcFace dari kode resmi; uji pasangan sama/beda |
-| K9 | Evaluasi penuh (LOSO x skenario resolusi) | SELESAI 2026-11-08 (liveness + pengenalan, 640/1280/penuh) | CSV skor mentah + tabel metrik; tanpa threshold pada data uji |
+| K9 | Evaluasi penuh (LOSO x skenario resolusi) | SELESAI 2026-11-08 (liveness + pengenalan, 640/1280/penuh); hasil liveness TIDAK sah untuk memilih model (amandemen 6) dan perlu diulang setelah foto serangan diambil ulang dengan kamera depan | CSV skor mentah + tabel metrik; tanpa threshold pada data uji |
 | K10 | Laporan akhir + rekomendasi + kelayakan Frappe | DRAF 2026-11-09 (`reports/laporan-akhir.md`), menunggu tinjauan peneliti | memenuhi "definisi selesai" di bawah |
 
 ## 6. Asumsi, risiko, dan hal belum terverifikasi
 
 - Persetujuan relawan ditandatangani semua: SUDAH DIKONFIRMASI peneliti (8 November 2026).
+- Foto serangan liveness (print dan screen) diambil dengan KAMERA BELAKANG, bukan kamera depan (`reports/amandemen-protokol-6.md`, 9 November 2026): hasil liveness tidak sah untuk memilih model; hasil pengenalan tidak terdampak. Pengambilan ulang dengan kamera depan belum dilakukan.
 - Semua gambar dipotong tengah ke tepat 3:4 sebelum pipeline (`reports/amandemen-protokol-2.md`).
 - Crop anti-spoof-mn3: terverifikasi dari kode sumber (amandemen 5); ketatnya kotak YuNet vs detektor asli [T]. Makna indeks keluaran 0 dan 2 MiniFASNet: belum diverifikasi.
 - Data latih bobot MiniFASNet dan face-antispoof-onnx tidak dinyatakan; lisensi WIDER Face (YuNet) belum dibaca dari situs resmi.
