@@ -1,0 +1,108 @@
+{
+  "meta": {
+    "dibuat": "2026-11-09T15:31:23",
+    "gambar": "repositories/face-antispoof-onnx/assets/docs/face.jpg",
+    "ukuran_gambar_hw": [
+      1280,
+      960
+    ],
+    "gambar_diperbesar_sintetis_tinggi": 1280,
+    "threads": 1,
+    "ulangan": 100,
+    "warmup": 10,
+    "cpu": "Intel64 Family 6 Model 141 Stepping 1, GenuineIntel",
+    "cpu_logis": 16,
+    "versi": {
+      "python": "3.12.10",
+      "torch": "2.15.0+cpu",
+      "onnxruntime": "1.31.1",
+      "opencv": "5.0.0",
+      "numpy": "2.5.4"
+    },
+    "memori_rss_mb": {
+      "awal": 228.3,
+      "sesudah_muat_pengenalan": 724.1,
+      "sesudah_muat_liveness": 759.1,
+      "selisih_pengenalan": 495.8,
+      "selisih_liveness": 35.0,
+      "puncak_akhir": 892.9
+    },
+    "catatan": [
+      "Latensi diukur pada laptop pengembangan, bukan server produksi.",
+      "Gambar uji non-relawan (face.jpg); ukuran gambar dan wajahnya tidak mewakili foto aplikasi.",
+      "Pipeline = YuNet + ansambel MiniFASNet + embedding AuraFace; tanpa perbandingan templat dan tanpa dekode JPEG."
+    ]
+  },
+  "latensi": {
+    "auraface_align": {
+      "median_ms": 0.143,
+      "p95_ms": 0.155,
+      "mean_ms": 0.146,
+      "min_ms": 0.141,
+      "n": 100
+    },
+    "auraface_inferensi": {
+      "median_ms": 196.59,
+      "p95_ms": 206.911,
+      "mean_ms": 196.741,
+      "min_ms": 186.638,
+      "n": 100
+    },
+    "auraface_total": {
+      "median_ms": 198.437,
+      "p95_ms": 208.287,
+      "mean_ms": 199.276,
+      "min_ms": 190.234,
+      "n": 100
+    },
+    "buffalo_l_align": {
+      "median_ms": 0.144,
+      "p95_ms": 0.158,
+      "mean_ms": 0.147,
+      "min_ms": 0.137,
+      "n": 100
+    },
+    "buffalo_l_inferensi": {
+      "median_ms": 223.265,
+      "p95_ms": 248.671,
+      "mean_ms": 228.313,
+      "min_ms": 216.371,
+      "n": 100
+    },
+    "buffalo_l_total": {
+      "median_ms": 233.755,
+      "p95_ms": 255.58,
+      "mean_ms": 235.907,
+      "min_ms": 217.531,
+      "n": 100
+    },
+    "sface_align": {
+      "median_ms": 0.071,
+      "p95_ms": 0.076,
+      "mean_ms": 0.072,
+      "min_ms": 0.071,
+      "n": 100
+    },
+    "sface_inferensi": {
+      "median_ms": 26.25,
+      "p95_ms": 30.764,
+      "mean_ms": 26.666,
+      "min_ms": 23.167,
+      "n": 100
+    },
+    "sface_total": {
+      "median_ms": 25.871,
+      "p95_ms": 33.335,
+      "mean_ms": 26.968,
+      "min_ms": 24.554,
+      "n": 100
+    },
+    "pipeline_yunet_minifasnet_auraface_total": {
+      "median_ms": 239.212,
+      "p95_ms": 256.683,
+      "mean_ms": 242.591,
+      "min_ms": 228.293,
+      "n": 100
+    }
+  }
+}
