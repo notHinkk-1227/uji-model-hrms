@@ -334,3 +334,12 @@
 - Tafsir (bukan kesimpulan akhir): (1) mekanisme aturan threshold terkonfirmasi [V]; pada penuh, threshold tengah-celah lipatan S02 (0,444) dan S03 (0,425) berada di bawah impostor uji tertinggi (0,492 dan 0,471), sehingga FA 6 + 9. (2) Klaim awal laporan v1.0/v1.1 bahwa kenaikan FAR "bukan karena model" tidak didukung: celah AuraFace menyempit sekitar 6 kali lipat pada penuh (0,069 -> 0,011) sedangkan buffalo_l hampir tetap, jadi sensitivitas terhadap resolusi bersifat spesifik model (AuraFace, SFace); penyebabnya belum diketahui [T]. (3) FAR 0/186 AuraFace pada 640 tipis: pada lipatan S02 threshold 0,481 hanya 0,003 di atas impostor uji tertinggi (0,478). (4) AUC 1,0 tidak berarti margin lebar: celah terbaik AuraFace 0,076 vs buffalo_l 0,356; dengan 4 identitas, impostor tertinggi kemungkinan naik bila identitas bertambah [T].
 - Batas: rentang ambang tanpa kesalahan pada data ini TIDAK boleh dipakai sebagai threshold produksi karena diambil dari data yang sama (aturan 5).
 - Belum dilakukan: identifikasi pasangan impostor tertinggi per relawan; uji hipotesis penyebab sensitivitas resolusi AuraFace; revisi laporan-akhir.md (bagian 1, 4, 7.2) menunggu persetujuan peneliti.
+
+## 2026-11-09 - Revisi laporan-akhir.md v1.2 (hasil analisis celah skor)
+- Dasar: results/recognition/analisis_celah.json (scripts/analisis_celah.py, commit e346f4c) dan entri log "Analisis celah skor pengenalan". Tidak ada eksperimen baru; tidak ada angka di metrik_*.json yang diubah.
+- Perubahan teks (4 tempat):
+  1. Bagian 1, baris face recognition: "pemisahan sempurna, AUC 1,0" diganti "AUC 1,0 tetapi celah skor sempit (0,07 pada 1280 px, 0,011 pada penuh)".
+  2. Bagian 4, butir AuraFace: klaim "kemungkinan besar terkait aturan threshold [T]" diganti temuan terukur (celah 0,076 / 0,069 / 0,011; threshold selalu di tengah celah latih; celah menyempit pada penuh sedangkan buffalo_l tidak; FAR 0/186 pada 640 tipis; AUC 1,0 tidak berarti margin lebar; ambang tanpa kesalahan tidak boleh dipakai sebagai threshold produksi).
+  3. Bagian 7.2, butir pengenalan: resolusi penuh tidak dipilih untuk AuraFace (celah 0,011); 640 vs 1280 tidak terbedakan; usulan 1280 tetap sebagai asumsi.
+  4. Bagian 9: ditambah keterbatasan celah skor AuraFace sempit dengan 4 identitas [T].
+- Penyebab sensitivitas resolusi AuraFace tetap [T] dan belum diuji.

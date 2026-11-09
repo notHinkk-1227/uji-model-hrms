@@ -1,6 +1,6 @@
 # Laporan Akhir: Penelitian Komparatif Liveness Detection dan Face Recognition untuk Absensi HRMS Mobile
 
-Versi 1.1 (draf revisi setelah pemeriksaan angka terhadap JSON), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
+Versi 1.2 (draf revisi setelah pemeriksaan angka dan analisis celah skor), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
 Sumber angka: `results/liveness/metrik_{640,1280,penuh}.json`, `results/recognition/metrik_{640,1280,penuh}.json`,
 `logs/experiment-log.md`. Penanda: [V] terverifikasi, [S] klaim sumber/sekunder, [T] belum terverifikasi.
 Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, kecuali disebut lain.
@@ -10,7 +10,7 @@ Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, ke
 | Peran | Pilihan | Status produksi |
 |---|---|---|
 | Liveness | **MiniFASNet V2 + V1SE** (terbaik relatif, satu-satunya yang lulus audit lisensi) | **BELUM LAYAK apa adanya.** Dengan aturan bawaan, 33-43% foto cetak lolos. Hanya dengan threshold yang dikalibrasi, kinerjanya mendekati berguna (ACER 8,1% pada 1280), dan itu pun belum cukup bukti. |
-| Face recognition | **AuraFace-v1** (lisensi lulus audit; pemisahan sempurna, AUC 1,0) | **LAYAK BERSYARAT.** Kalibrasi threshold perlu data lebih banyak, enrollment harus sesi terpisah, dan detektor produksi harus diuji. |
+| Face recognition | **AuraFace-v1** (lisensi lulus audit; AUC 1,0 tetapi celah skor sempit: 0,07 pada 1280 px, 0,011 pada resolusi penuh) | **LAYAK BERSYARAT.** Kalibrasi threshold perlu data lebih banyak, enrollment harus sesi terpisah, dan detektor produksi harus diuji. |
 | Detektor wajah | YuNet hanya untuk eksperimen; **BlazeFace** kandidat produksi | **BELUM ADA.** Data latih YuNet nonkomersial [S]; BlazeFace berlisensi Apache-2.0 [V] tetapi belum diuji dan titik wajahnya tidak cocok dengan alignment AuraFace. |
 
 Catatan membaca hasil liveness: ukuran dan EXIF foto asli berbeda dari foto serangan pada keempat relawan, sehingga
@@ -91,13 +91,22 @@ FRR = orang yang benar ditolak (dari 62). FAR = orang lain diterima (dari 186). 
 | SFace | 640 / 1280 / penuh | 1/62 | 7 / 8 / 16 dari 186 | 0,999-1,000 | 0,92 / 0,31 |
 
 - **buffalo_l paling bersih**, tetapi bobotnya berlisensi **riset saja** sehingga tidak boleh dipakai komersial tanpa lisensi dari InsightFace.
-- **AuraFace** memisahkan genuine dan impostor dengan sempurna (AUC 1,0). Kenaikan FAR pada skenario penuh (15/186) kemungkinan besar
-  terkait aturan threshold [T]. Data latih tiap lipatan terpisah sempurna, sehingga threshold EER jatuh di tengah celah
-  (0,425-0,59), dan sebagian impostor relawan uji (S02, S03) masuk ke celah itu. Namun median skor genuine juga turun (0,898 pada 640
-  menjadi 0,884 pada penuh) dan median impostor naik (0,284 menjadi 0,300), jadi celahnya ikut menyempit dan resolusi
-  mungkin berperan. Memisahkan kedua penyebab butuh perbandingan skor genuine terendah dan impostor tertinggi per
-  skenario, yang belum dilakukan [T]. Implikasi untuk produksi: threshold
-  AuraFace harus dipilih untuk FAR rendah, tidak memakai EER, dan dikalibrasi pada data yang lebih banyak.
+- **AuraFace** memisahkan genuine dan impostor secara gabungan (AUC 1,0), tetapi celah skornya sempit. Celah = skor genuine
+  terendah dikurangi skor impostor tertinggi: 0,076 (640), 0,069 (1280), 0,011 (penuh). Pembanding: buffalo_l sekitar 0,35 di
+  ketiga skenario (`results/recognition/analisis_celah.json`, dibuat `scripts/analisis_celah.py`).
+  - Mekanisme FAR 15/186 pada penuh: data latih tiap lipatan terpisah sempurna, sehingga threshold EER jatuh tepat di tengah
+    celah latih (posisi 0,50 di semua lipatan; nilai 0,425-0,59). Pada penuh, threshold lipatan S02 (0,444) dan S03 (0,425)
+    berada di bawah impostor uji tertinggi (0,492 dan 0,471), sehingga 6 + 9 impostor diterima.
+  - Resolusi juga berperan: celah AuraFace menyempit sekitar 6 kali lipat pada penuh, sedangkan buffalo_l hampir tidak
+    berubah. Jadi sensitivitas terhadap resolusi bersifat spesifik model (SFace juga: celah 0,001, -0,012, -0,058).
+    Penyebabnya belum diketahui [T].
+  - FAR 0/186 pada 640 tipis: pada lipatan S02 threshold 0,481 hanya 0,003 di atas impostor uji tertinggi (0,478).
+    Selisih 640 dan 1280 (0 vs 2 FA) tidak bermakna.
+  - AUC 1,0 tidak berarti margin lebar. Dengan 4 identitas, impostor tertinggi kemungkinan naik bila identitas bertambah [T].
+    Rentang ambang tanpa kesalahan pada data ini tidak boleh dipakai sebagai threshold produksi karena diambil dari data
+    yang sama.
+  - Implikasi untuk produksi: threshold AuraFace harus dipilih untuk FAR rendah, tidak memakai EER, dan dikalibrasi pada
+    data yang lebih banyak.
 - SFace lebih lemah daripada AuraFace di semua skenario, dan lisensinya tertahan.
 - Bias optimistis: enrollment dan probe diambil di sesi yang sama dan hanya ada 4 identitas. FAR di bawah sekitar 1,6% (3/186) tidak
   dapat dibuktikan dari data ini.
@@ -147,8 +156,9 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
   terbukti). Alasannya kompromi:
   - Liveness: MiniFASNet terburuk pada 640 (ACER threshold EER 13,1%, dibanding 8,1% pada 1280). Selisih 1280 dan penuh
     kecil pada angka EER (8,1% vs 7,5%), tetapi lebih besar pada aturan bawaan (20,0% vs 16,2%).
-  - Pengenalan: FAR AuraFace 0/186 (640), 2/186 (1280), 15/186 (penuh). Selisih 0 vs 2 tidak bermakna, dan kenaikan pada
-    resolusi penuh belum terpisah dari efek aturan threshold (bagian 4).
+  - Pengenalan: FAR AuraFace 0/186 (640), 2/186 (1280), 15/186 (penuh). Selisih 0 vs 2 tidak bermakna (celah skor 0,076 vs
+    0,069). Pada resolusi penuh celah menyempit menjadi 0,011, sehingga resolusi penuh tidak dipilih untuk AuraFace; aturan
+    threshold memperbesar dampaknya (bagian 4).
   - Ukuran unggahan 1280 jauh lebih kecil daripada resolusi penuh.
   - Pilot sebaiknya membandingkan 1280 dengan resolusi lain secara langsung.
 
@@ -207,6 +217,7 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 - Model ponsel, OS, dan pengaturan kamera tidak dicatat (penanda di manifest).
 - Latensi dari laptop pengembangan dan pengukuran awal.
 - Model card AuraFace menyatakan cakupan etnis data latih terbatas [V]; kinerja pada populasi karyawan sebenarnya belum diketahui.
+- Celah skor AuraFace sempit (0,07 pada 1280) dengan hanya 4 identitas; margin pada populasi karyawan sebenarnya kemungkinan lebih sempit [T].
 - Detektor eksperimen (YuNet) berbeda dari kandidat detektor produksi (BlazeFace), jadi hasil bisa berubah saat detektor diganti.
 
 ## 10. Langkah lanjutan yang disarankan
