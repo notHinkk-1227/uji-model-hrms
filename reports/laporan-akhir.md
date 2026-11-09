@@ -1,6 +1,6 @@
 # Laporan Akhir: Penelitian Komparatif Liveness Detection dan Face Recognition untuk Absensi HRMS Mobile
 
-Versi 1.3 (draf revisi setelah temuan kamera belakang, amandemen 6), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
+Versi 1.3.1 (draf: v1.3 setelah temuan kamera belakang, amandemen 6, ditambah latensi pengenalan dan pipeline), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
 Sumber angka: `results/liveness/metrik_{640,1280,penuh}.json`, `results/recognition/metrik_{640,1280,penuh}.json`,
 `logs/experiment-log.md`. Penanda: [V] terverifikasi, [S] klaim sumber/sekunder, [T] belum terverifikasi.
 Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, kecuali disebut lain.
@@ -124,10 +124,18 @@ Angka dari laptop pengembangan (i7-11800H, CPU, 1 thread, gambar uji face.jpg 75
 amandemen 2 dan 5). Antar-sesi angkanya bergeser 35-60%, jadi hanya urutan besarnya yang dapat dipakai:
 
 - YuNet sekitar 22 ms; ansambel MiniFASNet sekitar 11 ms; face-antispoof-onnx sekitar 5 ms; anti-spoof-mn3 sekitar 3 ms.
-- Latensi model pengenalan **belum diukur** [T]. Ukuran bobot: AuraFace 261 MB, buffalo_l 174 MB, SFace 39 MB,
+- Latensi model pengenalan diukur 9 November 2026 (paragraf di bawah). Ukuran bobot: AuraFace 261 MB, buffalo_l 174 MB, SFace 39 MB,
   MiniFASNet 2 x 1,8 MB.
-- Kesimpulan [T]: biaya komputasi liveness kecil. Biaya terbesar per permintaan kemungkinan ada di AuraFace
+- Kesimpulan [T]: biaya komputasi liveness kecil. Pada pengukuran 9 November biaya terbesar per permintaan ada di AuraFace
   (ResNet-100) dan dekode/resize foto besar. Perlu benchmark di server target.
+
+Latensi pengenalan dan pipeline lengkap (9 November 2026; laptop pengembangan, CPU; `scripts/benchmark_recognition.py`, hasil di `results/latensi/`).
+Gambar uji adalah `face.jpg` yang dibesarkan sintetis ke 960x1280, bukan foto nyata; tanpa dekode JPEG, jaringan, dan perbandingan templat. Median, ms:
+
+- Embedding AuraFace (alignment + inferensi): sekitar 198 ms pada 1 thread (dua jalan: 198,3 dan 198,4) dan 63 ms pada 4 thread. buffalo_l 224-234 ms (1 thread) dan 65 ms (4 thread); SFace 25-26 ms dan 10 ms.
+- Pipeline YuNet + ansambel MiniFASNet + AuraFace: 233-239 ms pada 1 thread dan 93 ms pada 4 thread; AuraFace sekitar 83-85% waktunya pada 1 thread.
+- Memori: puncak proses 892-897 MB dengan tiga model pengenalan dan tiga model liveness dimuat bersamaan; ini BUKAN memori AuraFace sendirian [T].
+- Dua jalan pada 1 thread berselisih sekitar 3% (pipeline); tetap hanya perkiraan dari satu gambar dan satu mesin, bukan angka server.
 
 ## 6. Status lisensi (ringkas; rinci di `audit/model-audit-v3.md`)
 
@@ -212,7 +220,7 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 ### 8.4 Risiko kelayakan
 - Kinerja liveness belum dapat dinilai: hasil bagian 3 tidak sahih karena foto serangan kamera belakang (amandemen 6), dan ini risiko terbesar.
 - Detektor produksi belum diuji.
-- Latensi AuraFace di server belum diukur.
+- Latensi AuraFace di server target belum diukur (di laptop pengembangan sekitar 63 ms pada 4 thread dan 198 ms pada 1 thread per embedding; bagian 5).
 - Kamera aplikasi HRMS mungkin memproses gambar berbeda dari kamera bawaan ponsel yang dipakai di penelitian ini.
 
 ## 9. Keterbatasan
@@ -231,7 +239,7 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 ## 10. Langkah lanjutan yang disarankan
 1. Ambil ulang foto serangan liveness (print 10 dan screen 10 per relawan) dengan KAMERA DEPAN, lalu jalankan ulang evaluasi liveness (amandemen 6). Tanpa ini liveness belum punya kesimpulan yang sahih. Protokol atau amandemen baru dibekukan sebelum pengambilan; EXIF, ukuran, dan lensa foto asli dan serangan diperiksa sebelum evaluasi.
 2. Uji BlazeFace dan sumber landmark untuk alignment pada data yang ada, lalu bandingkan hasil AuraFace dan MiniFASNet dengan hasil YuNet.
-3. Benchmark latensi AuraFace dan pipeline lengkap di CPU.
+3. Benchmark latensi AuraFace dan pipeline lengkap di server target (di laptop pengembangan sudah diukur 9 November, bagian 5).
 4. Pilot data baru dengan protokol baru yang dibekukan sebelum pengambilan:
    - lebih banyak relawan dan ponsel;
    - enrollment dari sesi berbeda;
