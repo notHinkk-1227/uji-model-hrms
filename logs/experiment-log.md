@@ -392,3 +392,18 @@
 - Hasil pengenalan wajah tidak terdampak (hanya foto asli kamera depan). Foto asli liveness tetap sahih untuk BPCER.
 - CLAUDE.md (diff diperiksa: 1 baris diganti, 1 baris ditambahkan): daftar reports/ menjadi amandemen-protokol-2..6.md dengan keterangan kamera belakang untuk serangan; langkah 8 baru di bagian status. Bagian lain tidak diubah.
 - Belum dilakukan: revisi laporan-akhir.md (bagian 1, 3, 7, 9; status MiniFASNet dari "kandidat terpilih untuk pilot" menjadi belum didukung bukti sahih), menunggu persetujuan peneliti. Koreksi catatan "penyebab tidak diketahui [T]" pada amandemen-protokol-2.md baris 42 dicatat di amandemen 6 dan tidak dilakukan dengan menyunting berkas lama.
+
+## 2026-11-09 - Revisi laporan-akhir.md v1.3 (dampak amandemen 6: foto serangan kamera belakang)
+- Dasar: amandemen-protokol-6.md (commit 8a9d09a) dan entri log "EXIF foto liveness". Tidak ada eksperimen baru, tidak ada model dijalankan, tidak ada data relawan dibuka. Tidak ada angka di metrik_*.json maupun tabel laporan yang diubah.
+- Perubahan hanya teks, 10 penggantian lewat skrip sekali pakai yang memeriksa tiap teks lama tepat satu kali sebelum menulis (git diff --stat: 18 insertions, 11 deletions, hanya laporan-akhir.md):
+  1. Versi 1.2 menjadi 1.3.
+  2. Bagian 1, baris Liveness: dari "MiniFASNet terbaik relatif" menjadi "belum ada pilihan yang sahih"; status dari "BELUM LAYAK apa adanya" menjadi "BELUM ADA KESIMPULAN".
+  3. Bagian 1, catatan membaca hasil liveness: dugaan confound [T] diganti temuan terverifikasi [V] (kamera belakang vs depan; ukuran tidak tumpang tindih); dampak pada AUC tetap [T].
+  4. Bagian 1, kesimpulan jujur: "titik lemah utama" menjadi "belum punya kesimpulan yang sahih".
+  5. Bagian 3: peringatan di awal bahwa angka tidak dipakai memilih model dan hanya BPCER yang sahih.
+  6. Bagian 7.1 butir 1: MiniFASNet bukan lagi "kandidat terpilih untuk pilot", menjadi "belum didukung bukti"; syarat baru: foto serangan diulang dengan kamera depan.
+  7. Bagian 7.2, butir liveness: diberi catatan bahwa bukan dasar penentuan resolusi.
+  8. Bagian 8.4: "belum memadai" menjadi "belum dapat dinilai".
+  9. Bagian 9: butir confound diganti temuan terverifikasi; ditambah butir pengambilan ulang ditunda.
+- CLAUDE.md: penanda versi laporan v1.2 menjadi v1.3 di dua tempat (daftar reports/ dan langkah 7). Bagian lain tidak diubah.
+- Belum dilakukan: bagian 10 (langkah lanjutan) belum menyebut pengambilan ulang foto serangan kamera depan secara eksplisit. Laporan tetap draf yang menunggu tinjauan peneliti.

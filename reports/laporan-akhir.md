@@ -1,6 +1,6 @@
 # Laporan Akhir: Penelitian Komparatif Liveness Detection dan Face Recognition untuk Absensi HRMS Mobile
 
-Versi 1.2 (draf revisi setelah pemeriksaan angka dan analisis celah skor), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
+Versi 1.3 (draf revisi setelah temuan kamera belakang, amandemen 6), 9 November 2026. Salinan uji `D:\dev\model-research-face-cc`.
 Sumber angka: `results/liveness/metrik_{640,1280,penuh}.json`, `results/recognition/metrik_{640,1280,penuh}.json`,
 `logs/experiment-log.md`. Penanda: [V] terverifikasi, [S] klaim sumber/sekunder, [T] belum terverifikasi.
 Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, kecuali disebut lain.
@@ -9,16 +9,17 @@ Semua angka di bawah adalah **hasil eksperimen kita sendiri** pada 4 relawan, ke
 
 | Peran | Pilihan | Status produksi |
 |---|---|---|
-| Liveness | **MiniFASNet V2 + V1SE** (terbaik relatif, satu-satunya yang lulus audit lisensi) | **BELUM LAYAK apa adanya.** Dengan aturan bawaan, 33-43% foto cetak lolos. Hanya dengan threshold yang dikalibrasi, kinerjanya mendekati berguna (ACER 8,1% pada 1280), dan itu pun belum cukup bukti. |
+| Liveness | **Belum ada pilihan yang sahih** (MiniFASNet V2 + V1SE unggul pada data kita dan satu-satunya yang lulus audit lisensi, tetapi foto serangan diambil dengan kamera belakang: amandemen 6) | **BELUM ADA KESIMPULAN.** Hasil liveness membandingkan foto asli kamera depan dengan foto serangan kamera belakang, sehingga tidak dipakai untuk memilih model; angka di bagian 3 hanya catatan. |
 | Face recognition | **AuraFace-v1** (lisensi lulus audit; AUC 1,0 tetapi celah skor sempit: 0,07 pada 1280 px, 0,011 pada resolusi penuh) | **LAYAK BERSYARAT.** Kalibrasi threshold perlu data lebih banyak, enrollment harus sesi terpisah, dan detektor produksi harus diuji. |
 | Detektor wajah | YuNet hanya untuk eksperimen; **BlazeFace** kandidat produksi | **BELUM ADA.** Data latih YuNet nonkomersial [S]; BlazeFace berlisensi Apache-2.0 [V] tetapi belum diuji dan titik wajahnya tidak cocok dengan alignment AuraFace. |
 
-Catatan membaca hasil liveness: ukuran dan EXIF foto asli berbeda dari foto serangan pada keempat relawan, sehingga
-skor yang memisahkan keduanya (AUC MiniFASNet 0,99) mungkin sebagian mencerminkan perbedaan pengambilan foto, bukan
-kemampuan mendeteksi serangan [T] (lihat bagian 9).
+Catatan membaca hasil liveness (amandemen 6): foto serangan diambil dengan kamera belakang, sedangkan foto asli dengan
+kamera depan [V: konfirmasi peneliti dan EXIF]. Ukuran foto asli dan serangan juga tidak tumpang tindih pada keempat
+relawan [V]. Skor yang memisahkan keduanya (AUC MiniFASNet 0,99) karena itu mungkin mencerminkan perbedaan kamera,
+bukan kemampuan mendeteksi serangan [T] (lihat bagian 9).
 
 Kesimpulan jujur: **pipeline absensi wajah yang siap produksi belum ada.** Komponen pengenalan (AuraFace)
-menjanjikan. Komponen liveness adalah titik lemah utama. Detektor produksi masih harus dipilih dan diuji.
+menjanjikan. Komponen liveness belum punya kesimpulan yang sahih (foto serangan kamera belakang, amandemen 6). Detektor produksi masih harus dipilih dan diuji.
 Rekomendasinya adalah melanjutkan ke **tahap pilot terbatas**, bukan rilis produksi (lihat bagian 7).
 
 ## 2. Apa yang diuji
@@ -37,6 +38,11 @@ Rekomendasinya adalah melanjutkan ke **tahap pilot terbatas**, bukan rilis produ
 - Semua run: 160/160 foto liveness dan 82/82 foto pengenalan diproses tanpa gagal deteksi.
 
 ## 3. Hasil liveness
+
+> **Peringatan (amandemen 6, 9 November 2026):** foto serangan pada seluruh bagian ini diambil dengan kamera belakang,
+> sedangkan foto asli dengan kamera depan. Angka di bawah adalah hasil eksperimen kita dan tidak diubah, tetapi TIDAK
+> dipakai untuk memilih model liveness dan tidak mewakili aplikasi. Hanya BPCER (foto asli ditolak, kamera depan) yang
+> masih sahih; APCER, ACER, AUC, dan peringkat model tidak.
 
 ### 3.1 Aturan keputusan bawaan tiap model (hasil utama protokol)
 
@@ -140,7 +146,8 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 ## 7. Rekomendasi
 
 ### 7.1 Keputusan model
-1. **Liveness: MiniFASNet**, dengan status *kandidat terpilih untuk pilot*, bukan produksi. Syaratnya:
+1. **Liveness: belum ada pilihan yang sahih** (amandemen 6). MiniFASNet unggul pada data kita dan satu-satunya yang lulus audit lisensi, tetapi foto serangan diambil dengan kamera belakang, sehingga hasilnya tidak dipakai untuk memilih model. Status: *belum didukung bukti*. Syarat sebelum pilot:
+   - foto serangan diambil ulang dengan kamera depan sesuai protokol, lalu liveness dievaluasi ulang (amandemen 6);
    - aturan bawaan **tidak boleh** dipakai; threshold dikalibrasi pada data pilot;
    - data pilot berisi lebih banyak relawan dan ponsel, termasuk serangan replay video;
    - liveness pasif ini tidak dijadikan satu-satunya pertahanan (lihat 7.3).
@@ -154,7 +161,7 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 ### 7.2 Format foto dari aplikasi
 - Kamera depan, potong ke 3:4, JPEG. Usulan awal untuk pilot: **sisi terpanjang 1280 px** (ASUMSI, bukan hasil yang
   terbukti). Alasannya kompromi:
-  - Liveness: MiniFASNet terburuk pada 640 (ACER threshold EER 13,1%, dibanding 8,1% pada 1280). Selisih 1280 dan penuh
+  - Liveness (catatan saja; hasil liveness tidak sahih untuk memilih, amandemen 6): MiniFASNet terburuk pada 640 (ACER threshold EER 13,1%, dibanding 8,1% pada 1280). Selisih 1280 dan penuh
     kecil pada angka EER (8,1% vs 7,5%), tetapi lebih besar pada aturan bawaan (20,0% vs 16,2%).
   - Pengenalan: FAR AuraFace 0/186 (640), 2/186 (1280), 15/186 (penuh). Selisih 0 vs 2 tidak bermakna (celah skor 0,076 vs
     0,069). Pada resolusi penuh celah menyempit menjadi 0,011, sehingga resolusi penuh tidak dipilih untuk AuraFace; aturan
@@ -202,7 +209,7 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 - Threshold dan versi model disimpan sebagai konfigurasi bertanggal, dan setiap keputusan mencatat versi model.
 
 ### 8.4 Risiko kelayakan
-- Kinerja liveness belum memadai (bagian 3), dan ini risiko terbesar.
+- Kinerja liveness belum dapat dinilai: hasil bagian 3 tidak sahih karena foto serangan kamera belakang (amandemen 6), dan ini risiko terbesar.
 - Detektor produksi belum diuji.
 - Latensi AuraFace di server belum diukur.
 - Kamera aplikasi HRMS mungkin memproses gambar berbeda dari kamera bawaan ponsel yang dipakai di penelitian ini.
@@ -211,8 +218,8 @@ Lisensi kode tidak otomatis mencakup bobot dan data latih. Kelayakan akhir perlu
 - 4 relawan, 4 ponsel, 1 sesi. Hasil adalah perbandingan relatif, bukan akurasi populasi; tidak ada analisis demografis.
   Selang kepercayaan lebar dan optimistis, karena foto dari relawan yang sama saling berkorelasi.
 - Serangan hanya foto cetak dan foto di layar; replay, topeng, dan injeksi tidak diuji.
-- Ukuran dan EXIF foto asli berbeda dari foto serangan pada keempat relawan, sehingga ada kemungkinan model membedakan
-  keduanya dari faktor itu (confound [T]). Pemotongan 3:4 hanya mengurangi sebagian.
+- Foto serangan diambil dengan kamera belakang, foto asli dengan kamera depan (penyimpangan dari protokol, amandemen 6) [V]. Ukuran foto asli dan serangan tidak tumpang tindih pada keempat relawan [V]. Model mungkin membedakan keduanya dari karakter lensa, bukan dari tanda serangan; besar pengaruhnya belum diukur [T]. Pemotongan 3:4 tidak menghilangkan perbedaan kamera.
+- Pengambilan ulang foto serangan dengan kamera depan ditunda karena relawan belum tersedia.
 - Enrollment dari sesi yang sama dengan probe, dan sebagian redup; 18 foto duplikat dikeluarkan dari probe.
 - Model ponsel, OS, dan pengaturan kamera tidak dicatat (penanda di manifest).
 - Latensi dari laptop pengembangan dan pengukuran awal.
