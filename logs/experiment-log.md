@@ -351,3 +351,8 @@
   2. Baris 129 (langkah 7): "DRAF 2026-11-09" menjadi "DRAF v1.2 2026-11-09". Status tetap menunggu tinjauan peneliti.
 - Bagian lain CLAUDE.md tidak diubah, termasuk tanggal "Terakhir diperbarui" (9 November 2026).
 - Catatan terbuka: daftar "Skrip yang ada" di CLAUDE.md belum diperiksa apakah memuat analisis_celah.py dan test_analisis_celah.py; dikerjakan sebagai langkah terpisah.
+
+## 2026-11-09 - CLAUDE.md: analisis_celah.py ditambahkan ke daftar skrip
+- Dasar: commit e346f4c (analisis_celah.py dan test_analisis_celah.py, uji 16/16) dan commit 560e2c2 (CLAUDE.md sinkron dengan laporan v1.2). Tidak ada eksperimen baru, tidak ada model dijalankan, tidak ada data relawan dibuka.
+- Perubahan teks pada CLAUDE.md (diff diperiksa: tepat 1 baris ditambahkan, tanpa baris dihapus): bullet baru `analisis_celah.py` di bagian "Skrip yang ada", tepat setelah bullet metrics.py/recognition.py/evaluasi.py. Isi bullet hanya mengulang fakta dari entri log "Analisis celah skor pengenalan".
+- Temuan terpisah, belum ditindaklanjuti: git log menunjukkan origin/main (remote), sedangkan CLAUDE.md menulis "Repo Git lokal, tanpa remote". Tujuan remote dan apakah publik belum diperiksa; tidak ada push dilakukan.
