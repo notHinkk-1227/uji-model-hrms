@@ -1,6 +1,6 @@
 # Amandemen 7 untuk Protokol Evaluasi v1.0 (DRAF, 9 November 2026)
 
-STATUS: DRAF, belum dibekukan. Harus dibekukan (commit bertanda "dibekukan") SEBELUM pengambilan foto dimulai.
+STATUS: DIBEKUKAN 2026-11-10 (commit bertanda "dibekukan"). Pembekuan dilakukan setelah foto baru diambil, tetapi sebelum foto dibuka, diperiksa EXIF-nya, atau dievaluasi (lihat bagian 10).
 Melengkapi v1.0 dan amandemen 1-6; isinya tidak diubah. Menindaklanjuti amandemen 6.
 
 PENTING (transparansi): kriteria pemilihan model pada bagian 6 ditulis SETELAH hasil liveness lama terlihat. Angkanya dipilih
@@ -103,3 +103,9 @@ data pengenalan sudah terlihat, sehingga ambang yang ditulis sekarang bukan amba
 ## 9. Hubungan dengan dokumen lain
 
 Melengkapi PRD tujuan T2 tanpa mengubahnya. Tidak mengubah protokol v1.0 maupun amandemen 1-6; hasil utama liveness menurut amandemen 4 (aturan bawaan) tetap berlaku sebagai hasil utama.
+
+## 10. Catatan pembekuan (2026-11-10)
+- Foto baru (serangan dan kontrol sesi) sudah diambil SEBELUM amandemen ini dibekukan. Ini penyimpangan dari rencana awal, yang mewajibkan pembekuan sebelum pengambilan.
+- Menurut keterangan peneliti, sejak pengambilan tidak ada foto yang dibuka, diperiksa EXIF-nya, atau dievaluasi; foto hanya dikumpulkan di satu tempat. Keterangan ini tidak dapat diverifikasi dari berkas.
+- Kriteria bagian 6 sudah ter-commit sebelum foto baru dibuka atau dievaluasi.
+- Angka bagian 6 adalah usulan asisten yang dipakai peneliti sebagai titik awal. Perubahan angka setelah pembekuan hanya lewat amandemen baru yang dibuat SEBELUM foto baru dievaluasi, dengan alasan tertulis.
