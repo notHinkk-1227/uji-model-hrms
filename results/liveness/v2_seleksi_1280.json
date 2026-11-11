@@ -1,0 +1,133 @@
+{
+ "skenario": "1280",
+ "sumber_skor": [
+  "results/liveness/v2_skor_real_1280.csv",
+  "results/liveness/v2_skor_serangan_1280.csv"
+ ],
+ "model": {
+  "minifasnet": {
+   "acer": 0.10625,
+   "apcer": {
+    "print": [
+     5,
+     40
+    ],
+    "screen": [
+     0,
+     40
+    ]
+   },
+   "bpcer": [
+    7,
+    80
+   ],
+   "bpcer_per_relawan": {
+    "S01": [
+     0,
+     20
+    ],
+    "S02": [
+     0,
+     20
+    ],
+    "S03": [
+     0,
+     20
+    ],
+    "S04": [
+     7,
+     20
+    ]
+   },
+   "gagal_deteksi_atau_proses": 0,
+   "memenuhi_syarat": true
+  },
+  "face_antispoof_onnx": {
+   "acer": 0.2375,
+   "apcer": {
+    "print": [
+     1,
+     40
+    ],
+    "screen": [
+     10,
+     40
+    ]
+   },
+   "bpcer": [
+    18,
+    80
+   ],
+   "bpcer_per_relawan": {
+    "S01": [
+     0,
+     20
+    ],
+    "S02": [
+     9,
+     20
+    ],
+    "S03": [
+     1,
+     20
+    ],
+    "S04": [
+     8,
+     20
+    ]
+   },
+   "gagal_deteksi_atau_proses": 0,
+   "memenuhi_syarat": true
+  },
+  "anti_spoof_mn3": {
+   "acer": 0.19375,
+   "apcer": {
+    "print": [
+     0,
+     40
+    ],
+    "screen": [
+     10,
+     40
+    ]
+   },
+   "bpcer": [
+    11,
+    80
+   ],
+   "bpcer_per_relawan": {
+    "S01": [
+     0,
+     20
+    ],
+    "S02": [
+     4,
+     20
+    ],
+    "S03": [
+     0,
+     20
+    ],
+    "S04": [
+     7,
+     20
+    ]
+   },
+   "gagal_deteksi_atau_proses": 0,
+   "memenuhi_syarat": true
+  }
+ },
+ "keputusan": {
+  "pemenang": "minifasnet",
+  "status": "pemenang_menurut_acer",
+  "peringkat": [
+   "minifasnet",
+   "anti_spoof_mn3",
+   "face_antispoof_onnx"
+  ],
+  "jejak": [
+   "Peringkat menurut ACER (EER-LOSO): minifasnet 10.6%, anti_spoof_mn3 19.4%, face_antispoof_onnx 23.8%",
+   "Selisih ACER minifasnet dan anti_spoof_mn3 = 8.8 poin > 5: pemenang minifasnet (ACER terendah)."
+  ]
+ }
+}

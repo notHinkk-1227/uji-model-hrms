@@ -1,0 +1,39 @@
+{
+  "dibuat": "2026-11-11T14:18:40",
+  "batas_resolusi_sisi_terpanjang_px": 1280,
+  "git_commit_skrip": "4bceafad9f55f19ae535f70899df42ac947c8a53",
+  "skrip_belum_di_commit": false,
+  "jumlah_baris": 80,
+  "versi": {
+    "python": "3.12.10",
+    "torch": "2.15.0+cpu",
+    "onnxruntime": "1.31.1",
+    "opencv": "5.0.0",
+    "numpy": "2.5.4"
+  },
+  "detektor": {
+    "model": "face_detection_yunet_2023mar.onnx",
+    "conf_threshold": 0.8,
+    "nms_threshold": 0.3,
+    "top_k": 5000,
+    "detect_max_side": 640,
+    "pemotongan_rasio": "tengah, tepat 3:4, sebelum batas resolusi (amandemen-protokol-2)",
+    "opencv": "5.0.0"
+  },
+  "berkas_model_sha256": {
+    "minifasnet_v2": "a5eb02e1843f19b5386b953cc4c9f011c3f985d0ee2bb9819eea9a142099bec0",
+    "minifasnet_v1se": "84ee1d37d96894d5e82de5a57df044ef80a58be2b218b5ed7cdfd875ec2f5990",
+    "face_antispoof_onnx": "af2381b88f38769222ed93379e12444e2a50814575de1c46170de570c55a42b6",
+    "anti_spoof_mn3": "c4c99af04603b62d7e44f6f4daeb33e0daeccc696008c0b1d62f6f5cebbb3262"
+  },
+  "aturan_keputusan": {
+    "minifasnet": "rata-rata softmax dua model; real bila argmax = indeks 1 (menurut kode asli)",
+    "face_antispoof_onnx": "real bila logit_real - logit_spoof >= 0",
+    "anti_spoof_mn3": "real bila p_spoof <= 0,4 (demo sumber, amandemen 5)"
+  },
+  "catatan": [
+    "Crop anti-spoof-mn3: kotak diperluas 1,1 x 1,05, INTER_CUBIC (kode sumber, amandemen 5); ketatnya kotak YuNet vs detektor asli [T].",
+    "Makna indeks keluaran 0 dan 2 MiniFASNet belum diverifikasi.",
+    "Satu detektor YuNet (BGR) dipakai bersama; wajah terbesar dipilih."
+  ]
+}
