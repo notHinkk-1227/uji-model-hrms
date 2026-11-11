@@ -1,0 +1,112 @@
+{
+ "syarat_1_lensa_sama": "LULUS",
+ "syarat_2_ukuran_tumpang_tindih": "LULUS",
+ "per_relawan": {
+  "S01": {
+   "n_real": 20,
+   "n_serangan": 20,
+   "tidak_terbaca": {
+    "real": 0,
+    "serangan": 0
+   },
+   "arah_real": {
+    "depan": 20
+   },
+   "arah_serangan": {
+    "depan": 20
+   },
+   "jumlah_kombinasi_lensa": {
+    "real": 1,
+    "serangan": 1
+   },
+   "lensa_sama": true,
+   "ukuran_real": [
+    "2316x3088"
+   ],
+   "ukuran_serangan": [
+    "2316x3088",
+    "3024x4032"
+   ],
+   "ukuran_tumpang_tindih": true
+  },
+  "S02": {
+   "n_real": 20,
+   "n_serangan": 20,
+   "tidak_terbaca": {
+    "real": 0,
+    "serangan": 0
+   },
+   "arah_real": {
+    "tidak_diketahui": 20
+   },
+   "arah_serangan": {
+    "tidak_diketahui": 20
+   },
+   "jumlah_kombinasi_lensa": {
+    "real": 1,
+    "serangan": 1
+   },
+   "lensa_sama": true,
+   "ukuran_real": [
+    "3120x4208"
+   ],
+   "ukuran_serangan": [
+    "3120x4208"
+   ],
+   "ukuran_tumpang_tindih": true
+  },
+  "S03": {
+   "n_real": 20,
+   "n_serangan": 20,
+   "tidak_terbaca": {
+    "real": 0,
+    "serangan": 0
+   },
+   "arah_real": {
+    "tidak_diketahui": 20
+   },
+   "arah_serangan": {
+    "tidak_diketahui": 20
+   },
+   "jumlah_kombinasi_lensa": {
+    "real": 1,
+    "serangan": 1
+   },
+   "lensa_sama": true,
+   "ukuran_real": [
+    "2448x3264",
+    "4896x6528"
+   ],
+   "ukuran_serangan": [
+    "2448x3264"
+   ],
+   "ukuran_tumpang_tindih": true
+  },
+  "S04": {
+   "n_real": 20,
+   "n_serangan": 20,
+   "tidak_terbaca": {
+    "real": 0,
+    "serangan": 0
+   },
+   "arah_real": {
+    "tidak_diketahui": 20
+   },
+   "arah_serangan": {
+    "tidak_diketahui": 20
+   },
+   "jumlah_kombinasi_lensa": {
+    "real": 1,
+    "serangan": 1
+   },
+   "lensa_sama": true,
+   "ukuran_real": [
+    "2448x3264"
+   ],
+   "ukuran_serangan": [
+    "2448x3264"
+   ],
+   "ukuran_tumpang_tindih": true
+  }
+ }
+}
